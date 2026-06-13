@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop Cordyceps — Vitalcep</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { heading: ['Barlow Condensed', 'sans-serif'], body: ['Barlow', 'sans-serif'] },
+          colors: {
+            brand: { orange: '#F97316', 'orange-light': '#FB923C', green: '#22C55E', black: '#050505' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: #050505; color: #F8FAFC; font-family: 'Barlow', sans-serif; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 3px; } ::-webkit-scrollbar-track { background: #050505; } ::-webkit-scrollbar-thumb { background: #F97316; }
+
+    .font-heading { font-family: 'Barlow Condensed', sans-serif; }
+    .gradient-text { background: linear-gradient(135deg,#F97316,#FB923C,#FBBF24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .glow-line { background: linear-gradient(90deg, transparent, #F97316, transparent); height: 1px; }
+    .btn-glow { box-shadow: 0 0 20px rgba(249,115,22,0.4); }
+    .btn-glow:hover { box-shadow: 0 0 35px rgba(249,115,22,0.65); }
+
+    nav { background: rgba(5,5,5,0.9); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(249,115,22,0.07); }
+
+    /* Product image area */
+    .product-stage {
+      background: radial-gradient(ellipse 600px 600px at 50% 50%, rgba(249,115,22,0.07) 0%, transparent 70%);
+      border: 1px solid rgba(249,115,22,0.12);
+      border-radius: 1.5rem;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-stage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(249,115,22,0.025) 40px),
+                  repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(249,115,22,0.025) 40px);
+    }
+
+    /* Thumbnail */
+    .thumb { border: 1px solid #1a1a1a; border-radius: 0.75rem; cursor: pointer; overflow: hidden; transition: border-color 0.2s ease; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+    .thumb.active, .thumb:hover { border-color: rgba(249,115,22,0.5); }
+
+    /* Variant selector */
+    .variant-btn { border: 1px solid #2a2a2a; border-radius: 0.5rem; padding: 0.5rem 1.25rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.875rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; color: #9CA3AF; background: transparent; }
+    .variant-btn:hover { border-color: rgba(249,115,22,0.4); color: #F8FAFC; }
+    .variant-btn.active { border-color: #F97316; color: #F97316; background: rgba(249,115,22,0.08); }
+    .variant-btn.out { border-color: #111; color: #374151; cursor: not-allowed; text-decoration: line-through; }
+
+    /* Qty */
+    .qty-btn { width: 36px; height: 36px; border: 1px solid #2a2a2a; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #9CA3AF; transition: all 0.2s ease; }
+    .qty-btn:hover { border-color: rgba(249,115,22,0.4); color: #F97316; }
+
+    /* Tab */
+    .tab-btn { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.875rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 0; position: relative; cursor: pointer; color: #6B7280; transition: color 0.2s ease; }
+    .tab-btn::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #F97316; transform: scaleX(0); transition: transform 0.2s ease; }
+    .tab-btn.active { color: #F97316; }
+    .tab-btn.active::after { transform: scaleX(1); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Review stars */
+    .star { color: #F97316; }
+    .star-empty { color: #1F2937; }
+
+    /* Sticky buy bar */
+    .sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: rgba(5,5,5,0.95); backdrop-filter: blur(20px); border-top: 1px solid rgba(249,115,22,0.15); transform: translateY(100%); transition: transform 0.3s ease; }
+    .sticky-bar.visible { transform: translateY(0); }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* Glass card */
+    .glass { background: rgba(10,10,10,0.9); border: 1px solid #1a1a1a; border-radius: 1rem; }
+
+    /* Notification */
+    #cart-toast { position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%) translateY(80px); opacity: 0; z-index: 100; background: #22C55E; color: #000; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 0.875rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.75rem 1.5rem; border-radius: 9999px; transition: all 0.3s ease; white-space: nowrap; }
+    #cart-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .section-label span { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #F97316; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="homepage.html" class="font-heading font-black text-2xl tracking-widest uppercase">
+        <span class="gradient-text">VITAL</span><span class="text-white">CEP</span>
+      </a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="homepage.html" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">Home</a>
+        <a href="product.html" class="font-heading font-600 text-sm tracking-widest uppercase text-brand-orange transition-colors cursor-pointer">Products</a>
+        <a href="recipe.html" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">Recipes</a>
+        <a href="about.html" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-400 hover:text-white transition-colors cursor-pointer">About</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="relative cursor-pointer">
+          <svg class="w-6 h-6 text-gray-400 hover:text-white transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-label="Cart"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span id="cart-count" class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-brand-orange text-black font-heading font-900 text-xs rounded-full flex items-center justify-center">0</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Breadcrumb -->
+  <div class="pt-24 pb-2 max-w-7xl mx-auto px-6">
+    <nav aria-label="breadcrumb" class="flex items-center gap-2 text-xs font-body text-gray-600">
+      <a href="homepage.html" class="hover:text-gray-400 transition-colors cursor-pointer">Home</a>
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      <span class="text-gray-400">Cordyceps Militaris Powder</span>
+    </nav>
+  </div>
+
+  <!-- ════════════════ PRODUCT MAIN ════════════════ -->
+  <main class="max-w-7xl mx-auto px-6 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+
+      <!-- LEFT: Product Images -->
+      <div class="reveal">
+        <!-- Main image stage -->
+        <div class="product-stage mb-4 p-8">
+          <div class="relative z-10 text-center">
+            <div style="font-size:8rem; filter: drop-shadow(0 0 40px rgba(249,115,22,0.6));" aria-hidden="true">🍄</div>
+            <div class="font-heading font-900 text-xl tracking-widest uppercase text-brand-orange mt-2">Cordyceps Militaris</div>
+            <div class="font-body text-sm text-gray-500 mt-1">Ultra-Fine Powder · 50g</div>
+          </div>
+          <!-- Corner badges -->
+          <div class="absolute top-4 left-4">
+            <span class="font-heading font-700 text-xs tracking-widest uppercase px-3 py-1 rounded-full" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#22C55E;">Pure</span>
+          </div>
+          <div class="absolute top-4 right-4">
+            <span class="font-heading font-700 text-xs tracking-widest uppercase px-3 py-1 rounded-full" style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);color:#F97316;">Vegan</span>
+          </div>
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="grid grid-cols-4 gap-3">
+          <div class="thumb active p-3" style="background:#0A0A0A;" onclick="setThumb(this)">
+            <div class="text-3xl text-center" aria-hidden="true">🍄</div>
+          </div>
+          <div class="thumb p-3" style="background:#0A0A0A;" onclick="setThumb(this)">
+            <div class="text-3xl text-center" aria-hidden="true">🌿</div>
+          </div>
+          <div class="thumb p-3" style="background:#0A0A0A;" onclick="setThumb(this)">
+            <div class="text-3xl text-center" aria-hidden="true">⚗️</div>
+          </div>
+          <div class="thumb p-3" style="background:#0A0A0A;" onclick="setThumb(this)">
+            <div class="text-3xl text-center" aria-hidden="true">💊</div>
+          </div>
+        </div>
+
+        <!-- Trust bar under image -->
+        <div class="mt-4 glass p-4 flex items-center justify-between gap-4 flex-wrap">
+          <div class="flex items-center gap-2 text-xs text-gray-400 font-body">
+            <svg class="w-4 h-4 text-brand-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            30-Day Guarantee
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-400 font-body">
+            <svg class="w-4 h-4 text-brand-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+            Free Shipping ₹999+
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-400 font-body">
+            <svg class="w-4 h-4 text-brand-green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+            COD Available
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Product Info -->
+      <div class="reveal" style="transition-delay:0.15s">
+
+        <!-- Reviews summary -->
+        <div class="flex items-center gap-3 mb-4">
+          <div class="flex items-center gap-0.5">
+            <span class="star text-lg">★★★★★</span>
+          </div>
+          <span class="font-body text-sm text-gray-400">4.9 · <a href="#reviews" class="underline text-brand-orange hover:no-underline cursor-pointer">214 reviews</a></span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="font-heading font-900 uppercase leading-tight text-white mb-2" style="font-size: clamp(2rem,4vw,3rem); letter-spacing:-0.01em;">
+          Vitalcep Cordyceps<br/>Militaris Powder
+        </h1>
+        <p class="font-body text-gray-400 mb-5 leading-relaxed">Pure fruiting body extract. No mycelium on grain. No fillers. Just 100% Cordyceps Militaris — the most bioactive form for energy, endurance, and immunity.</p>
+
+        <!-- Price block -->
+        <div class="flex items-baseline gap-3 mb-6">
+          <span class="font-heading font-900 text-4xl text-white" id="price-display">₹2,199</span>
+          <span class="font-body text-sm text-gray-500 line-through">₹2,799</span>
+          <span class="font-heading font-700 text-sm px-2 py-0.5 rounded" style="background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);color:#22C55E;">Save 21%</span>
+        </div>
+
+        <div class="glow-line mb-6"></div>
+
+        <!-- Format selector -->
+        <div class="mb-5">
+          <label class="block font-heading font-700 text-xs tracking-[0.2em] uppercase text-gray-500 mb-3">Format</label>
+          <div class="flex flex-wrap gap-2">
+            <button class="variant-btn active" data-format="powder" onclick="selectVariant('format', this)">Powder</button>
+            <button class="variant-btn" data-format="capsules" onclick="selectVariant('format', this)">Capsules</button>
+            <button class="variant-btn" data-format="raw" onclick="selectVariant('format', this)">Raw Dried</button>
+          </div>
+        </div>
+
+        <!-- Size selector -->
+        <div class="mb-6">
+          <label class="block font-heading font-700 text-xs tracking-[0.2em] uppercase text-gray-500 mb-3">
+            Size <span class="text-brand-orange" id="size-label">— 50g (≈50 servings)</span>
+          </label>
+          <div class="flex flex-wrap gap-2">
+            <button class="variant-btn" data-size="50g" data-price="₹2,199" data-servings="50 servings" onclick="selectSize(this)">50g</button>
+            <button class="variant-btn active" data-size="100g" data-price="₹3,999" data-servings="100 servings" onclick="selectSize(this)">100g <span style="font-size:0.65rem;color:#22C55E;"> Best Value</span></button>
+            <button class="variant-btn" data-size="250g" data-price="₹8,499" data-servings="250 servings" onclick="selectSize(this)">250g</button>
+          </div>
+        </div>
+
+        <!-- Qty + Add to Cart -->
+        <div class="flex items-center gap-3 mb-4">
+          <!-- Qty -->
+          <div class="flex items-center gap-2">
+            <button class="qty-btn" onclick="changeQty(-1)" aria-label="Decrease quantity">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+            </button>
+            <span class="font-heading font-800 text-xl text-white w-8 text-center" id="qty-display">1</span>
+            <button class="qty-btn" onclick="changeQty(1)" aria-label="Increase quantity">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+          <!-- ATC -->
+          <button onclick="addToCart()" class="flex-1 flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-light text-black font-heading font-900 text-base tracking-widest uppercase py-3.5 rounded-lg transition-all duration-200 btn-glow cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            Add to Cart
+          </button>
+        </div>
+
+        <!-- Buy Now -->
+        <button class="w-full border border-gray-700 hover:border-brand-orange text-gray-200 hover:text-brand-orange font-heading font-800 text-base tracking-widest uppercase py-3.5 rounded-lg transition-all duration-200 cursor-pointer mb-6">
+          Buy Now · Pay Later Available
+        </button>
+
+        <!-- Stock indicator -->
+        <div class="flex items-center gap-2 mb-6">
+          <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span>
+          <span class="font-body text-sm text-gray-400">In Stock · Usually ships within 24 hours</span>
+        </div>
+
+        <!-- Mini feature list -->
+        <div class="glass p-5 space-y-3">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-brand-green mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            <span class="font-body text-sm text-gray-300">100% Cordyceps Militaris fruiting body — no mycelium, no grain fillers</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-brand-green mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            <span class="font-body text-sm text-gray-300">Ultra-fine powder, dissolves instantly — tasteless, odourless</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-brand-green mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            <span class="font-body text-sm text-gray-300">Cultivated in controlled environment for guaranteed purity</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-brand-green mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            <span class="font-body text-sm text-gray-300">Vegan · Gluten-Free · Non-GMO · 18-month shelf life</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════ PRODUCT TABS ════════ -->
+    <div class="mt-20 reveal">
+      <!-- Tab headers -->
+      <div class="flex items-center gap-8 border-b border-[#1a1a1a] mb-8">
+        <button class="tab-btn active pb-4" data-tab="details" onclick="switchTab(this)">Details</button>
+        <button class="tab-btn pb-4" data-tab="nutrition" onclick="switchTab(this)">Nutrition</button>
+        <button class="tab-btn pb-4" data-tab="usage" onclick="switchTab(this)">How to Use</button>
+        <button class="tab-btn pb-4" data-tab="reviews" onclick="switchTab(this)">Reviews (214)</button>
+      </div>
+
+      <!-- Details -->
+      <div id="tab-details" class="tab-content active">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div>
+            <h3 class="font-heading font-800 text-2xl uppercase text-white mb-4">About This Product</h3>
+            <div class="font-body text-gray-400 leading-relaxed space-y-4 text-sm">
+              <p>Vitalcep Cordyceps Militaris is grown using a controlled indoor cultivation process that ensures 100% traceability from spore to shelf. Every batch is tested for purity — no heavy metals, no pesticides, no adulterants.</p>
+              <p>Unlike Cordyceps Sinensis (the wild variety harvested from caterpillar larvae, which is critically endangered and unethical to source), Cordyceps Militaris is scientifically cultivated and consistently higher in the key bioactive compound <strong class="text-white">cordycepin</strong>.</p>
+              <p>Our ultra-fine milling process ensures maximum surface area — which means maximum absorption into your bloodstream, and faster results.</p>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-heading font-800 text-2xl uppercase text-white mb-4">Product Specs</h3>
+            <table class="w-full text-sm font-body">
+              <tbody class="divide-y divide-[#141414]">
+                <tr><td class="py-3 text-gray-500">Product Name</td><td class="py-3 text-gray-200 font-semibold text-right">Cordyceps Militaris Powder</td></tr>
+                <tr><td class="py-3 text-gray-500">Form</td><td class="py-3 text-gray-200 text-right">Ultra-Fine Powder</td></tr>
+                <tr><td class="py-3 text-gray-500">Source</td><td class="py-3 text-gray-200 text-right">Fruiting Body (no mycelium)</td></tr>
+                <tr><td class="py-3 text-gray-500">Servings per 50g</td><td class="py-3 text-gray-200 text-right">≈50 (1g per serving)</td></tr>
+                <tr><td class="py-3 text-gray-500">Shelf Life</td><td class="py-3 text-gray-200 text-right">18 months</td></tr>
+                <tr><td class="py-3 text-gray-500">Storage</td><td class="py-3 text-gray-200 text-right">Cool, dry place. Reseal after use.</td></tr>
+                <tr><td class="py-3 text-gray-500">Certifications</td><td class="py-3 text-gray-200 text-right">Vegan · Gluten-Free · Non-GMO</td></tr>
+                <tr><td class="py-3 text-gray-500">Country of Origin</td><td class="py-3 text-gray-200 text-right">India</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nutrition -->
+      <div id="tab-nutrition" class="tab-content">
+        <div class="max-w-lg">
+          <h3 class="font-heading font-800 text-2xl uppercase text-white mb-6">Nutritional Information</h3>
+          <div class="glass overflow-hidden">
+            <div class="p-4 border-b border-[#1a1a1a]">
+              <div class="font-heading font-700 text-xs tracking-widest uppercase text-gray-500">Per 1g Serving (50 servings per pack)</div>
+            </div>
+            <table class="w-full text-sm font-body">
+              <tbody class="divide-y divide-[#141414]">
+                <tr><td class="px-4 py-3 text-gray-400">Calories</td><td class="px-4 py-3 text-right text-gray-200 font-semibold">~3 kcal</td></tr>
+                <tr><td class="px-4 py-3 text-gray-400">Protein</td><td class="px-4 py-3 text-right text-gray-200">~0.25g</td></tr>
+                <tr><td class="px-4 py-3 text-gray-400">Carbohydrates</td><td class="px-4 py-3 text-right text-gray-200">~0.4g</td></tr>
+                <tr><td class="px-4 py-3 text-gray-400">Dietary Fibre</td><td class="px-4 py-3 text-right text-gray-200">~0.3g</td></tr>
+                <tr><td class="px-4 py-3 text-gray-400">Fat</td><td class="px-4 py-3 text-right text-gray-200">~0.05g</td></tr>
+                <tr class="bg-[#0D0D0D]"><td class="px-4 py-3 text-brand-orange font-semibold">Cordycepin</td><td class="px-4 py-3 text-right text-brand-orange font-semibold">Present</td></tr>
+                <tr class="bg-[#0D0D0D]"><td class="px-4 py-3 text-brand-orange font-semibold">Adenosine</td><td class="px-4 py-3 text-right text-brand-orange font-semibold">Present</td></tr>
+                <tr class="bg-[#0D0D0D]"><td class="px-4 py-3 text-brand-orange font-semibold">Beta-Glucans</td><td class="px-4 py-3 text-right text-brand-orange font-semibold">Present</td></tr>
+                <tr><td class="px-4 py-3 text-gray-400">Heavy Metals</td><td class="px-4 py-3 text-right text-brand-green font-semibold">Below detection</td></tr>
+                <tr><td class="px-4 py-3 text-gray-400">Pesticides</td><td class="px-4 py-3 text-right text-brand-green font-semibold">Not detected</td></tr>
+              </tbody>
+            </table>
+            <div class="p-4 border-t border-[#1a1a1a]">
+              <p class="font-body text-xs text-gray-600">*Values are approximate. Exact cordycepin and adenosine concentrations available in Certificate of Analysis on request.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usage -->
+      <div id="tab-usage" class="tab-content">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div>
+            <h3 class="font-heading font-800 text-2xl uppercase text-white mb-6">Dosage Protocol</h3>
+            <div class="space-y-4">
+              <div class="glass p-5 flex gap-4">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-black" style="background:#F97316;">1</div>
+                <div>
+                  <h4 class="font-heading font-700 text-base uppercase text-white mb-1">Weeks 1–2: Start Low</h4>
+                  <p class="font-body text-sm text-gray-400">1g per day (½ tsp). Mix into your morning drink or food. Let your body calibrate to the compounds.</p>
+                </div>
+              </div>
+              <div class="glass p-5 flex gap-4">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-black" style="background:#FB923C;">2</div>
+                <div>
+                  <h4 class="font-heading font-700 text-base uppercase text-white mb-1">Week 3+: Increase to 2g</h4>
+                  <p class="font-body text-sm text-gray-400">Split doses — 1g pre-workout and 1g with breakfast for maximum coverage. Full benefits typically kick in at this stage.</p>
+                </div>
+              </div>
+              <div class="glass p-5 flex gap-4">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#22C55E;">3</div>
+                <div>
+                  <h4 class="font-heading font-700 text-base uppercase text-white mb-1">Month 2+: Maintain</h4>
+                  <p class="font-body text-sm text-gray-400">Keep at 1–2g daily for sustained performance baseline. Can cycle 5-days-on, 2-days-off for optimal receptor sensitivity.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-heading font-800 text-2xl uppercase text-white mb-6">Mix It Into Anything</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="glass p-4 text-center">
+                <div class="text-3xl mb-2" aria-hidden="true">☕</div>
+                <div class="font-heading font-700 text-sm uppercase text-white">Coffee</div>
+                <div class="font-body text-xs text-gray-500 mt-1">Stir into espresso or cold brew</div>
+              </div>
+              <div class="glass p-4 text-center">
+                <div class="text-3xl mb-2" aria-hidden="true">🍵</div>
+                <div class="font-heading font-700 text-sm uppercase text-white">Tea</div>
+                <div class="font-body text-xs text-gray-500 mt-1">Green tea, tulsi, turmeric</div>
+              </div>
+              <div class="glass p-4 text-center">
+                <div class="text-3xl mb-2" aria-hidden="true">🥤</div>
+                <div class="font-heading font-700 text-sm uppercase text-white">Smoothie</div>
+                <div class="font-body text-xs text-gray-500 mt-1">Blends seamlessly</div>
+              </div>
+              <div class="glass p-4 text-center">
+                <div class="text-3xl mb-2" aria-hidden="true">🥣</div>
+                <div class="font-heading font-700 text-sm uppercase text-white">Oats / Food</div>
+                <div class="font-body text-xs text-gray-500 mt-1">Stir into breakfast bowl</div>
+              </div>
+            </div>
+            <div class="glass mt-4 p-4">
+              <p class="font-body text-xs text-gray-400 leading-relaxed"><strong class="text-white">Tip:</strong> Cordyceps is heat-stable up to 100°C. You can add it to warm drinks without losing potency. Avoid direct high-heat cooking for extended periods.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div id="tab-reviews" class="tab-content" id="reviews">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Aggregate -->
+          <div class="glass p-6 text-center">
+            <div class="font-heading font-900 text-7xl gradient-text mb-2">4.9</div>
+            <div class="text-brand-orange text-2xl mb-2">★★★★★</div>
+            <div class="font-body text-sm text-gray-500 mb-6">214 verified reviews</div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs">
+                <span class="font-heading font-700 w-10 text-gray-400">5 ★</span>
+                <div class="flex-1 h-1.5 rounded-full bg-gray-800"><div class="h-full rounded-full bg-brand-orange" style="width:89%"></div></div>
+                <span class="font-body text-gray-500 w-8 text-right">89%</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="font-heading font-700 w-10 text-gray-400">4 ★</span>
+                <div class="flex-1 h-1.5 rounded-full bg-gray-800"><div class="h-full rounded-full bg-brand-orange opacity-60" style="width:8%"></div></div>
+                <span class="font-body text-gray-500 w-8 text-right">8%</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="font-heading font-700 w-10 text-gray-400">3 ★</span>
+                <div class="flex-1 h-1.5 rounded-full bg-gray-800"><div class="h-full rounded-full bg-brand-orange opacity-30" style="width:3%"></div></div>
+                <span class="font-body text-gray-500 w-8 text-right">3%</span>
+              </div>
+            </div>
+          </div>
+          <!-- Individual reviews -->
+          <div class="md:col-span-2 space-y-4">
+            <div class="glass p-5">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center font-heading font-800 text-xs text-white" style="background:linear-gradient(135deg,#F97316,#EA580C);">A</div>
+                  <div>
+                    <div class="font-heading font-700 text-sm uppercase text-white">Arjun S.</div>
+                    <div class="font-body text-xs text-gray-600">Verified Purchase</div>
+                  </div>
+                </div>
+                <div class="text-brand-orange text-sm">★★★★★</div>
+              </div>
+              <p class="font-body text-sm text-gray-400 leading-relaxed">"Didn't believe it until I tried it. My 10K time dropped by 4 minutes. The endurance boost is genuinely real. I've reordered twice."</p>
+            </div>
+            <div class="glass p-5">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center font-heading font-800 text-xs text-white" style="background:linear-gradient(135deg,#22C55E,#16A34A);">P</div>
+                  <div>
+                    <div class="font-heading font-700 text-sm uppercase text-white">Priya K.</div>
+                    <div class="font-body text-xs text-gray-600">Verified Purchase</div>
+                  </div>
+                </div>
+                <div class="text-brand-orange text-sm">★★★★★</div>
+              </div>
+              <p class="font-body text-sm text-gray-400 leading-relaxed">"Been taking this in my coffee for 6 weeks. The consistency of my energy through the day is the biggest difference. No 3pm crash anymore."</p>
+            </div>
+            <div class="glass p-5">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center font-heading font-800 text-xs text-white" style="background:linear-gradient(135deg,#6366F1,#4F46E5);">R</div>
+                  <div>
+                    <div class="font-heading font-700 text-sm uppercase text-white">Rahul M.</div>
+                    <div class="font-body text-xs text-gray-600">Verified Purchase</div>
+                  </div>
+                </div>
+                <div class="text-brand-orange text-sm">★★★★★</div>
+              </div>
+              <p class="font-body text-sm text-gray-400 leading-relaxed">"Really skeptical about supplements but this one actually delivers. Mixing into my oats every morning. Subtle but real difference in gym sessions."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════ UPSELL / RELATED ════════ -->
+    <div class="mt-20 reveal">
+      <div class="flex items-center gap-3 mb-8">
+        <span class="glow-line w-8 block"></span>
+        <h2 class="font-heading font-800 text-2xl uppercase text-white">Complete Your Protocol</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- Bundle offer -->
+        <div class="glass p-6 rounded-2xl" style="border-color:rgba(249,115,22,0.25);">
+          <div class="badge-green font-heading font-700 text-xs px-2 py-1 rounded-full mb-3 inline-block" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);color:#22C55E;">Save 25%</div>
+          <h3 class="font-heading font-800 text-xl uppercase text-white mb-2">3-Month Supply</h3>
+          <p class="font-body text-xs text-gray-500 mb-4">3× 100g Powder. Best value for serious performers.</p>
+          <div class="font-heading font-900 text-2xl text-white mb-4">₹8,999 <span class="text-sm text-gray-500 line-through font-400">₹11,997</span></div>
+          <button onclick="addToCart()" class="w-full bg-brand-orange hover:bg-brand-orange-light text-black font-heading font-800 text-sm tracking-widest uppercase py-2.5 rounded-lg transition-all cursor-pointer">Add Bundle</button>
+        </div>
+        <!-- Capsules -->
+        <div class="glass p-6 rounded-2xl">
+          <div class="font-heading font-700 text-xs px-2 py-1 rounded-full mb-3 inline-block" style="background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.2);color:#F97316;">Most Popular</div>
+          <h3 class="font-heading font-800 text-xl uppercase text-white mb-2">Capsules (60ct)</h3>
+          <p class="font-body text-xs text-gray-500 mb-4">For on-the-go. 500mg per capsule, 30-day supply.</p>
+          <div class="font-heading font-900 text-2xl text-white mb-4">₹1,999</div>
+          <button onclick="addToCart()" class="w-full border border-gray-700 hover:border-brand-orange text-gray-300 hover:text-brand-orange font-heading font-800 text-sm tracking-widest uppercase py-2.5 rounded-lg transition-all cursor-pointer">Add Capsules</button>
+        </div>
+        <!-- Raw -->
+        <div class="glass p-6 rounded-2xl">
+          <div class="font-heading font-700 text-xs px-2 py-1 rounded-full mb-3 inline-block" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#9CA3AF;">Traditional</div>
+          <h3 class="font-heading font-800 text-xl uppercase text-white mb-2">Raw Dried (25g)</h3>
+          <p class="font-body text-xs text-gray-500 mb-4">Whole fruiting bodies for brewing traditional decoctions.</p>
+          <div class="font-heading font-900 text-2xl text-white mb-4">₹1,599</div>
+          <button onclick="addToCart()" class="w-full border border-gray-700 hover:border-brand-orange text-gray-300 hover:text-brand-orange font-heading font-800 text-sm tracking-widest uppercase py-2.5 rounded-lg transition-all cursor-pointer">Add Raw</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Sticky buy bar (appears on scroll) -->
+  <div class="sticky-bar" id="sticky-bar">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+      <div class="hidden sm:block">
+        <div class="font-heading font-800 text-base uppercase text-white">Vitalcep Cordyceps Powder</div>
+        <div class="font-body text-xs text-gray-500" id="sticky-size-label">100g · Best Value</div>
+      </div>
+      <div class="font-heading font-900 text-2xl text-white" id="sticky-price">₹3,999</div>
+      <button onclick="addToCart()" class="flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-light text-black font-heading font-900 text-sm tracking-widest uppercase px-6 py-2.5 rounded-lg transition-all btn-glow cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Add to Cart
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="cart-toast" role="alert" aria-live="polite">✓ Added to Cart!</div>
+
+  <script>
+    let qty = 1;
+    let cartCount = 0;
+    let currentPrice = '₹3,999';
+
+    /* ── Qty ── */
+    function changeQty(delta) {
+      qty = Math.max(1, qty + delta);
+      document.getElementById('qty-display').textContent = qty;
+    }
+
+    /* ── Add to Cart ── */
+    function addToCart() {
+      cartCount += qty;
+      document.getElementById('cart-count').textContent = cartCount;
+      const toast = document.getElementById('cart-toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    /* ── Variant selector ── */
+    function selectVariant(group, btn) {
+      const parent = btn.parentElement;
+      parent.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    /* ── Size selector ── */
+    function selectSize(btn) {
+      document.querySelectorAll('[data-size]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentPrice = btn.dataset.price;
+      document.getElementById('price-display').textContent = currentPrice;
+      document.getElementById('size-label').textContent = `— ${btn.dataset.size} (≈${btn.dataset.servings})`;
+      document.getElementById('sticky-price').textContent = currentPrice;
+      document.getElementById('sticky-size-label').textContent = `${btn.dataset.size} · ${btn.dataset.servings}`;
+    }
+
+    /* ── Tab switcher ── */
+    function switchTab(btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      const tabId = 'tab-' + btn.dataset.tab;
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    /* ── Thumbnail ── */
+    function setThumb(el) {
+      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    /* ── Sticky bar ── */
+    const addToCartBtn = document.querySelector('button[onclick="addToCart()"]');
+    const stickyBar = document.getElementById('sticky-bar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) stickyBar.classList.add('visible');
+      else stickyBar.classList.remove('visible');
+    });
+
+    /* ── Scroll Reveal ── */
+    const observer = new IntersectionObserver(e => e.forEach(en => { if (en.isIntersecting) en.target.classList.add('in'); }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
