@@ -1,0 +1,132 @@
+{%- comment -%}
+  VC Cart Drawer — HTML/CSS SHELL ONLY
+  This renders the drawer structure and styles.
+  Your existing theme cart JS (AJAX cart, quantity updates, remove, checkout)
+  continues to drive behaviour unchanged — just point it at these class hooks:
+
+    Open  drawer : add class 'is-open' to .vc-drawer and .vc-drawer__overlay
+    Close drawer : remove class 'is-open' from both
+    Item count   : update .vc-drawer__count text
+    Items list   : render inside .vc-drawer__items
+    Subtotal     : update .vc-drawer__subtotal-val text
+    Progress bar : set width% on .vc-shipnudge__fill inline style
+
+  If you are using a Shopify theme that already has a cart drawer,
+  you can use just the CSS from vitalcep-theme.css (classes vc-drawer*)
+  and apply them to your theme's existing drawer markup.
+{%- endcomment -%}
+
+<div class="vc-drawer__overlay" id="vc-drawer-overlay" aria-hidden="true"></div>
+
+<div
+  class="vc-drawer"
+  id="vc-cart-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Shopping cart"
+>
+  <!-- Header -->
+  <div class="vc-drawer__head">
+    <div>
+      <p class="vc-drawer__title">Your Cart</p>
+      <p class="vc-drawer__count" id="vc-drawer-count">
+        {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}
+      </p>
+    </div>
+    <button
+      class="vc-drawer__close"
+      id="vc-drawer-close"
+      type="button"
+      aria-label="Close cart"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Free shipping progress -->
+  {%- assign free_ship_threshold = 99900 -%}
+  {%- assign remaining = free_ship_threshold | minus: cart.total_price -%}
+  <div class="vc-shipnudge">
+    {%- if cart.total_price >= free_ship_threshold -%}
+      <p class="vc-shipnudge__text">🎉 <em>You've unlocked free shipping!</em></p>
+    {%- else -%}
+      <p class="vc-shipnudge__text">
+        Add <em>{{ remaining | money }}</em> more for free shipping
+      </p>
+    {%- endif -%}
+    <div class="vc-shipnudge__bar" aria-hidden="true">
+      {%- assign progress = cart.total_price | times: 100 | divided_by: free_ship_threshold -%}
+      {%- if progress > 100 -%}{%- assign progress = 100 -%}{%- endif -%}
+      <div class="vc-shipnudge__fill" style="width:{{ progress }}%;"></div>
+    </div>
+  </div>
+
+  <!-- Items -->
+  <div class="vc-drawer__items" id="vc-drawer-items">
+    {%- if cart.item_count == 0 -%}
+      <p style="font-family:var(--vc-sans);font-size:14px;color:var(--vc-muted);text-align:center;padding:40px 0;">
+        Your cart is empty.
+      </p>
+    {%- else -%}
+      {%- for item in cart.items -%}
+        <div class="vc-cart-item" data-key="{{ item.key }}">
+          <a href="{{ item.url }}">
+            {%- if item.image -%}
+              <img
+                src="{{ item.image | image_url: width: 150 }}"
+                alt="{{ item.title | escape }}"
+                class="vc-cart-item__img"
+                loading="lazy"
+                width="72" height="72"
+              >
+            {%- else -%}
+              <div class="vc-cart-item__img"></div>
+            {%- endif -%}
+          </a>
+          <div class="vc-cart-item__info">
+            <p class="vc-cart-item__title">{{ item.product.title }}</p>
+            {%- unless item.product.has_only_default_variant -%}
+              <p class="vc-cart-item__variant">{{ item.variant.title }}</p>
+            {%- endunless -%}
+            <div class="vc-cart-item__meta">
+              <span class="vc-cart-item__price">{{ item.final_line_price | money }}</span>
+              <div class="vc-qty" role="group" aria-label="Quantity for {{ item.title | escape }}">
+                <button class="vc-qty__btn" data-vc-qty-minus="{{ item.key }}" aria-label="Decrease quantity">−</button>
+                <span class="vc-qty__val" aria-live="polite">{{ item.quantity }}</span>
+                <button class="vc-qty__btn" data-vc-qty-plus="{{ item.key }}" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  <!-- Footer -->
+  <div class="vc-drawer__foot">
+    <div class="vc-drawer__subtotal">
+      <span class="vc-drawer__subtotal-label">Subtotal</span>
+      <span class="vc-drawer__subtotal-val" id="vc-drawer-subtotal">
+        {{ cart.total_price | money }}
+      </span>
+    </div>
+
+    <div class="vc-drawer__trust">
+      <span class="vc-drawer__trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Secure checkout
+      </span>
+      <span class="vc-drawer__trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        30-day returns
+      </span>
+    </div>
+
+    <a href="{{ routes.checkout }}" class="vc-btn vc-btn--primary vc-drawer__checkout">
+      Checkout — {{ cart.total_price | money }}
+    </a>
+    <a href="{{ routes.cart_url }}" class="vc-drawer__continue">View full cart</a>
+  </div>
+</div>

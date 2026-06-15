@@ -1,0 +1,241 @@
+{{ 'vitalcep-theme.css' | asset_url | stylesheet_tag }}
+
+<section class="vc-sec vc-sec--cream vc-sec__pad">
+  <div class="vc-wrap">
+    <div class="vc-sec-head--center">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="vc-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="vc-h2">{{ section.settings.heading }}</h2>
+    </div>
+
+    {%- if section.settings.show_stats -%}
+      <div class="vc-stats">
+        <div class="vc-stat">
+          <span class="vc-stat__val">{{ section.settings.stat1_value }}</span>
+          <span class="vc-stat__lbl">{{ section.settings.stat1_label }}</span>
+        </div>
+        <div class="vc-stat">
+          <span class="vc-stat__val">{{ section.settings.stat2_value }}</span>
+          <span class="vc-stat__lbl">{{ section.settings.stat2_label }}</span>
+        </div>
+        <div class="vc-stat">
+          <span class="vc-stat__val">{{ section.settings.stat3_value }}</span>
+          <span class="vc-stat__lbl">{{ section.settings.stat3_label }}</span>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="vc-reviews">
+      {%- for block in section.blocks -%}
+        <article class="vc-review" {{ block.shopify_attributes }}>
+          <div class="vc-stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+            <span class="vc-stars__icons" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                <svg class="vc-stars__icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              {%- endfor -%}
+            </span>
+            <span class="vc-stars__count">{{ block.settings.rating }}.0</span>
+          </div>
+          <blockquote class="vc-review__quote">
+            "{{ block.settings.quote }}"
+          </blockquote>
+          <footer class="vc-review__author">
+            {%- if block.settings.avatar != blank -%}
+              <img
+                src="{{ block.settings.avatar | image_url: width: 80 }}"
+                alt="{{ block.settings.name | escape }}"
+                class="vc-review__avatar"
+                width="40" height="40"
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="vc-review__avatar" aria-hidden="true"></div>
+            {%- endif -%}
+            <div>
+              <div class="vc-review__name">{{ block.settings.name }}</div>
+              <div class="vc-review__role">{{ block.settings.role }}</div>
+            </div>
+          </footer>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_reviews_app -%}
+      <div class="vc-reviews-app-slot">
+        {%- comment -%}
+          Your reviews app widget goes here.
+          Example for Judge.me: {% render 'judgeme_widgets', widget_type: 'judgeme_all_reviews_widget', concierge_install: true, product: product %}
+          Example for Stamped: {% render 'stamped-main-widget', product: product, productId: product.id, productTitle: product.title %}
+          Example for Okendo: {% render 'okendo-reviews-widget', product: product %}
+        {%- endcomment -%}
+        {{ section.settings.reviews_app_liquid }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC Social Proof",
+  "tag": "section",
+  "class": "vc-sec",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Real Results"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by 2,000+ Customers"
+    },
+    {
+      "type": "header",
+      "content": "Stats bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show stats",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat1_value",
+      "label": "Stat 1 value",
+      "default": "2,000+"
+    },
+    {
+      "type": "text",
+      "id": "stat1_label",
+      "label": "Stat 1 label",
+      "default": "Happy customers"
+    },
+    {
+      "type": "text",
+      "id": "stat2_value",
+      "label": "Stat 2 value",
+      "default": "4.9★"
+    },
+    {
+      "type": "text",
+      "id": "stat2_label",
+      "label": "Stat 2 label",
+      "default": "Average rating"
+    },
+    {
+      "type": "text",
+      "id": "stat3_value",
+      "label": "Stat 3 value",
+      "default": "94%"
+    },
+    {
+      "type": "text",
+      "id": "stat3_label",
+      "label": "Stat 3 label",
+      "default": "Repeat buyers"
+    },
+    {
+      "type": "header",
+      "content": "Reviews app integration"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews_app",
+      "label": "Show reviews app widget",
+      "default": false,
+      "info": "Enable to display your existing reviews app (Judge.me, Stamped, Okendo, etc.) below the featured reviews."
+    },
+    {
+      "type": "liquid",
+      "id": "reviews_app_liquid",
+      "label": "Reviews app snippet",
+      "info": "Paste your reviews app Liquid snippet here (e.g. {% render 'judgeme_widgets' %})."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review card",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review quote",
+          "default": "I've tried many energy supplements but nothing compares to Vitalcep. Cleaner, steadier, and no jitters whatsoever."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name",
+          "default": "Priya S."
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Reviewer detail",
+          "default": "Verified buyer · Mumbai"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Social Proof",
+      "settings": {
+        "eyebrow": "Real Results",
+        "heading": "Loved by 2,000+ Customers"
+      },
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "I've tried many energy supplements but nothing compares to Vitalcep. Cleaner, steadier, and no jitters whatsoever.",
+            "name": "Priya S.",
+            "role": "Verified buyer · Mumbai"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "As a marathon runner I was skeptical, but after 6 weeks my VO₂ numbers actually moved. This is now a non-negotiable in my stack.",
+            "name": "Arjun M.",
+            "role": "Verified buyer · Bengaluru"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "The powder blends perfectly into my morning coffee. I noticed sharper focus within the first week — truly impressed.",
+            "name": "Sneha R.",
+            "role": "Verified buyer · Delhi"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

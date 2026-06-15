@@ -1,0 +1,117 @@
+{{ 'vitalcep-theme.css' | asset_url | stylesheet_tag }}
+
+{%- assign featured = section.settings.collection -%}
+
+<section class="vc-sec vc-sec--cream vc-sec__pad">
+  <div class="vc-wrap">
+    <div class="vc-sec-head">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="vc-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="vc-h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subtext != blank -%}
+        <p class="vc-sec-sub">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="vc-pgrid">
+      {%- if featured != blank -%}
+        {%- for product in featured.products limit: section.settings.products_to_show -%}
+          {%- render 'vc-product-card', product: product -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <div class="vc-pcard">
+            <div class="vc-pcard__media" style="background-color:var(--vc-warm-panel);"></div>
+            <div class="vc-pcard__body">
+              <span class="vc-pcard__cat">Cordyceps</span>
+              <span class="vc-pcard__title">Sample Product {{ i }}</span>
+              <div class="vc-pcard__foot">
+                <div class="vc-price">
+                  <span class="vc-price__now">₹1,400</span>
+                </div>
+                <div class="vc-pcard__actions">
+                  <a href="#" class="vc-btn vc-btn--secondary">View</a>
+                  <a href="#" class="vc-btn vc-btn--primary">Add</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.cta_label != blank -%}
+      <div style="text-align:center;margin-top:40px;">
+        <a href="{{ section.settings.cta_url | default: featured.url }}" class="vc-btn vc-btn--secondary">
+          {{ section.settings.cta_label }}
+          <span class="vc-btn__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC Featured Collection",
+  "tag": "section",
+  "class": "vc-sec",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Most-Loved Products"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Every formula starts with premium Cordyceps militaris, batch-tested for potency."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Products to show",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "View all button label",
+      "default": "View All Products"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "View all button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Featured Collection",
+      "settings": {
+        "eyebrow": "Bestsellers",
+        "heading": "Our Most-Loved Products",
+        "products_to_show": 4,
+        "cta_label": "View All Products"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{%- comment -%}
+  Usage: {% render 'vc-product-card', product: product %}
+  Requires vitalcep-theme.css to be loaded on the page.
+{%- endcomment -%}
+
+{%- assign first_variant = product.selected_or_first_available_variant -%}
+{%- assign product_url   = product.url | within: collection -%}
+
+<article class="vc-pcard">
+  {%- if product.tags contains 'bestseller' or product.metafields.vc.flag != blank -%}
+    <span class="vc-pcard__flag">
+      {{- product.metafields.vc.flag | default: 'Bestseller' -}}
+    </span>
+  {%- endif -%}
+
+  <div class="vc-pcard__media">
+    <a href="{{ product_url }}" tabindex="-1" aria-hidden="true">
+      {%- if product.featured_media -%}
+        <img
+          src="{{ product.featured_media | image_url: width: 600 }}"
+          srcset="{{ product.featured_media | image_url: width: 400 }} 400w,
+                  {{ product.featured_media | image_url: width: 600 }} 600w"
+          sizes="(min-width: 990px) 25vw, 50vw"
+          alt="{{ product.featured_media.alt | default: product.title | escape }}"
+          class="vc-pcard__img"
+          loading="lazy"
+          width="{{ product.featured_media.width }}"
+          height="{{ product.featured_media.height }}"
+        >
+      {%- else -%}
+        <div class="vc-pcard__img" style="background-color:var(--vc-warm-panel);"></div>
+      {%- endif -%}
+    </a>
+  </div>
+
+  <div class="vc-pcard__body">
+    {%- if product.type != blank -%}
+      <span class="vc-pcard__cat">{{ product.type }}</span>
+    {%- endif -%}
+
+    <a href="{{ product_url }}" class="vc-pcard__title">{{ product.title }}</a>
+
+    {%- if product.metafields.reviews.rating.value != blank -%}
+      <div class="vc-stars" aria-label="{{ product.metafields.reviews.rating.value }} out of 5 stars">
+        <span class="vc-stars__icons" aria-hidden="true">
+          {%- for i in (1..5) -%}
+            <svg class="vc-stars__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          {%- endfor -%}
+        </span>
+        <span class="vc-stars__count">({{ product.metafields.reviews.rating_count.value }})</span>
+      </div>
+    {%- endif -%}
+
+    <div class="vc-pcard__foot">
+      <div class="vc-price">
+        {%- if first_variant.compare_at_price > first_variant.price -%}
+          <span class="vc-price__now">{{ first_variant.price | money }}</span>
+          <span class="vc-price__was">{{ first_variant.compare_at_price | money }}</span>
+          {%- assign savings_pct = first_variant.compare_at_price | minus: first_variant.price | times: 100 | divided_by: first_variant.compare_at_price -%}
+          <span class="vc-price__save">Save {{ savings_pct }}%</span>
+        {%- else -%}
+          <span class="vc-price__now">{{ first_variant.price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if first_variant.inventory_quantity > 0 and first_variant.inventory_quantity <= 10 -%}
+        <span class="vc-lowstock">Only {{ first_variant.inventory_quantity }} left</span>
+      {%- endif -%}
+
+      <div class="vc-pcard__actions">
+        <a href="{{ product_url }}" class="vc-btn vc-btn--secondary">Details</a>
+        <button
+          type="button"
+          class="vc-btn vc-btn--primary"
+          data-vc-atc="{{ first_variant.id }}"
+          {%- unless first_variant.available -%}disabled{%- endunless -%}
+        >
+          {{- first_variant.available ? 'Add' : 'Sold out' -}}
+        </button>
+      </div>
+    </div>
+  </div>
+</article>

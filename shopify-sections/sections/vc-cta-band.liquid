@@ -1,0 +1,93 @@
+{{ 'vitalcep-theme.css' | asset_url | stylesheet_tag }}
+
+<div class="vc-sec">
+  <div class="vc-ctaband">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="vc-eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    <h2 class="vc-ctaband__h">{{ section.settings.heading }}</h2>
+    {%- if section.settings.subtext != blank -%}
+      <p class="vc-ctaband__sub">{{ section.settings.subtext }}</p>
+    {%- endif -%}
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;">
+      {%- if section.settings.cta_primary_label != blank -%}
+        <a href="{{ section.settings.cta_primary_url }}" class="vc-btn vc-btn--primary">
+          {{ section.settings.cta_primary_label }}
+          <span class="vc-btn__arrow" aria-hidden="true">→</span>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_secondary_label != blank -%}
+        <a href="{{ section.settings.cta_secondary_url }}" class="vc-btn vc-btn--secondary">
+          {{ section.settings.cta_secondary_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC CTA Band",
+  "tag": "section",
+  "class": "vc-sec",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Start Your Vitalcep Journey Today"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Join 2,000+ customers who've made the switch to clean, natural energy."
+    },
+    {
+      "type": "header",
+      "content": "Primary CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Secondary CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_url",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC CTA Band",
+      "settings": {
+        "heading": "Start Your Vitalcep Journey Today",
+        "subtext": "Join 2,000+ customers who've made the switch to clean, natural energy.",
+        "cta_primary_label": "Shop Now",
+        "cta_secondary_label": "Learn More"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,67 @@
+{{ 'vitalcep-theme.css' | asset_url | stylesheet_tag }}
+
+{%- assign bg_class = 'vc-announce--ink' -%}
+{%- if section.settings.color_scheme == 'orange' -%}
+  {%- assign bg_class = 'vc-announce--orange' -%}
+{%- elsif section.settings.color_scheme == 'green' -%}
+  {%- assign bg_class = 'vc-announce--green' -%}
+{%- endif -%}
+
+<div class="vc-announce {{ bg_class }}" role="marquee" aria-live="off">
+  <div class="vc-announce__viewport">
+    <div class="vc-announce__track">
+      {%- comment -%}Duplicate for seamless loop{%- endcomment -%}
+      {%- for block in section.blocks -%}{%- for i in (1..2) -%}
+        <span class="vc-announce__item" {{ block.shopify_attributes }}>
+          {{ block.settings.text }}
+          <span class="vc-announce__dot" aria-hidden="true"></span>
+        </span>
+      {%- endfor -%}{%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VC Announcement Bar",
+  "tag": "section",
+  "class": "vc-sec",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Background colour",
+      "default": "ink",
+      "options": [
+        { "value": "ink",    "label": "Dark (ink)" },
+        { "value": "orange", "label": "Brand orange" },
+        { "value": "green",  "label": "Trust green" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Message",
+          "default": "Free shipping on orders above ₹999 · Use code VITALCEP10 for 10% off"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Announcement Bar",
+      "blocks": [
+        { "type": "message", "settings": { "text": "🚀 Free shipping on orders above ₹999" } },
+        { "type": "message", "settings": { "text": "✦ Clinically-studied Cordyceps militaris" } },
+        { "type": "message", "settings": { "text": "🇮🇳 Made in India · Batch-tested quality" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

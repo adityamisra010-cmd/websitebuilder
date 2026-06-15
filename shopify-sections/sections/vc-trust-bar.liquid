@@ -1,0 +1,77 @@
+{{ 'vitalcep-theme.css' | asset_url | stylesheet_tag }}
+
+<section class="vc-sec vc-trustbar">
+  <div class="vc-wrap">
+    <div class="vc-trustbar__inner">
+      {%- for block in section.blocks -%}
+        <div class="vc-ti" {{ block.shopify_attributes }}>
+          <span class="vc-ti__icon" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'shield' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              {%- when 'leaf' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 8C8 10 5.9 16.17 3.82 19.34A1 1 0 0 0 4 21c5.39 0 9-3.33 9-3.33V21"/><path d="M21 3C21 3 12 5 8 12"/></svg>
+              {%- when 'truck' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              {%- when 'star' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              {%- when 'check' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            {%- endcase -%}
+          </span>
+          <span class="vc-ti__text">{{ block.settings.label }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC Trust Bar",
+  "tag": "section",
+  "class": "vc-sec",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "check",
+          "options": [
+            { "value": "check",  "label": "Checkmark" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "leaf",   "label": "Leaf / natural" },
+            { "value": "truck",  "label": "Truck / shipping" },
+            { "value": "star",   "label": "Star" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label text",
+          "default": "Lab-tested purity"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Trust Bar",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "leaf",   "label": "100% Natural Cordyceps" } },
+        { "type": "item", "settings": { "icon": "shield", "label": "3rd-party lab tested" } },
+        { "type": "item", "settings": { "icon": "truck",  "label": "Free shipping ₹999+" } },
+        { "type": "item", "settings": { "icon": "star",   "label": "4.9★ · 2000+ reviews" } },
+        { "type": "item", "settings": { "icon": "check",  "label": "30-day return policy" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,105 @@
+{{ 'vitalcep-theme.css' | asset_url | stylesheet_tag }}
+
+<section class="vc-sec vc-incentive">
+  <div class="vc-wrap">
+    <div class="vc-incentive__inner">
+      <div class="vc-incentive__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="vc-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="vc-incentive__h">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subtext != blank -%}
+          <p class="vc-incentive__sub">{{ section.settings.subtext }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_form -%}
+        <div class="vc-incentive__form">
+          {%- form 'customer', id: 'vc-email-signup' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter,vitalcep-signup">
+            <input
+              class="vc-incentive__input"
+              type="email"
+              name="contact[email]"
+              placeholder="{{ section.settings.input_placeholder | escape }}"
+              required
+              autocomplete="email"
+              aria-label="{{ section.settings.input_placeholder | escape }}"
+            >
+            <button type="submit" class="vc-btn vc-btn--primary">
+              {{ section.settings.cta_label }}
+            </button>
+          {%- endform -%}
+          {%- if section.settings.fine_print != blank -%}
+            <p style="width:100%;font-family:var(--vc-sans);font-size:11px;color:rgba(255,255,255,0.38);text-align:center;margin-top:4px;">
+              {{ section.settings.fine_print }}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VC Email Incentive",
+  "tag": "section",
+  "class": "vc-sec",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Join the Community"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get 10% Off Your First Order"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Plus early access to new products, science deep-dives, and exclusive member pricing."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_form",
+      "label": "Show email form",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "label": "Email input placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Claim My 10%"
+    },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "No spam, ever. Unsubscribe anytime."
+    }
+  ],
+  "presets": [
+    {
+      "name": "VC Email Incentive",
+      "settings": {
+        "eyebrow": "Join the Community",
+        "heading": "Get 10% Off Your First Order",
+        "subtext": "Plus early access to new products, science deep-dives, and exclusive member pricing.",
+        "cta_label": "Claim My 10%"
+      }
+    }
+  ]
+}
+{% endschema %}
