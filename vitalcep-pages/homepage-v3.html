@@ -88,13 +88,15 @@
     .glass-card {
       background: #fff;
       border: 1px solid #e8e8e8;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-      transition: all 0.3s ease;
+      border-top: 2px solid rgba(249,115,22,0.55);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: all 0.28s ease;
     }
     .glass-card:hover {
-      border-color: rgba(249,115,22,0.4);
+      border-color: rgba(249,115,22,0.5);
+      border-top-color: #F97316;
       transform: translateY(-5px);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.1);
+      box-shadow: 0 16px 44px rgba(0,0,0,0.1), 0 0 0 1px rgba(249,115,22,0.12);
     }
 
     .hero-bg {
@@ -258,7 +260,7 @@
 
       <h1 class="font-heading leading-none mb-6" style="font-weight:600;">
         <span class="block" style="color:#111;font-size:clamp(3rem,9vw,7rem);letter-spacing:-.025em;">Ancient Wisdom.</span>
-        <span class="block gradient-text" style="font-size:clamp(3.5rem,11vw,9rem);letter-spacing:-.03em;font-style:italic;">Modern Performance.</span>
+        <span class="block gradient-text" style="font-size:clamp(3.5rem,11vw,9rem);letter-spacing:-.03em;">Modern Performance.</span>
       </h1>
 
       <p class="font-body text-gray-500 text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed mb-10" style="font-weight:300;">
@@ -392,7 +394,7 @@
             <span>The Product Line</span>
           </div>
           <h2 class="font-heading" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-.02em;font-weight:600;line-height:1.1;">
-            One Mushroom.<br/><span class="gradient-text" style="font-style:italic;">Six Forms.</span>
+            One Mushroom.<br/><span class="gradient-text" style="">Six Forms.</span>
           </h2>
         </div>
         <div class="flex gap-2">
@@ -424,7 +426,7 @@
             <a href="#" class="btn-shimmer block w-full bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-800 text-sm tracking-widest uppercase py-3 rounded-lg transition-colors duration-200 cursor-pointer text-center">Add to Cart</a>
           </div>
 
-          <div class="rounded-2xl p-8 text-center reveal relative" style="background:#fff;border:1.5px solid rgba(249,115,22,.45);box-shadow:0 8px 40px rgba(249,115,22,.1);transition-delay:.1s">
+          <div class="rounded-2xl p-8 text-center reveal relative" style="background:rgba(249,115,22,.03);border:1.5px solid rgba(249,115,22,.55);border-top:2.5px solid #F97316;box-shadow:0 8px 40px rgba(249,115,22,.12);transition-delay:.1s">
             <div class="absolute -top-3 left-1/2 -translate-x-1/2">
               <span class="badge badge-orange px-4 py-1">Most Popular</span>
             </div>
@@ -490,7 +492,7 @@
             </div>
             <a href="#" class="btn-shimmer block w-full bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-800 text-sm tracking-widest uppercase py-3 rounded-lg transition-colors duration-200 cursor-pointer text-center">Add to Cart</a>
           </div>
-          <div class="rounded-2xl p-8 text-center reveal" style="background:#fff;border:1.5px solid rgba(249,115,22,.45);box-shadow:0 8px 40px rgba(249,115,22,.1);transition-delay:.1s">
+          <div class="rounded-2xl p-8 text-center reveal" style="background:rgba(249,115,22,.03);border:1.5px solid rgba(249,115,22,.55);border-top:2.5px solid #F97316;box-shadow:0 8px 40px rgba(249,115,22,.12);transition-delay:.1s">
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 relative">
               <span class="badge badge-orange px-4 py-1">Most Loved</span>
             </div>
@@ -534,7 +536,7 @@
           <span class="glow-line w-10 block"></span>
         </div>
         <h2 class="font-heading" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);font-weight:600;line-height:1.1;">
-          Your Results <span class="gradient-text" style="font-style:italic;">Timeline</span>
+          Your Results <span class="gradient-text" style="">Timeline</span>
         </h2>
         <p class="font-body text-gray-500 mt-4">Cordyceps is not a stimulant. Results build as the compounds accumulate.</p>
       </div>
@@ -545,15 +547,15 @@
 
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#F97316;box-shadow:0 0 18px rgba(249,115,22,.3);">D1</div>
-            <div class="glass-card rounded-xl p-5">
-              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Day 1 to 3: Absorption</h3>
-              <p class="font-body text-sm text-gray-500 leading-relaxed">First dose taken. Cordycepin and adenosine begin absorbing at a cellular level. No sudden jolt, no crash.</p>
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Day 1: First Dose</h3>
+              <p class="font-body text-sm text-gray-500 leading-relaxed">Cordycepin and adenosine begin absorbing at a cellular level. No sudden jolt, no crash after.</p>
             </div>
           </div>
 
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#F97316;box-shadow:0 0 18px rgba(249,115,22,.3);">W1</div>
-            <div class="glass-card rounded-xl p-5">
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
               <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 1: Energy Shift</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">Subtle but noticeable lift in morning energy. Afternoon crash softens. Mornings feel clearer.</p>
             </div>
@@ -561,7 +563,7 @@
 
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#FB923C;box-shadow:0 0 18px rgba(249,115,22,.25);">W2</div>
-            <div class="glass-card rounded-xl p-5">
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
               <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 2: Stamina Builds</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">Workout endurance improves. Less breathlessness during cardio. You are running longer before your body says stop.</p>
             </div>
@@ -569,7 +571,7 @@
 
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#EA580C;box-shadow:0 0 18px rgba(249,115,22,.2);">W3</div>
-            <div class="glass-card rounded-xl p-5">
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
               <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 3: Oxygen Uptake</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">Faster oxygen delivery to muscles. Focus sharpens. Better mind-muscle connection during training.</p>
             </div>
@@ -577,7 +579,7 @@
 
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#EA580C;box-shadow:0 0 18px rgba(249,115,22,.2);">W4</div>
-            <div class="glass-card rounded-xl p-5">
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
               <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 4: Recovery Speeds Up</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">Time between intense sessions noticeably shorter. Soreness reduces. You can go hard again sooner.</p>
             </div>
@@ -652,27 +654,27 @@
             <span>The Active Compounds</span>
           </div>
           <h2 class="font-heading mb-6" style="color:#111;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-.02em;font-weight:600;line-height:1.1;">
-            Not Magic.<br/><span class="gradient-text" style="font-style:italic;">Biochemistry.</span>
+            Not Magic.<br/><span class="gradient-text" style="">Biochemistry.</span>
           </h2>
           <p class="font-body text-gray-500 leading-relaxed mb-8" style="font-size:1.05rem">
             Cordyceps Militaris works because of three specific compounds. These are not folklore. They are molecules studied in peer-reviewed research worldwide.
           </p>
           <div class="space-y-4 mb-8">
-            <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid rgba(249,115,22,.2);">
+            <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;border-left:3px solid #F97316;">
               <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-heading font-900 text-sm text-brand-orange" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">C</div>
               <div>
                 <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Cordycepin (3'-Deoxyadenosine)</h4>
                 <p class="font-body text-xs text-gray-500 leading-relaxed">Mimics cellular signalling to increase ATP energy production and inhibit inflammatory pathways. Directly supports endurance and immunity.</p>
               </div>
             </div>
-            <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;">
+            <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;border-left:3px solid rgba(249,115,22,0.35);">
               <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-heading font-900 text-sm text-brand-orange" style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);">A</div>
               <div>
                 <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Adenosine</h4>
                 <p class="font-body text-xs text-gray-500 leading-relaxed">A key regulator of cellular energy transfer. Supports oxygen delivery to muscles, reduces fatigue signals, and helps the body sustain high-intensity output.</p>
               </div>
             </div>
-            <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;">
+            <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;border-left:3px solid rgba(249,115,22,0.35);">
               <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-heading font-900 text-sm text-gray-600" style="background:rgba(0,0,0,.04);border:1px solid #e0e0e0;">&#946;</div>
               <div>
                 <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Beta-Glucans</h4>
@@ -691,18 +693,18 @@
               <thead>
                 <tr style="background:#F8F8F6;">
                   <th class="text-left p-4 font-heading font-700 text-xs tracking-widest uppercase text-gray-400">Feature</th>
-                  <th class="text-center p-4 font-heading font-700 text-xs tracking-widest uppercase text-brand-orange">Vitalcep</th>
+                  <th class="text-center p-4 font-heading font-700 text-xs tracking-widest uppercase text-brand-orange" style="background:rgba(249,115,22,0.06);">Vitalcep</th>
                   <th class="text-center p-4 font-heading font-700 text-xs tracking-widest uppercase text-gray-400">Generic</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
-                <tr><td class="p-4 font-body text-gray-500 text-xs">Cordyceps Militaris (not Sinensis)</td><td class="p-4 text-center text-lg check-yes">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
-                <tr><td class="p-4 font-body text-gray-500 text-xs">Controlled environment cultivation</td><td class="p-4 text-center text-lg check-yes">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
-                <tr><td class="p-4 font-body text-gray-500 text-xs">FICCI Lab-Tested batch certificate</td><td class="p-4 text-center text-lg check-yes">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
-                <tr><td class="p-4 font-body text-gray-500 text-xs">FSSAI Licensed</td><td class="p-4 text-center text-lg check-yes">&#10003;</td><td class="p-4 text-center text-xs text-gray-400">Varies</td></tr>
-                <tr><td class="p-4 font-body text-gray-500 text-xs">ISO Certified</td><td class="p-4 text-center text-lg check-yes">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
-                <tr><td class="p-4 font-body text-gray-500 text-xs">Zero fillers or additives</td><td class="p-4 text-center text-lg check-yes">&#10003;</td><td class="p-4 text-center text-xs text-gray-400">Maybe</td></tr>
-                <tr><td class="p-4 font-body text-gray-500 text-xs">100% Vegetarian</td><td class="p-4 text-center text-lg check-yes">&#10003;</td><td class="p-4 text-center text-xs text-gray-400">Varies</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">Cordyceps Militaris (not Sinensis)</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">Controlled environment cultivation</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">FICCI Lab-Tested batch certificate</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">FSSAI Licensed</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-xs text-gray-400">Varies</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">ISO Certified</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">Zero fillers or additives</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-xs text-gray-400">Maybe</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">100% Vegetarian</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-xs text-gray-400">Varies</td></tr>
               </tbody>
             </table>
             <div class="p-5 border-t border-gray-100">
@@ -724,7 +726,7 @@
           <span class="glow-line w-10 block"></span>
         </div>
         <h2 class="font-heading" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);font-weight:600;line-height:1.1;">
-          What Customers <span class="gradient-text" style="font-style:italic;">Say.</span>
+          What Customers <span class="gradient-text" style="">Say.</span>
         </h2>
       </div>
 
@@ -743,7 +745,7 @@
           </div>
         </div>
 
-        <div class="rounded-2xl p-7 reveal" style="background:#fff;border:1.5px solid rgba(249,115,22,.35);box-shadow:0 8px 36px rgba(249,115,22,.09);transition-delay:.1s">
+        <div class="rounded-2xl p-7 reveal" style="background:rgba(249,115,22,.025);border:1.5px solid rgba(249,115,22,.45);border-top:2.5px solid #F97316;box-shadow:0 8px 36px rgba(249,115,22,.1);transition-delay:.1s">
           <div class="flex items-center gap-1 mb-4">
             <span class="text-brand-orange text-lg">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           </div>
@@ -813,7 +815,7 @@
         <span>FAQ</span>
         <span class="glow-line w-8 block"></span>
       </div>
-      <h2 class="font-heading" style="color:#111;font-size:clamp(2rem,5vw,4rem);font-weight:600;line-height:1.1;">Questions? <span class="gradient-text" style="font-style:italic;">Answered.</span></h2>
+      <h2 class="font-heading" style="color:#111;font-size:clamp(2rem,5vw,4rem);font-weight:600;line-height:1.1;">Questions? <span class="gradient-text" style="">Answered.</span></h2>
     </div>
 
     <div class="space-y-0 rounded-2xl overflow-hidden" style="border:1px solid #e8e8e8;background:#fff;">
@@ -875,7 +877,7 @@
         <span style="background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);height:1px;" class="w-12 block"></span>
       </div>
       <h2 class="font-heading leading-none text-white mb-6" style="font-size:clamp(3rem,9vw,7.5rem);letter-spacing:-.025em;font-weight:600;">
-        Start<br/><span style="font-style:italic;">Today.</span>
+        Start<br/><span style="">Today.</span>
       </h2>
       <p class="font-body text-xl mb-10" style="color:rgba(255,255,255,.75)">Free shipping above &#8377;999. COD available. FSSAI certified, ISO certified, FICCI lab-tested.</p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
