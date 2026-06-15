@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vitalcep — Ancient Wisdom. Modern Performance.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Cormorant Garamond', 'Georgia', 'serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#F97316',
+              'orange-light': '#FB923C',
+              'orange-dim': '#EA580C',
+              black: '#111111',
+              border: '#E5E5E5',
+              bg: '#F8F8F6',
+            }
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #fff;
+      color: #111;
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: #f0f0f0; }
+    ::-webkit-scrollbar-thumb { background: #F97316; border-radius: 2px; }
+
+    .font-heading { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #F97316 0%, #FB923C 50%, #F97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glow-line { background: linear-gradient(90deg, transparent, rgba(249,115,22,0.5), transparent); height: 1px; }
+
+    /* Shimmer on buttons */
+    .btn-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -130%;
+      width: 70%;
+      height: 100%;
+      background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.45) 50%, transparent 80%);
+      transform: skewX(-15deg);
+      animation: gloss 3.2s ease-in-out infinite;
+    }
+    @keyframes gloss {
+      0%   { left: -130%; }
+      38%  { left: 150%; }
+      100% { left: 150%; }
+    }
+
+    .nav-glass {
+      background: rgba(255,255,255,0.93);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .glass-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-top: 2px solid rgba(249,115,22,0.55);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: all 0.28s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(249,115,22,0.5);
+      border-top-color: #F97316;
+      transform: translateY(-5px);
+      box-shadow: 0 16px 44px rgba(0,0,0,0.1), 0 0 0 1px rgba(249,115,22,0.12);
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 800px 500px at 50% 30%, rgba(249,115,22,0.05) 0%, transparent 70%),
+        #fff;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 24s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .spore {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: floatSpore ease-in-out infinite;
+    }
+    @keyframes floatSpore {
+      0%,100% { transform: translateY(0) scale(1); opacity: 0.12; }
+      50%      { transform: translateY(-16px) scale(1.15); opacity: 0.25; }
+    }
+
+    .reveal       { opacity:0; transform:translateY(28px);  transition:opacity .65s ease,transform .65s ease; }
+    .reveal.in    { opacity:1; transform:translateY(0); }
+    .reveal-left  { opacity:0; transform:translateX(-28px); transition:opacity .65s ease,transform .65s ease; }
+    .reveal-left.in  { opacity:1; transform:translateX(0); }
+    .reveal-right { opacity:0; transform:translateX(28px);  transition:opacity .65s ease,transform .65s ease; }
+    .reveal-right.in { opacity:1; transform:translateX(0); }
+
+    .stat-num { font-variant-numeric: tabular-nums; }
+
+    .testimonial-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      transition: border-color .25s ease, box-shadow .25s ease;
+    }
+    .testimonial-card:hover { border-color: rgba(249,115,22,0.35); box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
+
+    .timeline-line {
+      position: absolute;
+      left: 20px;
+      top: 40px;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, #F97316, rgba(249,115,22,0.08));
+    }
+
+    .check-yes { color: #16A34A; }
+    .check-no  { color: #D1D5DB; }
+
+    .faq-item { border-bottom: 1px solid #e8e8e8; }
+    .faq-answer { display: none; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-arrow  { transform: rotate(180deg); }
+    .faq-arrow { transition: transform .28s ease; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .section-label span {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: .7rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: #F97316;
+    }
+
+    .badge { display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .75rem;border-radius:9999px;font-family:'Inter',system-ui,sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase; }
+    .badge-orange { background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.28);color:#F97316; }
+    .badge-gray   { background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.1);color:#666; }
+
+    /* Tab system */
+    .tab-btn { font-family:'Inter',system-ui,sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:.45rem 1.2rem;border-radius:6px;border:1px solid #e8e8e8;background:#fff;color:#666;cursor:pointer;transition:all .18s; }
+    .tab-btn.active { background:#F97316;color:#fff;border-color:#F97316; }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+
+    #mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    #mobile-nav.open { display: flex; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav-glass fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="font-heading font-bold flex-shrink-0" style="font-size:22px;letter-spacing:.04em;">
+        <span class="gradient-text">Vital</span><span style="color:#111">cep</span>
+      </a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="#products" class="text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.1em;">Products</a>
+        <a href="#benefits" class="text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.1em;">Benefits</a>
+        <a href="#science" class="text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.1em;">Science</a>
+        <a href="#" class="text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.1em;">About</a>
+      </div>
+      <div class="hidden lg:flex items-center gap-3">
+        <span class="badge badge-orange">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse"></span>
+          In Stock
+        </span>
+        <a href="#products" class="btn-shimmer inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-light text-white tracking-widest uppercase px-5 py-2.5 rounded-lg transition-colors duration-200 cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;">
+          Shop Now
+        </a>
+      </div>
+      <button id="menu-btn" class="lg:hidden text-gray-700 cursor-pointer" aria-label="Open menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div id="mobile-nav" role="dialog" aria-modal="true">
+    <button id="close-menu" class="absolute top-6 right-6 text-gray-700 cursor-pointer" aria-label="Close menu">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div class="font-heading font-bold mb-8" style="font-size:28px;letter-spacing:.04em;">
+      <span class="gradient-text">Vital</span><span style="color:#111">cep</span>
+    </div>
+    <a href="#products" class="text-2xl text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.08em;text-transform:uppercase;" onclick="document.getElementById('mobile-nav').classList.remove('open')">Products</a>
+    <a href="#benefits" class="text-2xl text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.08em;text-transform:uppercase;" onclick="document.getElementById('mobile-nav').classList.remove('open')">Benefits</a>
+    <a href="#science" class="text-2xl text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.08em;text-transform:uppercase;" onclick="document.getElementById('mobile-nav').classList.remove('open')">Science</a>
+    <a href="#" class="text-2xl text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.08em;text-transform:uppercase;">About</a>
+    <a href="#products" class="btn-shimmer mt-4 bg-brand-orange text-white text-base tracking-widest uppercase px-10 py-4 rounded-lg cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:700;" onclick="document.getElementById('mobile-nav').classList.remove('open')">Shop Now</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero-bg relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20">
+    <div class="spore w-3 h-3" style="background:radial-gradient(circle,rgba(249,115,22,0.4),transparent);top:12%;left:6%;animation-duration:8s;"></div>
+    <div class="spore w-2 h-2" style="background:radial-gradient(circle,rgba(249,115,22,0.3),transparent);top:28%;left:92%;animation-duration:10s;animation-delay:1.5s;"></div>
+    <div class="spore w-2.5 h-2.5" style="background:radial-gradient(circle,rgba(249,115,22,0.25),transparent);top:78%;left:88%;animation-duration:12s;animation-delay:2s;"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 mb-8">
+        <span class="glow-line w-16 block"></span>
+        <span class="font-heading font-700 text-xs tracking-[.35em] uppercase text-brand-orange">Cordyceps Militaris</span>
+        <span class="glow-line w-16 block"></span>
+      </div>
+
+      <h1 class="font-heading leading-none mb-6" style="font-weight:600;">
+        <span class="block" style="color:#111;font-size:clamp(3rem,9vw,7rem);letter-spacing:-.025em;">Ancient Wisdom.</span>
+        <span class="block gradient-text" style="font-size:clamp(3.5rem,11vw,9rem);letter-spacing:-.03em;">Modern Performance.</span>
+      </h1>
+
+      <p class="font-body text-gray-500 text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed mb-10" style="font-weight:300;">
+        The world's most studied adaptogen. Used for centuries across the Himalayas.<br/>
+        Now grown, lab-tested and shipped from India. <strong class="text-gray-800 font-semibold">FSSAI. ISO. FICCI.</strong>
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+        <a href="#products" class="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-brand-orange hover:bg-brand-orange-light text-white tracking-widest uppercase px-10 py-4 rounded-lg transition-colors duration-200 cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:.1em;">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          Shop Vitalcep
+        </a>
+        <a href="#science" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-gray-300 hover:border-brand-orange text-gray-600 hover:text-brand-orange tracking-widest uppercase px-10 py-4 rounded-lg transition-all duration-200 cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;font-size:14px;letter-spacing:.1em;">
+          The Science
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-xs">
+        <div class="flex items-center gap-2 text-gray-500">
+          <svg class="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span class="font-heading font-700 tracking-wider uppercase">FSSAI Certified</span>
+        </div>
+        <span class="w-px h-4 bg-gray-200"></span>
+        <div class="flex items-center gap-2 text-gray-500">
+          <svg class="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span class="font-heading font-700 tracking-wider uppercase">ISO Certified</span>
+        </div>
+        <span class="w-px h-4 bg-gray-200"></span>
+        <div class="flex items-center gap-2 text-gray-500">
+          <svg class="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          <span class="font-heading font-700 tracking-wider uppercase">FICCI Lab-Tested</span>
+        </div>
+        <span class="w-px h-4 bg-gray-200"></span>
+        <div class="flex items-center gap-2 text-gray-500">
+          <svg class="w-4 h-4 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <span class="font-heading font-700 tracking-wider uppercase">4.9 / 5 Rating</span>
+        </div>
+        <span class="w-px h-4 bg-gray-200"></span>
+        <div class="flex items-center gap-2 text-gray-500">
+          <svg class="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          <span class="font-heading font-700 tracking-wider uppercase">Free Ship above &#8377;999</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400">
+      <span class="font-heading text-xs tracking-[.2em] uppercase">Scroll</span>
+      <div class="w-px h-10 bg-gradient-to-b from-gray-300 to-transparent animate-pulse"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="py-5 overflow-hidden border-y" style="border-color:rgba(249,115,22,.18);background:#111;">
+    <div class="flex overflow-hidden">
+      <div class="marquee-track">
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Energy</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">Endurance</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Immunity</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">VO2 Max</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Cordycepin</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">Adenosine</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Recovery</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">Stamina</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Focus</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">Keedajadi</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Energy</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">Endurance</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Immunity</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">VO2 Max</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Cordycepin</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">Adenosine</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Recovery</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">Stamina</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest text-brand-orange">Focus</span>
+        <span style="color:#444">✦</span>
+        <span class="font-heading font-800 text-lg uppercase tracking-widest" style="color:#888">Keedajadi</span>
+        <span style="color:#444">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="py-20 max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="glass-card rounded-2xl p-6 text-center reveal">
+        <div class="font-heading font-900 text-5xl gradient-text stat-num" data-target="4.9" data-decimal="true">0</div>
+        <div class="font-heading font-700 text-xs tracking-[.25em] uppercase text-gray-400 mt-1">&#9733; Average Rating</div>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center reveal" style="transition-delay:.1s">
+        <div class="font-heading font-900 text-5xl stat-num" style="color:#111" data-target="18">0</div>
+        <div class="font-heading font-700 text-xs tracking-[.25em] uppercase text-gray-400 mt-1">Month Shelf Life</div>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center reveal" style="transition-delay:.2s">
+        <div class="font-heading font-900 text-5xl gradient-text">3</div>
+        <div class="font-heading font-700 text-xs tracking-[.25em] uppercase text-gray-400 mt-1">Certifications</div>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center reveal" style="transition-delay:.3s">
+        <div class="font-heading font-900" style="font-size:3rem;color:#111">100<span class="gradient-text" style="font-size:2rem">%</span></div>
+        <div class="font-heading font-700 text-xs tracking-[.25em] uppercase text-gray-400 mt-1">Pure, No Fillers</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" class="py-20 relative overflow-hidden" style="background:#F8F8F6;">
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse 600px 400px at 50% 50%,rgba(249,115,22,.04) 0%,transparent 70%);"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-14 reveal">
+        <div>
+          <div class="section-label">
+            <span class="glow-line w-10 block"></span>
+            <span>The Product Line</span>
+          </div>
+          <h2 class="font-heading" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-.02em;font-weight:600;line-height:1.1;">
+            One Mushroom.<br/><span class="gradient-text" style="">Six Forms.</span>
+          </h2>
+        </div>
+        <div class="flex gap-2">
+          <button class="tab-btn active" data-tab="extracts">Extracts</button>
+          <button class="tab-btn" data-tab="teas">Teas</button>
+        </div>
+      </div>
+
+      <!-- Extracts -->
+      <div id="extracts" class="tab-panel active">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-card rounded-2xl p-8 text-center reveal">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
+              <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+            </div>
+            <div class="badge badge-orange mx-auto mb-3">Best Seller</div>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Capsules</h3>
+            <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">500mg per capsule. 60 capsules per pack. Pre-measured, no mess. Keedajadi in its most convenient form.</p>
+            <div class="glow-line mb-5"></div>
+            <div class="text-left space-y-2 mb-6">
+              <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-brand-orange font-bold">+</span> 500mg per capsule</div>
+              <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-brand-orange font-bold">+</span> 60 capsules per pack</div>
+              <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-brand-orange font-bold">+</span> 100% veg capsule shell</div>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-heading font-900 text-2xl" style="color:#111">&#8377;2,400</span>
+              <span class="font-body text-xs text-gray-400">/ 60 caps</span>
+            </div>
+            <a href="#" class="btn-shimmer block w-full bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-800 text-sm tracking-widest uppercase py-3 rounded-lg transition-colors duration-200 cursor-pointer text-center">Add to Cart</a>
+          </div>
+
+          <div class="rounded-2xl p-8 text-center reveal relative" style="background:rgba(249,115,22,.03);border:1.5px solid rgba(249,115,22,.55);border-top:2.5px solid #F97316;box-shadow:0 8px 40px rgba(249,115,22,.12);transition-delay:.1s">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+              <span class="badge badge-orange px-4 py-1">Most Popular</span>
+            </div>
+            <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.35);">
+              <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+            </div>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Powder</h3>
+            <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Ultra-fine Keedajadi Churna. Dissolves in water, smoothies or warm drinks. 1g per serving, maximum bioavailability.</p>
+            <div style="background:rgba(249,115,22,.2);height:1px;" class="mb-5"></div>
+            <div class="text-left space-y-2 mb-6">
+              <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-brand-orange font-bold">+</span> 1g per serving</div>
+              <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-brand-orange font-bold">+</span> Instant dissolve</div>
+              <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-brand-orange font-bold">+</span> No taste, no smell</div>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <span class="font-heading font-900 text-2xl" style="color:#111">&#8377;2,150</span>
+                <span class="font-body text-xs text-gray-400 ml-1">/ 25g</span>
+              </div>
+              <span class="font-body text-sm text-gray-400">&#8377;4,100 / 50g</span>
+            </div>
+            <a href="#" class="btn-shimmer block w-full bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-900 text-sm tracking-widest uppercase py-3 rounded-lg transition-colors duration-200 cursor-pointer text-center">Add to Cart</a>
+          </div>
+
+          <div class="glass-card rounded-2xl p-8 text-center reveal" style="transition-delay:.2s">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);">
+              <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 21l3-9m0 0l3 9M10 12L6.5 3m7 9L17 3M3 21h18"/></svg>
+            </div>
+            <div class="badge badge-gray mx-auto mb-3">Most Natural</div>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Raw &amp; Dried</h3>
+            <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Whole Cordyceps fruiting bodies. Brew as tea or decoction. The most traditional way to consume Keedajadi.</p>
+            <div class="glow-line mb-5"></div>
+            <div class="text-left space-y-2 mb-6">
+              <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-brand-orange font-bold">+</span> Whole fruiting bodies</div>
+              <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-brand-orange font-bold">+</span> Brew as tea or decoction</div>
+              <div class="flex items-center gap-2 text-sm text-gray-600"><span class="text-brand-orange font-bold">+</span> Purest available form</div>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <span class="font-heading font-900 text-2xl" style="color:#111">&#8377;1,050</span>
+                <span class="font-body text-xs text-gray-400 ml-1">/ 25g</span>
+              </div>
+              <span class="font-body text-sm text-gray-400">&#8377;2,100 / 50g</span>
+            </div>
+            <a href="#" class="btn-shimmer block w-full bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-800 text-sm tracking-widest uppercase py-3 rounded-lg transition-colors duration-200 cursor-pointer text-center">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teas -->
+      <div id="teas" class="tab-panel">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-card rounded-2xl p-8 text-center reveal">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:#EFF7F0;border:1px solid rgba(34,197,94,.2);">
+              <svg class="w-10 h-10" style="color:#16A34A" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+            </div>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Green Zen</h3>
+            <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Cordyceps-infused whole leaf green tea. Clean energy, no crash. 15 individually wrapped sachets.</p>
+            <div class="glow-line mb-5"></div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-heading font-900 text-2xl" style="color:#111">&#8377;650</span>
+              <span class="font-body text-xs text-gray-400">/ 15 sachets</span>
+            </div>
+            <a href="#" class="btn-shimmer block w-full bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-800 text-sm tracking-widest uppercase py-3 rounded-lg transition-colors duration-200 cursor-pointer text-center">Add to Cart</a>
+          </div>
+          <div class="rounded-2xl p-8 text-center reveal" style="background:rgba(249,115,22,.03);border:1.5px solid rgba(249,115,22,.55);border-top:2.5px solid #F97316;box-shadow:0 8px 40px rgba(249,115,22,.12);transition-delay:.1s">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 relative">
+              <span class="badge badge-orange px-4 py-1">Most Loved</span>
+            </div>
+            <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
+              <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+            </div>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Masala Blaze</h3>
+            <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Cordyceps-infused Indian masala chai. The familiar taste of home with the edge of an adaptogen. 15 sachets.</p>
+            <div style="background:rgba(249,115,22,.2);height:1px;" class="mb-5"></div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-heading font-900 text-2xl" style="color:#111">&#8377;650</span>
+              <span class="font-body text-xs text-gray-400">/ 15 sachets</span>
+            </div>
+            <a href="#" class="btn-shimmer block w-full bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-900 text-sm tracking-widest uppercase py-3 rounded-lg transition-colors duration-200 cursor-pointer text-center">Add to Cart</a>
+          </div>
+          <div class="glass-card rounded-2xl p-8 text-center reveal" style="transition-delay:.2s">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:#F0FAF4;border:1px solid rgba(34,197,94,.15);">
+              <svg class="w-10 h-10" style="color:#16A34A" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+            </div>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Minty Fresh</h3>
+            <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Cordyceps-infused pudina chai. Refreshing, light and functional. Mint green tea with a performance twist. 15 sachets.</p>
+            <div class="glow-line mb-5"></div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-heading font-900 text-2xl" style="color:#111">&#8377;650</span>
+              <span class="font-body text-xs text-gray-400">/ 15 sachets</span>
+            </div>
+            <a href="#" class="btn-shimmer block w-full bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-800 text-sm tracking-widest uppercase py-3 rounded-lg transition-colors duration-200 cursor-pointer text-center">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS / TIMELINE -->
+  <section id="benefits" class="py-20" style="background:#fff;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <div class="section-label justify-center">
+          <span class="glow-line w-10 block"></span>
+          <span>What To Expect</span>
+          <span class="glow-line w-10 block"></span>
+        </div>
+        <h2 class="font-heading" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);font-weight:600;line-height:1.1;">
+          Your Results <span class="gradient-text" style="">Timeline</span>
+        </h2>
+        <p class="font-body text-gray-500 mt-4">Cordyceps is not a stimulant. Results build as the compounds accumulate.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+        <div class="relative pl-12">
+          <div class="timeline-line"></div>
+
+          <div class="relative mb-9 reveal">
+            <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#F97316;box-shadow:0 0 18px rgba(249,115,22,.3);">D1</div>
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Day 1: First Dose</h3>
+              <p class="font-body text-sm text-gray-500 leading-relaxed">Cordycepin and adenosine begin absorbing at a cellular level. No sudden jolt, no crash after.</p>
+            </div>
+          </div>
+
+          <div class="relative mb-9 reveal">
+            <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#F97316;box-shadow:0 0 18px rgba(249,115,22,.3);">W1</div>
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 1: Energy Shift</h3>
+              <p class="font-body text-sm text-gray-500 leading-relaxed">Subtle but noticeable lift in morning energy. Afternoon crash softens. Mornings feel clearer.</p>
+            </div>
+          </div>
+
+          <div class="relative mb-9 reveal">
+            <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#FB923C;box-shadow:0 0 18px rgba(249,115,22,.25);">W2</div>
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 2: Stamina Builds</h3>
+              <p class="font-body text-sm text-gray-500 leading-relaxed">Workout endurance improves. Less breathlessness during cardio. You are running longer before your body says stop.</p>
+            </div>
+          </div>
+
+          <div class="relative mb-9 reveal">
+            <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#EA580C;box-shadow:0 0 18px rgba(249,115,22,.2);">W3</div>
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 3: Oxygen Uptake</h3>
+              <p class="font-body text-sm text-gray-500 leading-relaxed">Faster oxygen delivery to muscles. Focus sharpens. Better mind-muscle connection during training.</p>
+            </div>
+          </div>
+
+          <div class="relative mb-9 reveal">
+            <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#EA580C;box-shadow:0 0 18px rgba(249,115,22,.2);">W4</div>
+            <div class="glass-card rounded-xl p-5" style="border-left:3px solid rgba(249,115,22,0.6)!important;">
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 4: Recovery Speeds Up</h3>
+              <p class="font-body text-sm text-gray-500 leading-relaxed">Time between intense sessions noticeably shorter. Soreness reduces. You can go hard again sooner.</p>
+            </div>
+          </div>
+
+          <div class="relative reveal">
+            <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-xs text-white" style="background:linear-gradient(135deg,#F97316,#EA580C);box-shadow:0 0 20px rgba(249,115,22,.3);">W6</div>
+            <div class="glass-card rounded-xl p-5" style="border-color:rgba(249,115,22,.25);">
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 5 to 6: Full Effect</h3>
+              <p class="font-body text-sm text-gray-500 leading-relaxed">Sustained energy, stronger output, better sleep. This is the new baseline. The adaptogenic effect is fully active.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="glass-card rounded-xl p-5 reveal">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
+              <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Energy</h4>
+            <p class="font-body text-xs text-gray-500 leading-relaxed">Boosts ATP production at mitochondrial level</p>
+          </div>
+          <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.1s">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
+              <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </div>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Immunity</h4>
+            <p class="font-body text-xs text-gray-500 leading-relaxed">Activates NK cells via beta-glucan pathways</p>
+          </div>
+          <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.2s">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
+              <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+            </div>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Endurance</h4>
+            <p class="font-body text-xs text-gray-500 leading-relaxed">Enhances oxygen uptake and VO2 max capacity</p>
+          </div>
+          <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.3s">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
+              <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            </div>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Focus</h4>
+            <p class="font-body text-xs text-gray-500 leading-relaxed">Adenosine supports cognitive clarity and drive</p>
+          </div>
+          <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.1s">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
+              <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            </div>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Recovery</h4>
+            <p class="font-body text-xs text-gray-500 leading-relaxed">Reduces inflammation, accelerates muscle repair</p>
+          </div>
+          <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.2s">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
+              <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1M4.22 4.22l.707.707m12.02 12.02l.707.707M1 12h1m18 0h1M4.22 19.78l.707-.707M18.95 5.05l-.707.707"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Stamina</h4>
+            <p class="font-body text-xs text-gray-500 leading-relaxed">Sustained output during long-duration performance</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCIENCE -->
+  <section id="science" class="py-20 relative overflow-hidden" style="background:#F8F8F6;">
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse 800px 500px at 50% 50%,rgba(249,115,22,.03) 0%,transparent 70%);"></div>
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+        <div class="reveal-left">
+          <div class="section-label">
+            <span class="glow-line w-8 block"></span>
+            <span>The Active Compounds</span>
+          </div>
+          <h2 class="font-heading mb-6" style="color:#111;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-.02em;font-weight:600;line-height:1.1;">
+            Not Magic.<br/><span class="gradient-text" style="">Biochemistry.</span>
+          </h2>
+          <p class="font-body text-gray-500 leading-relaxed mb-8" style="font-size:1.05rem">
+            Cordyceps Militaris works because of three specific compounds. These are not folklore. They are molecules studied in peer-reviewed research worldwide.
+          </p>
+          <div class="space-y-4 mb-8">
+            <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;border-left:3px solid #F97316;">
+              <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-heading font-900 text-sm text-brand-orange" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">C</div>
+              <div>
+                <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Cordycepin (3'-Deoxyadenosine)</h4>
+                <p class="font-body text-xs text-gray-500 leading-relaxed">Mimics cellular signalling to increase ATP energy production and inhibit inflammatory pathways. Directly supports endurance and immunity.</p>
+              </div>
+            </div>
+            <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;border-left:3px solid rgba(249,115,22,0.35);">
+              <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-heading font-900 text-sm text-brand-orange" style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);">A</div>
+              <div>
+                <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Adenosine</h4>
+                <p class="font-body text-xs text-gray-500 leading-relaxed">A key regulator of cellular energy transfer. Supports oxygen delivery to muscles, reduces fatigue signals, and helps the body sustain high-intensity output.</p>
+              </div>
+            </div>
+            <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;border-left:3px solid rgba(249,115,22,0.35);">
+              <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-heading font-900 text-sm text-gray-600" style="background:rgba(0,0,0,.04);border:1px solid #e0e0e0;">&#946;</div>
+              <div>
+                <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Beta-Glucans</h4>
+                <p class="font-body text-xs text-gray-500 leading-relaxed">Polysaccharides that stimulate Natural Killer (NK) cells and macrophages, the frontline of your immune system. Measurable immunity boost with consistent use.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal-right">
+          <div class="rounded-2xl overflow-hidden" style="background:#fff;border:1px solid #e8e8e8;box-shadow:0 2px 16px rgba(0,0,0,.05);">
+            <div class="p-5 border-b border-gray-100">
+              <h3 class="font-heading text-2xl" style="color:#111;font-weight:600;">Vitalcep vs. Generic Brands</h3>
+            </div>
+            <table class="w-full text-sm">
+              <thead>
+                <tr style="background:#F8F8F6;">
+                  <th class="text-left p-4 font-heading font-700 text-xs tracking-widest uppercase text-gray-400">Feature</th>
+                  <th class="text-center p-4 font-heading font-700 text-xs tracking-widest uppercase text-brand-orange" style="background:rgba(249,115,22,0.06);">Vitalcep</th>
+                  <th class="text-center p-4 font-heading font-700 text-xs tracking-widest uppercase text-gray-400">Generic</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr><td class="p-4 font-body text-gray-500 text-xs">Cordyceps Militaris (not Sinensis)</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">Controlled environment cultivation</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">FICCI Lab-Tested batch certificate</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">FSSAI Licensed</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-xs text-gray-400">Varies</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">ISO Certified</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-lg check-no">&#10007;</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">Zero fillers or additives</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-xs text-gray-400">Maybe</td></tr>
+                <tr><td class="p-4 font-body text-gray-500 text-xs">100% Vegetarian</td><td class="p-4 text-center text-lg check-yes" style="background:rgba(249,115,22,0.04);font-size:17px;">&#10003;</td><td class="p-4 text-center text-xs text-gray-400">Varies</td></tr>
+              </tbody>
+            </table>
+            <div class="p-5 border-t border-gray-100">
+              <a href="#products" class="btn-shimmer block w-full bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-900 text-sm tracking-widest uppercase py-3 rounded-lg transition-colors duration-200 cursor-pointer text-center">Shop Vitalcep</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="py-20" style="background:#fff;">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <div class="section-label justify-center">
+          <span class="glow-line w-10 block"></span>
+          <span>Real Reviews</span>
+          <span class="glow-line w-10 block"></span>
+        </div>
+        <h2 class="font-heading" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);font-weight:600;line-height:1.1;">
+          What Customers <span class="gradient-text" style="">Say.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="testimonial-card rounded-2xl p-7 reveal">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="text-brand-orange text-lg">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+          <blockquote class="font-body text-gray-600 leading-relaxed mb-6 italic">"I ordered the Raw Mushroom Extract and it was an amazing experience. Payment was convenient and delivery was on time. The customer experience at Vitalcep is very smooth."</blockquote>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-heading font-800 text-white text-base" style="background:linear-gradient(135deg,#F97316,#EA580C);">A</div>
+            <div>
+              <div class="font-heading text-lg" style="color:#111;font-weight:600;">Anuja Wesanekar</div>
+              <div class="font-body text-xs text-gray-400">Dancer, Age 23 · Delhi</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-7 reveal" style="background:rgba(249,115,22,.025);border:1.5px solid rgba(249,115,22,.45);border-top:2.5px solid #F97316;box-shadow:0 8px 36px rgba(249,115,22,.1);transition-delay:.1s">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="text-brand-orange text-lg">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+          <blockquote class="font-body text-gray-600 leading-relaxed mb-6 italic">"Balancing a hectic corporate job, Vitalcep's Cordyceps has been a real boost, improving my energy and focus naturally. The quality genuinely impressed me."</blockquote>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-heading font-800 text-white text-base" style="background:linear-gradient(135deg,#F97316,#FB923C);">V</div>
+            <div>
+              <div class="font-heading text-lg" style="color:#111;font-weight:600;">Vidisha Tayade</div>
+              <div class="font-body text-xs text-gray-400">Dancer, Age 23 · Pune</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card rounded-2xl p-7 reveal" style="transition-delay:.2s">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="text-brand-orange text-lg">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+          <blockquote class="font-body text-gray-600 leading-relaxed mb-6 italic">"Vitalcep stands out not just for the quality, but for how effortless the whole buying experience is. From browsing to checkout, everything is smooth. The care they put in makes it special."</blockquote>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-heading font-800 text-white text-base" style="background:linear-gradient(135deg,#EA580C,#F97316);">A</div>
+            <div>
+              <div class="font-heading text-lg" style="color:#111;font-weight:600;">Aamod Bhatt</div>
+              <div class="font-body text-xs text-gray-400">Marathon Runner, Age 21 · Hyderabad</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rating aggregate -->
+      <div class="mt-8 glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 reveal">
+        <div class="flex items-center gap-4">
+          <div class="font-heading font-900 text-6xl gradient-text">4.9</div>
+          <div>
+            <div class="text-brand-orange text-2xl mb-1">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="font-body text-xs text-gray-400">Verified purchases only</div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 w-full md:w-64">
+          <div class="flex items-center gap-2 text-xs">
+            <span class="font-heading font-700 text-gray-500 w-10">5 &#9733;</span>
+            <div class="flex-1 h-1.5 rounded-full bg-gray-100"><div class="h-full rounded-full bg-brand-orange" style="width:89%"></div></div>
+            <span class="font-body text-gray-400 w-6">89%</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <span class="font-heading font-700 text-gray-500 w-10">4 &#9733;</span>
+            <div class="flex-1 h-1.5 rounded-full bg-gray-100"><div class="h-full rounded-full bg-brand-orange opacity-60" style="width:8%"></div></div>
+            <span class="font-body text-gray-400 w-6">8%</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <span class="font-heading font-700 text-gray-500 w-10">3 &#9733;</span>
+            <div class="flex-1 h-1.5 rounded-full bg-gray-100"><div class="h-full rounded-full bg-brand-orange opacity-30" style="width:3%"></div></div>
+            <span class="font-body text-gray-400 w-6">3%</span>
+          </div>
+        </div>
+        <a href="#products" class="flex-shrink-0 btn-shimmer inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-900 text-sm tracking-widest uppercase px-6 py-3 rounded-lg transition-colors duration-200 cursor-pointer">
+          Shop Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-20 max-w-4xl mx-auto px-6">
+    <div class="text-center mb-12 reveal">
+      <div class="section-label justify-center">
+        <span class="glow-line w-8 block"></span>
+        <span>FAQ</span>
+        <span class="glow-line w-8 block"></span>
+      </div>
+      <h2 class="font-heading" style="color:#111;font-size:clamp(2rem,5vw,4rem);font-weight:600;line-height:1.1;">Questions? <span class="gradient-text" style="">Answered.</span></h2>
+    </div>
+
+    <div class="space-y-0 rounded-2xl overflow-hidden" style="border:1px solid #e8e8e8;background:#fff;">
+      <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex items-center justify-between p-6">
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">When do I start seeing results?</h3>
+          <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        </div>
+        <div class="faq-answer px-6 pb-6">
+          <p class="font-body text-gray-500 text-sm leading-relaxed">Most customers notice a shift in energy by the end of Week 1. Stamina improvements show up around Week 2 to 3. The full adaptogenic effect builds over 5 to 6 weeks of consistent daily use. Cordyceps is not a stimulant. Treat it like training: consistency matters more than timing.</p>
+        </div>
+      </div>
+      <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex items-center justify-between p-6">
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">Militaris vs. Sinensis: what's the difference?</h3>
+          <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        </div>
+        <div class="faq-answer px-6 pb-6">
+          <p class="font-body text-gray-500 text-sm leading-relaxed">Cordyceps Sinensis grows parasitically on caterpillars in the wild. It is extremely rare, expensive and near-impossible to source ethically. Cordyceps Militaris is cultivated in a controlled environment, has higher cordycepin content, is 100% vegan, and is backed by more published research. It is the scientifically superior choice for supplementation.</p>
+        </div>
+      </div>
+      <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex items-center justify-between p-6">
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">Can I take it with other supplements?</h3>
+          <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        </div>
+        <div class="faq-answer px-6 pb-6">
+          <p class="font-body text-gray-500 text-sm leading-relaxed">Yes. Vitalcep Cordyceps stacks well with protein powders, creatine, ashwagandha, and most adaptogens. Many customers mix the powder into their pre-workout or morning coffee. If you are on prescription medication, check with your physician before adding any supplement.</p>
+        </div>
+      </div>
+      <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex items-center justify-between p-6">
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">What is the recommended dosage?</h3>
+          <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        </div>
+        <div class="faq-answer px-6 pb-6">
+          <p class="font-body text-gray-500 text-sm leading-relaxed">1g per day for the first two weeks. After your body adapts, you can move to 2g for stronger performance effects. Best taken 30 minutes before training or with your first meal. The powder dissolves easily in water, smoothies or warm drinks.</p>
+        </div>
+      </div>
+      <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex items-center justify-between p-6">
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">What if my order arrives damaged?</h3>
+          <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        </div>
+        <div class="faq-answer px-6 pb-6">
+          <p class="font-body text-gray-500 text-sm leading-relaxed">Email us at info@vitalcep.com within 3 days of delivery with your order number and photos of the packaging and product. We will replace it promptly. The same applies for missing or spoiled items. We respond within 48 to 72 hours. Full details are on our Refund Policy page.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-24 relative overflow-hidden" style="background:#F97316;">
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse 800px 500px at 30% 50%,rgba(255,255,255,.08),transparent 60%),radial-gradient(ellipse 600px 400px at 75% 40%,rgba(255,255,255,.05),transparent 55%);pointer-events:none;"></div>
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal">
+      <div class="section-label justify-center mb-6" style="color:rgba(255,255,255,.6)">
+        <span style="background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);height:1px;" class="w-12 block"></span>
+        <span style="color:rgba(255,255,255,.65)">Finally in India</span>
+        <span style="background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);height:1px;" class="w-12 block"></span>
+      </div>
+      <h2 class="font-heading leading-none text-white mb-6" style="font-size:clamp(3rem,9vw,7.5rem);letter-spacing:-.025em;font-weight:600;">
+        Start<br/><span style="">Today.</span>
+      </h2>
+      <p class="font-body text-xl mb-10" style="color:rgba(255,255,255,.75)">Free shipping above &#8377;999. COD available. FSSAI certified, ISO certified, FICCI lab-tested.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#products" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-brand-orange tracking-widest uppercase px-12 py-5 rounded-xl" style="font-family:'Inter',system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:.1em;" transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 cursor-pointer">
+          Shop Vitalcep
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid #1a1a1a;background:#111;">
+    <div class="max-w-7xl mx-auto px-6 py-14">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+        <div class="md:col-span-1">
+          <div class="font-heading font-bold mb-4" style="font-size:22px;letter-spacing:.04em;">
+            <span class="gradient-text">Vital</span><span style="color:#fff">cep</span>
+          </div>
+          <p class="font-body text-xs leading-relaxed mb-4" style="color:rgba(255,255,255,.45)">Ancient wisdom. Modern performance. Pure Cordyceps Militaris — grown, tested and shipped from India.</p>
+          <div class="flex items-center gap-3">
+            <a href="#" aria-label="Instagram" class="w-8 h-8 flex items-center justify-center rounded-full border hover:border-brand-orange hover:text-brand-orange transition-all cursor-pointer" style="border-color:#2a2a2a;color:rgba(255,255,255,.4);">
+              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-heading font-700 text-xs tracking-[.25em] uppercase mb-4" style="color:rgba(255,255,255,.3)">Shop</h4>
+          <ul class="space-y-2 font-body text-sm" style="color:rgba(255,255,255,.45)">
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Cordyceps Capsules</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Cordyceps Powder</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Raw &amp; Dried</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Green Zen Tea</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Masala Blaze Tea</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Minty Fresh Tea</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-heading font-700 text-xs tracking-[.25em] uppercase mb-4" style="color:rgba(255,255,255,.3)">Learn</h4>
+          <ul class="space-y-2 font-body text-sm" style="color:rgba(255,255,255,.45)">
+            <li><a href="#science" class="hover:text-white transition-colors cursor-pointer">The Science</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">About Us</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Recipes</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Certifications</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-heading font-700 text-xs tracking-[.25em] uppercase mb-4" style="color:rgba(255,255,255,.3)">Support</h4>
+          <ul class="space-y-2 font-body text-sm" style="color:rgba(255,255,255,.45)">
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Refund Policy</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Shipping Info</a></li>
+            <li><a href="#" class="hover:text-white transition-colors cursor-pointer">Privacy Policy</a></li>
+            <li><span style="color:rgba(255,255,255,.3)">info@vitalcep.com</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pt-8" style="border-top:1px solid #1e1e1e;">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-body" style="color:rgba(255,255,255,.3)">
+          <span>&#169; 2025 Vitalcep. All rights reserved.</span>
+          <span>FSSAI Licensed &nbsp;&middot;&nbsp; ISO Certified &nbsp;&middot;&nbsp; COD Available</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-nav').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+    document.getElementById('close-menu').addEventListener('click', () => {
+      document.getElementById('mobile-nav').classList.remove('open');
+      document.body.style.overflow = '';
+    });
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el));
+
+    // Stat counters
+    const countObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseFloat(el.dataset.target);
+        const isDecimal = el.dataset.decimal === 'true';
+        let current = 0;
+        const step = target / 55;
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = isDecimal ? current.toFixed(1) : Math.round(current).toLocaleString();
+          if (current >= target) clearInterval(timer);
+        }, 18);
+        countObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-target]').forEach(el => countObs.observe(el));
+
+    // FAQ
+    function toggleFaq(item) {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.setAttribute('tabindex', '0');
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFaq(item); }
+      });
+    });
+
+    // Product tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

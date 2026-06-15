@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuel Recipes — Vitalcep Cordyceps</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Barlow Condensed', 'sans-serif'],
+            body: ['Barlow', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: '#F97316',
+              'orange-glow': '#FB923C',
+              green: '#22C55E',
+              'green-dim': '#16A34A',
+              black: '#050505',
+              dark: '#0A0A0A',
+              card: '#111111',
+              border: '#1F1F1F',
+              muted: '#6B7280',
+              text: '#F8FAFC',
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-delayed': 'float 6s ease-in-out 2s infinite',
+            'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+            'slide-up': 'slideUp 0.6s ease-out forwards',
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 20px rgba(249, 115, 22, 0.3)' },
+              '50%': { boxShadow: '0 0 40px rgba(249, 115, 22, 0.7)' },
+            },
+            slideUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to: { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              from: { opacity: '0' },
+              to: { opacity: '1' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #050505;
+      color: #F8FAFC;
+      font-family: 'Barlow', sans-serif;
+    }
+    .font-heading { font-family: 'Barlow Condensed', sans-serif; }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* Orange glow line */
+    .glow-line {
+      background: linear-gradient(90deg, transparent, #F97316, transparent);
+      height: 1px;
+    }
+
+    /* Card glass effect */
+    .glass-card {
+      background: rgba(17, 17, 17, 0.85);
+      border: 1px solid rgba(249, 115, 22, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(249, 115, 22, 0.4);
+      box-shadow: 0 0 30px rgba(249, 115, 22, 0.12), inset 0 0 30px rgba(249, 115, 22, 0.03);
+      transform: translateY(-4px);
+    }
+
+    /* Orange text glow */
+    .text-glow {
+      text-shadow: 0 0 30px rgba(249, 115, 22, 0.6), 0 0 60px rgba(249, 115, 22, 0.3);
+    }
+    .green-glow {
+      text-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+    }
+
+    /* Spore particle */
+    .spore {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,0.6), transparent);
+      animation: float 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    /* Category tab */
+    .cat-tab {
+      position: relative;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      color: #6B7280;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.25rem;
+    }
+    .cat-tab::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #F97316;
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+    .cat-tab:hover { color: #F8FAFC; }
+    .cat-tab.active { color: #F97316; }
+    .cat-tab.active::after { transform: scaleX(1); }
+
+    /* Step number */
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(249,115,22,0.15);
+      border: 1px solid rgba(249,115,22,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      color: #F97316;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Nav glassmorphism */
+    nav {
+      background: rgba(5, 5, 5, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(249,115,22,0.08);
+    }
+
+    /* Orange gradient heading */
+    .gradient-text {
+      background: linear-gradient(135deg, #F97316 0%, #FB923C 50%, #FBBF24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Ingredient chip */
+    .chip {
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.25);
+      color: #22C55E;
+      border-radius: 9999px;
+      padding: 0.2rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .badge-orange {
+      background: rgba(249,115,22,0.15);
+      border: 1px solid rgba(249,115,22,0.3);
+      color: #F97316;
+      border-radius: 9999px;
+      padding: 0.2rem 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Expanded recipe overlay */
+    .recipe-expanded {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .recipe-expanded.open { display: flex; }
+    .recipe-modal {
+      background: #111111;
+      border: 1px solid rgba(249,115,22,0.25);
+      border-radius: 1rem;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0A0A0A; }
+    ::-webkit-scrollbar-thumb { background: #F97316; border-radius: 2px; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- ═══════════════════ NAV ═══════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="font-heading font-black text-2xl tracking-widest uppercase">
+        <span class="gradient-text">VITAL</span><span class="text-white">CEP</span>
+      </a>
+      <!-- Links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-400 hover:text-white transition-colors">Home</a>
+        <a href="#" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-400 hover:text-white transition-colors">Products</a>
+        <a href="#" class="font-heading font-600 text-sm tracking-widest uppercase text-brand-orange transition-colors">Recipes</a>
+        <a href="#" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-400 hover:text-white transition-colors">Science</a>
+        <a href="#" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-400 hover:text-white transition-colors">About</a>
+      </div>
+      <!-- CTA -->
+      <a href="#" class="hidden md:flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-glow text-black font-heading font-800 text-sm tracking-widest uppercase px-5 py-2.5 rounded transition-all duration-200 cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Shop Now
+      </a>
+      <!-- Mobile menu icon -->
+      <button class="md:hidden text-white" aria-label="Open menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-20">
+    <!-- Background radial glow -->
+    <div class="absolute inset-0">
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full" style="background: radial-gradient(ellipse, rgba(249,115,22,0.08) 0%, transparent 70%);"></div>
+      <div class="absolute bottom-0 left-0 w-[400px] h-[400px]" style="background: radial-gradient(ellipse, rgba(34,197,94,0.05) 0%, transparent 70%);"></div>
+    </div>
+
+    <!-- Floating spores -->
+    <div class="spore w-2 h-2 opacity-40" style="top:15%;left:8%;animation-delay:0s;animation-duration:7s;"></div>
+    <div class="spore w-1.5 h-1.5 opacity-30" style="top:35%;left:85%;animation-delay:1s;animation-duration:9s;"></div>
+    <div class="spore w-1 h-1 opacity-50" style="top:60%;left:15%;animation-delay:2s;animation-duration:6s;"></div>
+    <div class="spore w-2.5 h-2.5 opacity-20" style="top:25%;left:70%;animation-delay:3s;animation-duration:8s;"></div>
+    <div class="spore w-1 h-1 opacity-40" style="top:75%;left:60%;animation-delay:0.5s;animation-duration:11s;"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      <!-- Label -->
+      <div class="inline-flex items-center gap-2 mb-6">
+        <span class="glow-line w-12 block"></span>
+        <span class="font-heading font-700 text-xs tracking-[0.3em] uppercase text-brand-orange">Performance Nutrition</span>
+        <span class="glow-line w-12 block"></span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="font-heading font-black text-[clamp(3.5rem,10vw,8rem)] leading-none uppercase mb-4">
+        <span class="block text-white">FUEL</span>
+        <span class="block gradient-text text-glow">DIFFERENT.</span>
+      </h1>
+      <p class="font-body text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
+        Every recipe unlocks a different dimension of Cordyceps performance —<br class="hidden md:block" />
+        from pre-dawn training to deep recovery sleep.
+      </p>
+
+      <!-- Stats strip -->
+      <div class="flex items-center justify-center gap-8 md:gap-16 flex-wrap">
+        <div class="text-center">
+          <div class="font-heading font-900 text-3xl text-brand-orange">18+</div>
+          <div class="font-body text-xs text-gray-500 uppercase tracking-widest mt-0.5">Recipes</div>
+        </div>
+        <div class="w-px h-8 bg-gray-800"></div>
+        <div class="text-center">
+          <div class="font-heading font-900 text-3xl text-white">5</div>
+          <div class="font-body text-xs text-gray-500 uppercase tracking-widest mt-0.5">Categories</div>
+        </div>
+        <div class="w-px h-8 bg-gray-800"></div>
+        <div class="text-center">
+          <div class="font-heading font-900 text-3xl text-brand-green green-glow">∞</div>
+          <div class="font-body text-xs text-gray-500 uppercase tracking-widest mt-0.5">Potential</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom glow line -->
+    <div class="absolute bottom-0 left-0 right-0 glow-line opacity-30"></div>
+  </section>
+
+  <!-- ═══════════════════ CATEGORY TABS ═══════════════════ -->
+  <div class="sticky top-[73px] z-40 bg-[#050505]/95 backdrop-blur-md border-b border-[#1F1F1F]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex items-center gap-0 overflow-x-auto hide-scrollbar py-1" id="category-tabs" role="tablist">
+        <button class="cat-tab active" data-cat="all" role="tab">All</button>
+        <button class="cat-tab" data-cat="preworkout" role="tab">Pre-Workout</button>
+        <button class="cat-tab" data-cat="morning" role="tab">Morning Ritual</button>
+        <button class="cat-tab" data-cat="recovery" role="tab">Recovery</button>
+        <button class="cat-tab" data-cat="focus" role="tab">Focus</button>
+        <button class="cat-tab" data-cat="evening" role="tab">Evening Wind-Down</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ RECIPES GRID ═══════════════════ -->
+  <section class="max-w-7xl mx-auto px-6 py-16">
+
+    <!-- Section intro -->
+    <div class="flex items-start justify-between mb-12 flex-wrap gap-4">
+      <div>
+        <h2 class="font-heading font-900 text-4xl md:text-5xl uppercase text-white">
+          Your Daily <span class="gradient-text">Protocol</span>
+        </h2>
+        <p class="font-body text-gray-400 mt-2">Tap any recipe to see the full preparation guide.</p>
+      </div>
+      <div class="flex items-center gap-2 text-sm text-gray-500 font-body">
+        <svg class="w-4 h-4 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+        <span>All recipes use 1g Vitalcep Cordyceps Militaris</span>
+      </div>
+    </div>
+
+    <!-- Recipe Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="recipe-grid">
+
+      <!-- ── Recipe 1: Pre-Workout Thunder Shot ── -->
+      <article class="glass-card rounded-2xl overflow-hidden cursor-pointer reveal" data-cat="preworkout" onclick="openRecipe('r1')">
+        <!-- Card image placeholder -->
+        <div class="relative h-52 overflow-hidden" style="background: linear-gradient(135deg, #1a0a00 0%, #3d1a00 50%, #0a1a00 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-2" aria-hidden="true" style="filter: drop-shadow(0 0 20px rgba(249,115,22,0.8));">⚡</div>
+              <div class="font-heading font-900 text-brand-orange text-lg tracking-widest uppercase">Thunder Shot</div>
+            </div>
+          </div>
+          <div class="absolute top-3 left-3"><span class="badge-orange">Pre-Workout</span></div>
+          <div class="absolute top-3 right-3 bg-black/50 rounded-full px-2.5 py-1 text-xs font-heading font-700 text-gray-300">5 min</div>
+          <!-- Glow bottom -->
+          <div class="absolute bottom-0 left-0 right-0 h-16" style="background: linear-gradient(to top, rgba(249,115,22,0.15), transparent);"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-heading font-800 text-xl uppercase text-white mb-1">Pre-Workout Thunder Shot</h3>
+          <p class="font-body text-sm text-gray-400 mb-4 leading-relaxed">Concentrated Cordyceps blast to prime your oxygen uptake before any training session.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="chip">Cordyceps 1g</span>
+            <span class="chip">Ginger</span>
+            <span class="chip">Lemon</span>
+            <span class="chip">Black Pepper</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-500 font-body">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2z"/><path fill="none" stroke="currentColor" stroke-width="1.5" d="M10 6v4l2.5 2.5"/></svg>
+                5 min
+              </span>
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
+                1 serving
+              </span>
+            </div>
+            <span class="flex items-center gap-1 text-brand-orange font-heading font-700 text-xs tracking-wider">
+              VIEW RECIPE
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Recipe 2: Golden Morning Tea ── -->
+      <article class="glass-card rounded-2xl overflow-hidden cursor-pointer reveal" data-cat="morning" onclick="openRecipe('r2')" style="transition-delay: 0.1s">
+        <div class="relative h-52 overflow-hidden" style="background: linear-gradient(135deg, #1a1000 0%, #3d2800 50%, #1a0800 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-2" style="filter: drop-shadow(0 0 20px rgba(251,191,36,0.8));">☀</div>
+              <div class="font-heading font-900 text-yellow-400 text-lg tracking-widest uppercase">Golden Ritual</div>
+            </div>
+          </div>
+          <div class="absolute top-3 left-3"><span class="badge-orange">Morning Ritual</span></div>
+          <div class="absolute top-3 right-3 bg-black/50 rounded-full px-2.5 py-1 text-xs font-heading font-700 text-gray-300">8 min</div>
+          <div class="absolute bottom-0 left-0 right-0 h-16" style="background: linear-gradient(to top, rgba(251,191,36,0.1), transparent);"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-heading font-800 text-xl uppercase text-white mb-1">Golden Morning Ritual Tea</h3>
+          <p class="font-body text-sm text-gray-400 mb-4 leading-relaxed">Turmeric-Cordyceps elixir that ignites your metabolism and clears morning brain fog instantly.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="chip">Cordyceps 1g</span>
+            <span class="chip">Turmeric</span>
+            <span class="chip">Ashwagandha</span>
+            <span class="chip">Oat Milk</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-500 font-body">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2z"/><path fill="none" stroke="currentColor" stroke-width="1.5" d="M10 6v4l2.5 2.5"/></svg>
+                8 min
+              </span>
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
+                1 serving
+              </span>
+            </div>
+            <span class="flex items-center gap-1 text-brand-orange font-heading font-700 text-xs tracking-wider">
+              VIEW RECIPE
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Recipe 3: Recovery Shake ── -->
+      <article class="glass-card rounded-2xl overflow-hidden cursor-pointer reveal" data-cat="recovery" onclick="openRecipe('r3')" style="transition-delay: 0.2s">
+        <div class="relative h-52 overflow-hidden" style="background: linear-gradient(135deg, #001a0a 0%, #003d1a 50%, #001408 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-2" style="filter: drop-shadow(0 0 20px rgba(34,197,94,0.8));">💚</div>
+              <div class="font-heading font-900 text-brand-green text-lg tracking-widest uppercase">Recovery Mode</div>
+            </div>
+          </div>
+          <div class="absolute top-3 left-3"><span class="badge-orange">Recovery</span></div>
+          <div class="absolute top-3 right-3 bg-black/50 rounded-full px-2.5 py-1 text-xs font-heading font-700 text-gray-300">5 min</div>
+          <div class="absolute bottom-0 left-0 right-0 h-16" style="background: linear-gradient(to top, rgba(34,197,94,0.1), transparent);"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-heading font-800 text-xl uppercase text-white mb-1">Post-Workout Recovery Shake</h3>
+          <p class="font-body text-sm text-gray-400 mb-4 leading-relaxed">Replenish glycogen, reduce DOMS, and accelerate muscle repair with this power blend.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="chip">Cordyceps 1g</span>
+            <span class="chip">Banana</span>
+            <span class="chip">Whey Protein</span>
+            <span class="chip">Honey</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-500 font-body">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2z"/><path fill="none" stroke="currentColor" stroke-width="1.5" d="M10 6v4l2.5 2.5"/></svg>
+                5 min
+              </span>
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3H-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
+                1 serving
+              </span>
+            </div>
+            <span class="flex items-center gap-1 text-brand-orange font-heading font-700 text-xs tracking-wider">
+              VIEW RECIPE
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Recipe 4: Focus Flow Coffee ── -->
+      <article class="glass-card rounded-2xl overflow-hidden cursor-pointer reveal" data-cat="focus" onclick="openRecipe('r4')" style="transition-delay: 0.05s">
+        <div class="relative h-52 overflow-hidden" style="background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3d 50%, #050514 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-2" style="filter: drop-shadow(0 0 20px rgba(139,92,246,0.8));">🧠</div>
+              <div class="font-heading font-900 text-purple-400 text-lg tracking-widest uppercase">Nootropic Flow</div>
+            </div>
+          </div>
+          <div class="absolute top-3 left-3"><span class="badge-orange">Focus</span></div>
+          <div class="absolute top-3 right-3 bg-black/50 rounded-full px-2.5 py-1 text-xs font-heading font-700 text-gray-300">10 min</div>
+          <div class="absolute bottom-0 left-0 right-0 h-16" style="background: linear-gradient(to top, rgba(139,92,246,0.1), transparent);"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-heading font-800 text-xl uppercase text-white mb-1">Nootropic Focus Coffee</h3>
+          <p class="font-body text-sm text-gray-400 mb-4 leading-relaxed">Smooth caffeine + Cordyceps adenosine synergy for laser-sharp focus without the crash.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="chip">Cordyceps 1g</span>
+            <span class="chip">Cold Brew</span>
+            <span class="chip">MCT Oil</span>
+            <span class="chip">Cinnamon</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-500 font-body">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2z"/><path fill="none" stroke="currentColor" stroke-width="1.5" d="M10 6v4l2.5 2.5"/></svg>
+                10 min
+              </span>
+            </div>
+            <span class="flex items-center gap-1 text-brand-orange font-heading font-700 text-xs tracking-wider">
+              VIEW RECIPE
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Recipe 5: Power Oatmeal Bowl ── -->
+      <article class="glass-card rounded-2xl overflow-hidden cursor-pointer reveal" data-cat="morning" onclick="openRecipe('r5')" style="transition-delay: 0.15s">
+        <div class="relative h-52 overflow-hidden" style="background: linear-gradient(135deg, #1a0800 0%, #3d1400 50%, #1a0800 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-2" style="filter: drop-shadow(0 0 20px rgba(249,115,22,0.8));">🥣</div>
+              <div class="font-heading font-900 text-brand-orange text-lg tracking-widest uppercase">Power Bowl</div>
+            </div>
+          </div>
+          <div class="absolute top-3 left-3"><span class="badge-orange">Morning Ritual</span></div>
+          <div class="absolute top-3 right-3 bg-black/50 rounded-full px-2.5 py-1 text-xs font-heading font-700 text-gray-300">15 min</div>
+          <div class="absolute bottom-0 left-0 right-0 h-16" style="background: linear-gradient(to top, rgba(249,115,22,0.12), transparent);"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-heading font-800 text-xl uppercase text-white mb-1">Cordyceps Power Oatmeal Bowl</h3>
+          <p class="font-body text-sm text-gray-400 mb-4 leading-relaxed">A complete breakfast weapon. Slow-releasing carbs, cordyceps adaptogens, and serious flavour.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="chip">Cordyceps 1g</span>
+            <span class="chip">Oats</span>
+            <span class="chip">Almond Butter</span>
+            <span class="chip">Berries</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-500 font-body">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2z"/><path fill="none" stroke="currentColor" stroke-width="1.5" d="M10 6v4l2.5 2.5"/></svg>
+                15 min
+              </span>
+            </div>
+            <span class="flex items-center gap-1 text-brand-orange font-heading font-700 text-xs tracking-wider">
+              VIEW RECIPE
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Recipe 6: Evening Wind-Down ── -->
+      <article class="glass-card rounded-2xl overflow-hidden cursor-pointer reveal" data-cat="evening" onclick="openRecipe('r6')" style="transition-delay: 0.25s">
+        <div class="relative h-52 overflow-hidden" style="background: linear-gradient(135deg, #050014 0%, #14003d 50%, #020008 100%);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-6xl mb-2" style="filter: drop-shadow(0 0 20px rgba(99,102,241,0.8));">🌙</div>
+              <div class="font-heading font-900 text-indigo-400 text-lg tracking-widest uppercase">Night Mode</div>
+            </div>
+          </div>
+          <div class="absolute top-3 left-3"><span class="badge-orange">Evening</span></div>
+          <div class="absolute top-3 right-3 bg-black/50 rounded-full px-2.5 py-1 text-xs font-heading font-700 text-gray-300">12 min</div>
+          <div class="absolute bottom-0 left-0 right-0 h-16" style="background: linear-gradient(to top, rgba(99,102,241,0.08), transparent);"></div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-heading font-800 text-xl uppercase text-white mb-1">Night Recovery Cacao Elixir</h3>
+          <p class="font-body text-sm text-gray-400 mb-4 leading-relaxed">Raw cacao + Cordyceps synergy triggers deep sleep and overnight cellular repair. No melatonin needed.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="chip">Cordyceps 1g</span>
+            <span class="chip">Raw Cacao</span>
+            <span class="chip">Magnesium</span>
+            <span class="chip">Reishi</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-500 font-body">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-brand-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2z"/><path fill="none" stroke="currentColor" stroke-width="1.5" d="M10 6v4l2.5 2.5"/></svg>
+                12 min
+              </span>
+            </div>
+            <span class="flex items-center gap-1 text-brand-orange font-heading font-700 text-xs tracking-wider">
+              VIEW RECIPE
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════ HOW TO USE SECTION ═══════════════════ -->
+  <section class="py-20 relative overflow-hidden">
+    <div class="absolute inset-0" style="background: linear-gradient(180deg, #050505 0%, #0a0500 50%, #050505 100%);"></div>
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16 reveal">
+        <div class="inline-flex items-center gap-2 mb-4">
+          <span class="glow-line w-8"></span>
+          <span class="font-heading text-xs tracking-[0.3em] uppercase text-brand-orange font-700">Usage Guide</span>
+          <span class="glow-line w-8"></span>
+        </div>
+        <h2 class="font-heading font-900 text-4xl md:text-6xl uppercase text-white">
+          One Powder.<br/><span class="gradient-text">Infinite Ways.</span>
+        </h2>
+        <p class="font-body text-gray-400 mt-4 max-w-xl mx-auto">Cordyceps Militaris is flavour-neutral and dissolves in seconds. Use it in anything — hot, cold, sweet, or savoury.</p>
+      </div>
+
+      <!-- Usage grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Method 1 -->
+        <div class="glass-card rounded-xl p-6 text-center reveal">
+          <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.3);">
+            <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9-4.03 9-9 9-9-4.03-9-9z"/></svg>
+          </div>
+          <div class="font-heading font-800 text-lg uppercase text-white mb-1">Hot Liquids</div>
+          <p class="font-body text-xs text-gray-500">Tea, coffee, soups, broth</p>
+        </div>
+        <!-- Method 2 -->
+        <div class="glass-card rounded-xl p-6 text-center reveal" style="transition-delay:0.1s">
+          <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);">
+            <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12l2 2 4-4"/></svg>
+          </div>
+          <div class="font-heading font-800 text-lg uppercase text-white mb-1">Cold Drinks</div>
+          <p class="font-body text-xs text-gray-500">Smoothies, shakes, juices</p>
+        </div>
+        <!-- Method 3 -->
+        <div class="glass-card rounded-xl p-6 text-center reveal" style="transition-delay:0.2s">
+          <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.3);">
+            <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg>
+          </div>
+          <div class="font-heading font-800 text-lg uppercase text-white mb-1">Food</div>
+          <p class="font-body text-xs text-gray-500">Oats, yogurt, energy bars</p>
+        </div>
+        <!-- Method 4 -->
+        <div class="glass-card rounded-xl p-6 text-center reveal" style="transition-delay:0.3s">
+          <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);">
+            <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div class="font-heading font-800 text-lg uppercase text-white mb-1">Direct</div>
+          <p class="font-body text-xs text-gray-500">Stir into water with honey</p>
+        </div>
+      </div>
+
+      <!-- Dosage guide -->
+      <div class="mt-10 glass-card rounded-2xl p-8 reveal">
+        <div class="flex items-start gap-4 flex-wrap md:flex-nowrap">
+          <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full" style="background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.4);">
+            <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-heading font-800 text-xl uppercase text-white mb-2">Recommended Dosage</h3>
+            <p class="font-body text-gray-400 text-sm leading-relaxed mb-4">Start with <strong class="text-white">1g per day</strong> (approx. ½ teaspoon) for the first 2 weeks. After your body adapts, you can increase to 2g for enhanced performance effects. Best taken <strong class="text-brand-orange">30 minutes before activity</strong> or <strong class="text-brand-orange">with breakfast</strong>.</p>
+            <div class="flex flex-wrap gap-4 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand-orange"></span>
+                <span class="font-body text-gray-300">Weeks 1–2: 1g/day</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand-green"></span>
+                <span class="font-body text-gray-300">Week 3+: Up to 2g/day</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+                <span class="font-body text-gray-300">Shelf life: 18 months</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ CTA SECTION ═══════════════════ -->
+  <section class="py-20 relative overflow-hidden">
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, rgba(249,115,22,0.07) 0%, transparent 70%);"></div>
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+      <h2 class="font-heading font-900 text-5xl md:text-7xl uppercase leading-none mb-4 reveal">
+        <span class="text-white">READY TO</span><br/>
+        <span class="gradient-text text-glow">PERFORM?</span>
+      </h2>
+      <p class="font-body text-gray-400 text-lg mb-10 reveal">Pure Cordyceps Militaris. No fillers. No BS. Just ancient mushroom power for modern performance.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal">
+        <a href="#" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-glow text-black font-heading font-900 text-lg tracking-widest uppercase px-8 py-4 rounded-lg transition-all duration-200 cursor-pointer animate-pulse-glow">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          Shop Vitalcep
+        </a>
+        <a href="#" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-gray-700 hover:border-brand-orange text-white hover:text-brand-orange font-heading font-700 text-lg tracking-widest uppercase px-8 py-4 rounded-lg transition-all duration-200 cursor-pointer">
+          The Science
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer class="border-t border-[#1F1F1F] py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="font-heading font-black text-2xl tracking-widest uppercase">
+          <span class="gradient-text">VITAL</span><span class="text-white">CEP</span>
+        </div>
+        <div class="flex items-center gap-6 text-xs font-heading font-600 tracking-widest uppercase text-gray-500">
+          <a href="#" class="hover:text-white transition-colors cursor-pointer">Privacy</a>
+          <a href="#" class="hover:text-white transition-colors cursor-pointer">Terms</a>
+          <a href="#" class="hover:text-white transition-colors cursor-pointer">Shipping</a>
+          <a href="#" class="hover:text-white transition-colors cursor-pointer">Contact</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <!-- Instagram -->
+          <a href="#" aria-label="Instagram" class="w-9 h-9 flex items-center justify-center rounded-full border border-[#2a2a2a] hover:border-brand-orange hover:text-brand-orange text-gray-500 transition-all cursor-pointer">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t border-[#111] text-center text-xs text-gray-600 font-body">
+        © 2025 Vitalcep. All rights reserved. | These statements have not been evaluated by FSSAI. This product is not intended to diagnose, treat, cure, or prevent any disease.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════ RECIPE MODAL ═══════════════════ -->
+  <div class="recipe-expanded" id="recipe-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="closeRecipe(event)">
+    <div class="recipe-modal p-8" id="modal-content" onclick="event.stopPropagation()">
+      <!-- Close button -->
+      <div class="flex items-center justify-between mb-6">
+        <span id="modal-badge" class="badge-orange">Recipe</span>
+        <button onclick="closeRecipe()" class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-700 hover:border-brand-orange text-gray-400 hover:text-brand-orange transition-all cursor-pointer" aria-label="Close">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <h2 id="modal-title" class="font-heading font-900 text-3xl uppercase text-white mb-2">Recipe Name</h2>
+      <p id="modal-desc" class="font-body text-gray-400 mb-6 leading-relaxed"></p>
+
+      <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="rounded-lg p-4" style="background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2);">
+          <div class="font-heading font-700 text-xs text-brand-orange uppercase tracking-widest mb-1">Prep Time</div>
+          <div id="modal-time" class="font-heading font-800 text-xl text-white"></div>
+        </div>
+        <div class="rounded-lg p-4" style="background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);">
+          <div class="font-heading font-700 text-xs text-brand-green uppercase tracking-widest mb-1">Servings</div>
+          <div class="font-heading font-800 text-xl text-white">1</div>
+        </div>
+      </div>
+
+      <!-- Ingredients -->
+      <div class="mb-6">
+        <h3 class="font-heading font-800 text-lg uppercase text-white mb-3">Ingredients</h3>
+        <ul id="modal-ingredients" class="space-y-2 font-body text-sm text-gray-300"></ul>
+      </div>
+      <!-- Steps -->
+      <div class="mb-8">
+        <h3 class="font-heading font-800 text-lg uppercase text-white mb-3">Preparation</h3>
+        <ol id="modal-steps" class="space-y-3"></ol>
+      </div>
+      <a href="#" class="inline-flex items-center justify-center w-full gap-2 bg-brand-orange hover:bg-brand-orange-glow text-black font-heading font-900 text-base tracking-widest uppercase px-6 py-3.5 rounded-lg transition-all duration-200 cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Get Vitalcep Cordyceps
+      </a>
+    </div>
+  </div>
+
+  <script>
+    /* ── Recipe Data ── */
+    const recipes = {
+      r1: {
+        title: 'Pre-Workout Thunder Shot',
+        badge: 'Pre-Workout',
+        desc: 'A concentrated Cordyceps shot to prime your oxygen uptake and ATP production. Take 30 minutes before your training session for a noticeable difference in endurance.',
+        time: '5 min',
+        ingredients: [
+          '1g Vitalcep Cordyceps Militaris powder',
+          '30ml fresh lemon juice (half a lemon)',
+          '1cm fresh ginger, grated',
+          'A pinch of black pepper (enhances absorption)',
+          '20ml warm water',
+          'Optional: ½ tsp raw honey'
+        ],
+        steps: [
+          'Grate ginger finely and squeeze through a cloth to extract juice.',
+          'Combine lemon juice, ginger juice, and warm water in a shot glass.',
+          'Whisk in 1g of Vitalcep Cordyceps powder until fully dissolved.',
+          'Add a pinch of black pepper and stir.',
+          'Take the shot in one go, 30 minutes before training.',
+        ]
+      },
+      r2: {
+        title: 'Golden Morning Ritual Tea',
+        badge: 'Morning Ritual',
+        desc: 'The ultimate morning reset. Cordyceps + turmeric work together to reduce inflammation and ignite cellular energy — so you hit the ground running from the first sip.',
+        time: '8 min',
+        ingredients: [
+          '1g Vitalcep Cordyceps Militaris powder',
+          '1 tsp turmeric powder',
+          '½ tsp ashwagandha powder (optional)',
+          '200ml oat milk or almond milk',
+          '1 tsp raw honey or maple syrup',
+          'A pinch of black pepper',
+          'Optional: ½ tsp ghee or coconut oil'
+        ],
+        steps: [
+          'Warm your milk in a small saucepan over medium heat — do not boil.',
+          'Add turmeric, ashwagandha, and black pepper. Whisk continuously for 2 minutes.',
+          'Remove from heat and stir in 1g Vitalcep Cordyceps powder.',
+          'Add honey to taste and a small knob of ghee for creaminess.',
+          'Pour into your favourite mug and drink mindfully — this is your morning ritual.',
+        ]
+      },
+      r3: {
+        title: 'Post-Workout Recovery Shake',
+        badge: 'Recovery',
+        desc: 'Replenish fast. This shake hits your muscles with glycogen, protein, and the recovery-accelerating compounds in Cordyceps — so you\'re ready to train harder tomorrow.',
+        time: '5 min',
+        ingredients: [
+          '1g Vitalcep Cordyceps Militaris powder',
+          '1 ripe banana',
+          '1 scoop vanilla whey protein (25g)',
+          '250ml cold milk or oat milk',
+          '1 tsp natural peanut or almond butter',
+          '1 tsp raw honey',
+          '3–4 ice cubes'
+        ],
+        steps: [
+          'Add all ingredients to a blender.',
+          'Blend on high for 30 seconds until smooth.',
+          'Taste and adjust sweetness with honey.',
+          'Pour into a large glass and drink within 30 minutes post-workout.',
+          'Tip: Prepare the banana by freezing it the night before for a creamier texture.'
+        ]
+      },
+      r4: {
+        title: 'Nootropic Focus Coffee',
+        badge: 'Focus',
+        desc: 'The Cordyceps adenosine molecule synergises with caffeine to deliver clean, extended focus — without the mid-afternoon crash. This is your flow state in a cup.',
+        time: '10 min',
+        ingredients: [
+          '1g Vitalcep Cordyceps Militaris powder',
+          '150ml cold brew or strong black coffee',
+          '1 tsp MCT oil or coconut oil',
+          '¼ tsp cinnamon',
+          '50ml oat milk (frothed)',
+          'Optional: 1 tsp cacao powder for richness'
+        ],
+        steps: [
+          'Brew your cold brew or prepare a strong espresso and let it cool slightly.',
+          'Add MCT oil, cinnamon, and Vitalcep Cordyceps to a blender.',
+          'Add coffee and blend for 15 seconds until emulsified and frothy.',
+          'Pour over ice into a tall glass.',
+          'Top with frothed oat milk and a dusting of cinnamon.',
+          'Drink slowly to extend your focus window.'
+        ]
+      },
+      r5: {
+        title: 'Cordyceps Power Oatmeal Bowl',
+        badge: 'Morning Ritual',
+        desc: 'A complete breakfast weapon designed for high-output days. Complex carbs provide hours of fuel, while Cordyceps keeps your mitochondria firing at peak capacity.',
+        time: '15 min',
+        ingredients: [
+          '1g Vitalcep Cordyceps Militaris powder',
+          '80g rolled oats',
+          '250ml milk or water',
+          '1 tbsp almond butter or peanut butter',
+          'Handful of mixed berries (fresh or frozen)',
+          '1 tsp chia seeds',
+          '1 tsp raw honey or date syrup',
+          'Optional: sliced banana, granola topping'
+        ],
+        steps: [
+          'Cook oats in milk over medium heat for 5 minutes, stirring frequently.',
+          'Remove from heat and stir in 1g Vitalcep Cordyceps powder — it dissolves instantly.',
+          'Pour into a bowl and drizzle in almond butter.',
+          'Arrange berries, chia seeds, and sliced banana on top.',
+          'Finish with honey and optional granola for crunch.',
+          'Eat within 10 minutes of waking for optimal metabolic activation.'
+        ]
+      },
+      r6: {
+        title: 'Night Recovery Cacao Elixir',
+        badge: 'Evening',
+        desc: 'Deep sleep is where the real gains happen. Cordyceps compounds support overnight cellular repair, and raw cacao triggers serotonin production. Sleep like a champion.',
+        time: '12 min',
+        ingredients: [
+          '1g Vitalcep Cordyceps Militaris powder',
+          '1 tbsp raw cacao powder',
+          '200ml oat milk or almond milk',
+          '½ tsp magnesium glycinate powder (optional)',
+          '1 tsp raw honey',
+          'Pinch of sea salt',
+          'Optional: ½ tsp vanilla extract, ¼ tsp reishi mushroom powder'
+        ],
+        steps: [
+          'Warm milk in a saucepan over low heat. Do not let it boil.',
+          'Whisk in raw cacao, Vitalcep Cordyceps, and salt until fully dissolved.',
+          'Add magnesium and reishi if using — stir well.',
+          'Remove from heat and stir in honey and vanilla.',
+          'Pour into a mug and sip slowly 30–45 minutes before bed.',
+          'Dim your lights, put your phone down, and let the elixir work.'
+        ]
+      }
+    };
+
+    /* ── Open Recipe Modal ── */
+    function openRecipe(id) {
+      const r = recipes[id];
+      if (!r) return;
+      document.getElementById('modal-title').textContent = r.title;
+      document.getElementById('modal-desc').textContent = r.desc;
+      document.getElementById('modal-time').textContent = r.time;
+      document.getElementById('modal-badge').textContent = r.badge;
+
+      const ingList = document.getElementById('modal-ingredients');
+      ingList.innerHTML = r.ingredients.map(i => `
+        <li class="flex items-start gap-2">
+          <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-orange flex-shrink-0"></span>
+          <span>${i}</span>
+        </li>`).join('');
+
+      const stepList = document.getElementById('modal-steps');
+      stepList.innerHTML = r.steps.map((s, i) => `
+        <li class="flex items-start gap-3">
+          <div class="step-num">${i + 1}</div>
+          <span class="font-body text-sm text-gray-300 leading-relaxed pt-1">${s}</span>
+        </li>`).join('');
+
+      document.getElementById('recipe-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeRecipe(e) {
+      if (e && e.target !== document.getElementById('recipe-modal')) return;
+      document.getElementById('recipe-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /* ── Category Filter ── */
+    document.getElementById('category-tabs').addEventListener('click', e => {
+      const btn = e.target.closest('[data-cat]');
+      if (!btn) return;
+      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      document.querySelectorAll('#recipe-grid article').forEach(card => {
+        const show = cat === 'all' || card.dataset.cat === cat;
+        card.style.display = show ? '' : 'none';
+      });
+    });
+
+    /* ── Scroll Reveal ── */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ── Keyboard close modal ── */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.getElementById('recipe-modal').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>
