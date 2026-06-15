@@ -7,14 +7,14 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            heading: ['Barlow Condensed', 'sans-serif'],
-            body: ['Barlow', 'sans-serif'],
+            heading: ['Cormorant Garamond', 'Georgia', 'serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
           },
           colors: {
             brand: {
@@ -37,7 +37,7 @@
     body {
       background: #fff;
       color: #111;
-      font-family: 'Barlow', sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       overflow-x: hidden;
     }
 
@@ -45,7 +45,7 @@
     ::-webkit-scrollbar-track { background: #f0f0f0; }
     ::-webkit-scrollbar-thumb { background: #F97316; border-radius: 2px; }
 
-    .font-heading { font-family: 'Barlow Condensed', sans-serif; }
+    .font-heading { font-family: 'Cormorant Garamond', Georgia, serif; }
 
     .gradient-text {
       background: linear-gradient(135deg, #F97316 0%, #FB923C 50%, #F97316 100%);
@@ -166,7 +166,7 @@
       margin-bottom: 1rem;
     }
     .section-label span {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-weight: 700;
       font-size: .7rem;
       letter-spacing: .3em;
@@ -174,12 +174,12 @@
       color: #F97316;
     }
 
-    .badge { display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .75rem;border-radius:9999px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase; }
+    .badge { display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .75rem;border-radius:9999px;font-family:'Inter',system-ui,sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase; }
     .badge-orange { background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.28);color:#F97316; }
     .badge-gray   { background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.1);color:#666; }
 
     /* Tab system */
-    .tab-btn { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;padding:.45rem 1.2rem;border-radius:6px;border:1px solid #e8e8e8;background:#fff;color:#666;cursor:pointer;transition:all .18s; }
+    .tab-btn { font-family:'Inter',system-ui,sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:.45rem 1.2rem;border-radius:6px;border:1px solid #e8e8e8;background:#fff;color:#666;cursor:pointer;transition:all .18s; }
     .tab-btn.active { background:#F97316;color:#fff;border-color:#F97316; }
     .tab-panel { display:none; }
     .tab-panel.active { display:block; }
@@ -204,21 +204,21 @@
   <!-- NAV -->
   <nav class="nav-glass fixed top-0 left-0 right-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#" class="font-heading font-black text-2xl tracking-widest uppercase flex-shrink-0">
-        <span class="gradient-text">VITAL</span><span style="color:#111">CEP</span>
+      <a href="#" class="font-heading font-bold flex-shrink-0" style="font-size:22px;letter-spacing:.04em;">
+        <span class="gradient-text">Vital</span><span style="color:#111">cep</span>
       </a>
       <div class="hidden lg:flex items-center gap-8">
-        <a href="#products" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer">Products</a>
-        <a href="#benefits" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer">Benefits</a>
-        <a href="#science" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer">Science</a>
-        <a href="#" class="font-heading font-600 text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer">About</a>
+        <a href="#products" class="text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.1em;">Products</a>
+        <a href="#benefits" class="text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.1em;">Benefits</a>
+        <a href="#science" class="text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.1em;">Science</a>
+        <a href="#" class="text-sm tracking-widest uppercase text-gray-500 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.1em;">About</a>
       </div>
       <div class="hidden lg:flex items-center gap-3">
         <span class="badge badge-orange">
           <span class="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse"></span>
           In Stock
         </span>
-        <a href="#products" class="btn-shimmer inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-800 text-sm tracking-widest uppercase px-5 py-2.5 rounded-lg transition-colors duration-200 cursor-pointer">
+        <a href="#products" class="btn-shimmer inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-light text-white tracking-widest uppercase px-5 py-2.5 rounded-lg transition-colors duration-200 cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;">
           Shop Now
         </a>
       </div>
@@ -233,14 +233,14 @@
     <button id="close-menu" class="absolute top-6 right-6 text-gray-700 cursor-pointer" aria-label="Close menu">
       <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
     </button>
-    <div class="font-heading font-black text-3xl tracking-widest uppercase mb-8">
-      <span class="gradient-text">VITAL</span><span style="color:#111">CEP</span>
+    <div class="font-heading font-bold mb-8" style="font-size:28px;letter-spacing:.04em;">
+      <span class="gradient-text">Vital</span><span style="color:#111">cep</span>
     </div>
-    <a href="#products" class="font-heading font-700 text-3xl tracking-widest uppercase text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" onclick="document.getElementById('mobile-nav').classList.remove('open')">Products</a>
-    <a href="#benefits" class="font-heading font-700 text-3xl tracking-widest uppercase text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" onclick="document.getElementById('mobile-nav').classList.remove('open')">Benefits</a>
-    <a href="#science" class="font-heading font-700 text-3xl tracking-widest uppercase text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" onclick="document.getElementById('mobile-nav').classList.remove('open')">Science</a>
-    <a href="#" class="font-heading font-700 text-3xl tracking-widest uppercase text-gray-600 hover:text-brand-orange transition-colors cursor-pointer">About</a>
-    <a href="#products" class="btn-shimmer mt-4 bg-brand-orange text-white font-heading font-900 text-xl tracking-widest uppercase px-10 py-4 rounded-lg cursor-pointer" onclick="document.getElementById('mobile-nav').classList.remove('open')">Shop Now</a>
+    <a href="#products" class="text-2xl text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.08em;text-transform:uppercase;" onclick="document.getElementById('mobile-nav').classList.remove('open')">Products</a>
+    <a href="#benefits" class="text-2xl text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.08em;text-transform:uppercase;" onclick="document.getElementById('mobile-nav').classList.remove('open')">Benefits</a>
+    <a href="#science" class="text-2xl text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.08em;text-transform:uppercase;" onclick="document.getElementById('mobile-nav').classList.remove('open')">Science</a>
+    <a href="#" class="text-2xl text-gray-600 hover:text-brand-orange transition-colors cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;letter-spacing:.08em;text-transform:uppercase;">About</a>
+    <a href="#products" class="btn-shimmer mt-4 bg-brand-orange text-white text-base tracking-widest uppercase px-10 py-4 rounded-lg cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:700;" onclick="document.getElementById('mobile-nav').classList.remove('open')">Shop Now</a>
   </div>
 
   <!-- HERO -->
@@ -256,9 +256,9 @@
         <span class="glow-line w-16 block"></span>
       </div>
 
-      <h1 class="font-heading font-black leading-none uppercase mb-6">
-        <span class="block" style="color:#111;font-size:clamp(3rem,9vw,7rem);letter-spacing:-.02em;">ANCIENT WISDOM.</span>
-        <span class="block gradient-text" style="font-size:clamp(3.5rem,11vw,9rem);letter-spacing:-.03em;">MODERN PERFORMANCE.</span>
+      <h1 class="font-heading leading-none mb-6" style="font-weight:600;">
+        <span class="block" style="color:#111;font-size:clamp(3rem,9vw,7rem);letter-spacing:-.025em;">Ancient Wisdom.</span>
+        <span class="block gradient-text" style="font-size:clamp(3.5rem,11vw,9rem);letter-spacing:-.03em;font-style:italic;">Modern Performance.</span>
       </h1>
 
       <p class="font-body text-gray-500 text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed mb-10" style="font-weight:300;">
@@ -267,11 +267,11 @@
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-        <a href="#products" class="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-brand-orange hover:bg-brand-orange-light text-white font-heading font-900 text-xl tracking-widest uppercase px-10 py-4 rounded-lg transition-colors duration-200 cursor-pointer">
+        <a href="#products" class="btn-shimmer w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-brand-orange hover:bg-brand-orange-light text-white tracking-widest uppercase px-10 py-4 rounded-lg transition-colors duration-200 cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:.1em;">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           Shop Vitalcep
         </a>
-        <a href="#science" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-gray-300 hover:border-brand-orange text-gray-600 hover:text-brand-orange font-heading font-700 text-xl tracking-widest uppercase px-10 py-4 rounded-lg transition-all duration-200 cursor-pointer">
+        <a href="#science" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-gray-300 hover:border-brand-orange text-gray-600 hover:text-brand-orange tracking-widest uppercase px-10 py-4 rounded-lg transition-all duration-200 cursor-pointer" style="font-family:'Inter',system-ui,sans-serif;font-weight:500;font-size:14px;letter-spacing:.1em;">
           The Science
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -391,8 +391,8 @@
             <span class="glow-line w-10 block"></span>
             <span>The Product Line</span>
           </div>
-          <h2 class="font-heading font-900 uppercase" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-.02em;">
-            ONE MUSHROOM.<br/><span class="gradient-text">SIX FORMS.</span>
+          <h2 class="font-heading" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-.02em;font-weight:600;line-height:1.1;">
+            One Mushroom.<br/><span class="gradient-text" style="font-style:italic;">Six Forms.</span>
           </h2>
         </div>
         <div class="flex gap-2">
@@ -409,7 +409,7 @@
               <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
             </div>
             <div class="badge badge-orange mx-auto mb-3">Best Seller</div>
-            <h3 class="font-heading font-900 text-2xl uppercase mb-1" style="color:#111">Capsules</h3>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Capsules</h3>
             <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">500mg per capsule. 60 capsules per pack. Pre-measured, no mess. Keedajadi in its most convenient form.</p>
             <div class="glow-line mb-5"></div>
             <div class="text-left space-y-2 mb-6">
@@ -431,7 +431,7 @@
             <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.35);">
               <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
             </div>
-            <h3 class="font-heading font-900 text-2xl uppercase mb-1" style="color:#111">Powder</h3>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Powder</h3>
             <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Ultra-fine Keedajadi Churna. Dissolves in water, smoothies or warm drinks. 1g per serving, maximum bioavailability.</p>
             <div style="background:rgba(249,115,22,.2);height:1px;" class="mb-5"></div>
             <div class="text-left space-y-2 mb-6">
@@ -454,7 +454,7 @@
               <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M7 21l3-9m0 0l3 9M10 12L6.5 3m7 9L17 3M3 21h18"/></svg>
             </div>
             <div class="badge badge-gray mx-auto mb-3">Most Natural</div>
-            <h3 class="font-heading font-900 text-2xl uppercase mb-1" style="color:#111">Raw &amp; Dried</h3>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Raw &amp; Dried</h3>
             <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Whole Cordyceps fruiting bodies. Brew as tea or decoction. The most traditional way to consume Keedajadi.</p>
             <div class="glow-line mb-5"></div>
             <div class="text-left space-y-2 mb-6">
@@ -481,7 +481,7 @@
             <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:#EFF7F0;border:1px solid rgba(34,197,94,.2);">
               <svg class="w-10 h-10" style="color:#16A34A" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
             </div>
-            <h3 class="font-heading font-900 text-2xl uppercase mb-1" style="color:#111">Green Zen</h3>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Green Zen</h3>
             <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Cordyceps-infused whole leaf green tea. Clean energy, no crash. 15 individually wrapped sachets.</p>
             <div class="glow-line mb-5"></div>
             <div class="flex items-center justify-between mb-4">
@@ -497,7 +497,7 @@
             <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
               <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
             </div>
-            <h3 class="font-heading font-900 text-2xl uppercase mb-1" style="color:#111">Masala Blaze</h3>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Masala Blaze</h3>
             <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Cordyceps-infused Indian masala chai. The familiar taste of home with the edge of an adaptogen. 15 sachets.</p>
             <div style="background:rgba(249,115,22,.2);height:1px;" class="mb-5"></div>
             <div class="flex items-center justify-between mb-4">
@@ -510,7 +510,7 @@
             <div class="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center" style="background:#F0FAF4;border:1px solid rgba(34,197,94,.15);">
               <svg class="w-10 h-10" style="color:#16A34A" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
             </div>
-            <h3 class="font-heading font-900 text-2xl uppercase mb-1" style="color:#111">Minty Fresh</h3>
+            <h3 class="font-heading text-3xl mb-1" style="color:#111;font-weight:600;">Minty Fresh</h3>
             <p class="font-body text-gray-500 text-sm leading-relaxed mb-5">Cordyceps-infused pudina chai. Refreshing, light and functional. Mint green tea with a performance twist. 15 sachets.</p>
             <div class="glow-line mb-5"></div>
             <div class="flex items-center justify-between mb-4">
@@ -533,8 +533,8 @@
           <span>What To Expect</span>
           <span class="glow-line w-10 block"></span>
         </div>
-        <h2 class="font-heading font-900 uppercase" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);">
-          YOUR RESULTS <span class="gradient-text">TIMELINE</span>
+        <h2 class="font-heading" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);font-weight:600;line-height:1.1;">
+          Your Results <span class="gradient-text" style="font-style:italic;">Timeline</span>
         </h2>
         <p class="font-body text-gray-500 mt-4">Cordyceps is not a stimulant. Results build as the compounds accumulate.</p>
       </div>
@@ -546,7 +546,7 @@
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#F97316;box-shadow:0 0 18px rgba(249,115,22,.3);">D1</div>
             <div class="glass-card rounded-xl p-5">
-              <h3 class="font-heading font-800 text-xl uppercase mb-1" style="color:#111">Day 1 to 3: Absorption</h3>
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Day 1 to 3: Absorption</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">First dose taken. Cordycepin and adenosine begin absorbing at a cellular level. No sudden jolt, no crash.</p>
             </div>
           </div>
@@ -554,7 +554,7 @@
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#F97316;box-shadow:0 0 18px rgba(249,115,22,.3);">W1</div>
             <div class="glass-card rounded-xl p-5">
-              <h3 class="font-heading font-800 text-xl uppercase mb-1" style="color:#111">Week 1: Energy Shift</h3>
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 1: Energy Shift</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">Subtle but noticeable lift in morning energy. Afternoon crash softens. Mornings feel clearer.</p>
             </div>
           </div>
@@ -562,7 +562,7 @@
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#FB923C;box-shadow:0 0 18px rgba(249,115,22,.25);">W2</div>
             <div class="glass-card rounded-xl p-5">
-              <h3 class="font-heading font-800 text-xl uppercase mb-1" style="color:#111">Week 2: Stamina Builds</h3>
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 2: Stamina Builds</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">Workout endurance improves. Less breathlessness during cardio. You are running longer before your body says stop.</p>
             </div>
           </div>
@@ -570,7 +570,7 @@
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#EA580C;box-shadow:0 0 18px rgba(249,115,22,.2);">W3</div>
             <div class="glass-card rounded-xl p-5">
-              <h3 class="font-heading font-800 text-xl uppercase mb-1" style="color:#111">Week 3: Oxygen Uptake</h3>
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 3: Oxygen Uptake</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">Faster oxygen delivery to muscles. Focus sharpens. Better mind-muscle connection during training.</p>
             </div>
           </div>
@@ -578,7 +578,7 @@
           <div class="relative mb-9 reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-sm text-white" style="background:#EA580C;box-shadow:0 0 18px rgba(249,115,22,.2);">W4</div>
             <div class="glass-card rounded-xl p-5">
-              <h3 class="font-heading font-800 text-xl uppercase mb-1" style="color:#111">Week 4: Recovery Speeds Up</h3>
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 4: Recovery Speeds Up</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">Time between intense sessions noticeably shorter. Soreness reduces. You can go hard again sooner.</p>
             </div>
           </div>
@@ -586,7 +586,7 @@
           <div class="relative reveal">
             <div class="absolute left-[-40px] w-10 h-10 rounded-full flex items-center justify-center font-heading font-900 text-xs text-white" style="background:linear-gradient(135deg,#F97316,#EA580C);box-shadow:0 0 20px rgba(249,115,22,.3);">W6</div>
             <div class="glass-card rounded-xl p-5" style="border-color:rgba(249,115,22,.25);">
-              <h3 class="font-heading font-800 text-xl uppercase mb-1" style="color:#111">Week 5 to 6: Full Effect</h3>
+              <h3 class="font-heading text-2xl mb-1" style="color:#111;font-weight:600;">Week 5 to 6: Full Effect</h3>
               <p class="font-body text-sm text-gray-500 leading-relaxed">Sustained energy, stronger output, better sleep. This is the new baseline. The adaptogenic effect is fully active.</p>
             </div>
           </div>
@@ -597,42 +597,42 @@
             <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
               <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
-            <h4 class="font-heading font-800 text-base uppercase mb-1" style="color:#111">Energy</h4>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Energy</h4>
             <p class="font-body text-xs text-gray-500 leading-relaxed">Boosts ATP production at mitochondrial level</p>
           </div>
           <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.1s">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
               <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
             </div>
-            <h4 class="font-heading font-800 text-base uppercase mb-1" style="color:#111">Immunity</h4>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Immunity</h4>
             <p class="font-body text-xs text-gray-500 leading-relaxed">Activates NK cells via beta-glucan pathways</p>
           </div>
           <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.2s">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
               <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
             </div>
-            <h4 class="font-heading font-800 text-base uppercase mb-1" style="color:#111">Endurance</h4>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Endurance</h4>
             <p class="font-body text-xs text-gray-500 leading-relaxed">Enhances oxygen uptake and VO2 max capacity</p>
           </div>
           <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.3s">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
               <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
             </div>
-            <h4 class="font-heading font-800 text-base uppercase mb-1" style="color:#111">Focus</h4>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Focus</h4>
             <p class="font-body text-xs text-gray-500 leading-relaxed">Adenosine supports cognitive clarity and drive</p>
           </div>
           <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.1s">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
               <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
             </div>
-            <h4 class="font-heading font-800 text-base uppercase mb-1" style="color:#111">Recovery</h4>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Recovery</h4>
             <p class="font-body text-xs text-gray-500 leading-relaxed">Reduces inflammation, accelerates muscle repair</p>
           </div>
           <div class="glass-card rounded-xl p-5 reveal" style="transition-delay:.2s">
             <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-3" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">
               <svg class="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1M4.22 4.22l.707.707m12.02 12.02l.707.707M1 12h1m18 0h1M4.22 19.78l.707-.707M18.95 5.05l-.707.707"/><circle cx="12" cy="12" r="4"/></svg>
             </div>
-            <h4 class="font-heading font-800 text-base uppercase mb-1" style="color:#111">Stamina</h4>
+            <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Stamina</h4>
             <p class="font-body text-xs text-gray-500 leading-relaxed">Sustained output during long-duration performance</p>
           </div>
         </div>
@@ -651,8 +651,8 @@
             <span class="glow-line w-8 block"></span>
             <span>The Active Compounds</span>
           </div>
-          <h2 class="font-heading font-900 uppercase mb-6" style="color:#111;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-.02em;">
-            NOT MAGIC.<br/><span class="gradient-text">BIOCHEMISTRY.</span>
+          <h2 class="font-heading mb-6" style="color:#111;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-.02em;font-weight:600;line-height:1.1;">
+            Not Magic.<br/><span class="gradient-text" style="font-style:italic;">Biochemistry.</span>
           </h2>
           <p class="font-body text-gray-500 leading-relaxed mb-8" style="font-size:1.05rem">
             Cordyceps Militaris works because of three specific compounds. These are not folklore. They are molecules studied in peer-reviewed research worldwide.
@@ -661,21 +661,21 @@
             <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid rgba(249,115,22,.2);">
               <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-heading font-900 text-sm text-brand-orange" style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);">C</div>
               <div>
-                <h4 class="font-heading font-800 text-base uppercase mb-1" style="color:#111">Cordycepin (3'-Deoxyadenosine)</h4>
+                <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Cordycepin (3'-Deoxyadenosine)</h4>
                 <p class="font-body text-xs text-gray-500 leading-relaxed">Mimics cellular signalling to increase ATP energy production and inhibit inflammatory pathways. Directly supports endurance and immunity.</p>
               </div>
             </div>
             <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;">
               <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-heading font-900 text-sm text-brand-orange" style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);">A</div>
               <div>
-                <h4 class="font-heading font-800 text-base uppercase mb-1" style="color:#111">Adenosine</h4>
+                <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Adenosine</h4>
                 <p class="font-body text-xs text-gray-500 leading-relaxed">A key regulator of cellular energy transfer. Supports oxygen delivery to muscles, reduces fatigue signals, and helps the body sustain high-intensity output.</p>
               </div>
             </div>
             <div class="rounded-xl p-5 flex gap-4" style="background:#fff;border:1px solid #e8e8e8;">
               <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-heading font-900 text-sm text-gray-600" style="background:rgba(0,0,0,.04);border:1px solid #e0e0e0;">&#946;</div>
               <div>
-                <h4 class="font-heading font-800 text-base uppercase mb-1" style="color:#111">Beta-Glucans</h4>
+                <h4 class="font-heading text-xl mb-1" style="color:#111;font-weight:600;">Beta-Glucans</h4>
                 <p class="font-body text-xs text-gray-500 leading-relaxed">Polysaccharides that stimulate Natural Killer (NK) cells and macrophages, the frontline of your immune system. Measurable immunity boost with consistent use.</p>
               </div>
             </div>
@@ -685,7 +685,7 @@
         <div class="reveal-right">
           <div class="rounded-2xl overflow-hidden" style="background:#fff;border:1px solid #e8e8e8;box-shadow:0 2px 16px rgba(0,0,0,.05);">
             <div class="p-5 border-b border-gray-100">
-              <h3 class="font-heading font-800 text-lg uppercase" style="color:#111">Vitalcep vs. Generic Brands</h3>
+              <h3 class="font-heading text-2xl" style="color:#111;font-weight:600;">Vitalcep vs. Generic Brands</h3>
             </div>
             <table class="w-full text-sm">
               <thead>
@@ -723,8 +723,8 @@
           <span>Real Reviews</span>
           <span class="glow-line w-10 block"></span>
         </div>
-        <h2 class="font-heading font-900 uppercase" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);">
-          WHAT CUSTOMERS <span class="gradient-text">SAY.</span>
+        <h2 class="font-heading" style="color:#111;font-size:clamp(2.5rem,6vw,5rem);font-weight:600;line-height:1.1;">
+          What Customers <span class="gradient-text" style="font-style:italic;">Say.</span>
         </h2>
       </div>
 
@@ -737,7 +737,7 @@
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full flex items-center justify-center font-heading font-800 text-white text-base" style="background:linear-gradient(135deg,#F97316,#EA580C);">A</div>
             <div>
-              <div class="font-heading font-700 text-sm uppercase tracking-wide" style="color:#111">Anuja Wesanekar</div>
+              <div class="font-heading text-lg" style="color:#111;font-weight:600;">Anuja Wesanekar</div>
               <div class="font-body text-xs text-gray-400">Dancer, Age 23 · Delhi</div>
             </div>
           </div>
@@ -751,7 +751,7 @@
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full flex items-center justify-center font-heading font-800 text-white text-base" style="background:linear-gradient(135deg,#F97316,#FB923C);">V</div>
             <div>
-              <div class="font-heading font-700 text-sm uppercase tracking-wide" style="color:#111">Vidisha Tayade</div>
+              <div class="font-heading text-lg" style="color:#111;font-weight:600;">Vidisha Tayade</div>
               <div class="font-body text-xs text-gray-400">Dancer, Age 23 · Pune</div>
             </div>
           </div>
@@ -765,7 +765,7 @@
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full flex items-center justify-center font-heading font-800 text-white text-base" style="background:linear-gradient(135deg,#EA580C,#F97316);">A</div>
             <div>
-              <div class="font-heading font-700 text-sm uppercase tracking-wide" style="color:#111">Aamod Bhatt</div>
+              <div class="font-heading text-lg" style="color:#111;font-weight:600;">Aamod Bhatt</div>
               <div class="font-body text-xs text-gray-400">Marathon Runner, Age 21 · Hyderabad</div>
             </div>
           </div>
@@ -813,13 +813,13 @@
         <span>FAQ</span>
         <span class="glow-line w-8 block"></span>
       </div>
-      <h2 class="font-heading font-900 uppercase" style="color:#111;font-size:clamp(2rem,5vw,4rem);">QUESTIONS? <span class="gradient-text">ANSWERED.</span></h2>
+      <h2 class="font-heading" style="color:#111;font-size:clamp(2rem,5vw,4rem);font-weight:600;line-height:1.1;">Questions? <span class="gradient-text" style="font-style:italic;">Answered.</span></h2>
     </div>
 
     <div class="space-y-0 rounded-2xl overflow-hidden" style="border:1px solid #e8e8e8;background:#fff;">
       <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
         <div class="flex items-center justify-between p-6">
-          <h3 class="font-heading font-700 text-lg uppercase tracking-wide pr-4" style="color:#111">When do I start seeing results?</h3>
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">When do I start seeing results?</h3>
           <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer px-6 pb-6">
@@ -828,7 +828,7 @@
       </div>
       <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
         <div class="flex items-center justify-between p-6">
-          <h3 class="font-heading font-700 text-lg uppercase tracking-wide pr-4" style="color:#111">Militaris vs. Sinensis: what's the difference?</h3>
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">Militaris vs. Sinensis: what's the difference?</h3>
           <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer px-6 pb-6">
@@ -837,7 +837,7 @@
       </div>
       <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
         <div class="flex items-center justify-between p-6">
-          <h3 class="font-heading font-700 text-lg uppercase tracking-wide pr-4" style="color:#111">Can I take it with other supplements?</h3>
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">Can I take it with other supplements?</h3>
           <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer px-6 pb-6">
@@ -846,7 +846,7 @@
       </div>
       <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
         <div class="flex items-center justify-between p-6">
-          <h3 class="font-heading font-700 text-lg uppercase tracking-wide pr-4" style="color:#111">What is the recommended dosage?</h3>
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">What is the recommended dosage?</h3>
           <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer px-6 pb-6">
@@ -855,7 +855,7 @@
       </div>
       <div class="faq-item cursor-pointer" onclick="toggleFaq(this)">
         <div class="flex items-center justify-between p-6">
-          <h3 class="font-heading font-700 text-lg uppercase tracking-wide pr-4" style="color:#111">What if my order arrives damaged?</h3>
+          <h3 class="font-heading text-xl pr-4" style="color:#111;font-weight:600;">What if my order arrives damaged?</h3>
           <svg class="faq-arrow w-5 h-5 text-brand-orange flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
         <div class="faq-answer px-6 pb-6">
@@ -874,12 +874,12 @@
         <span style="color:rgba(255,255,255,.65)">Finally in India</span>
         <span style="background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);height:1px;" class="w-12 block"></span>
       </div>
-      <h2 class="font-heading font-black uppercase leading-none text-white mb-6" style="font-size:clamp(3rem,9vw,7.5rem);letter-spacing:-.02em;">
-        START<br/>TODAY.
+      <h2 class="font-heading leading-none text-white mb-6" style="font-size:clamp(3rem,9vw,7.5rem);letter-spacing:-.025em;font-weight:600;">
+        Start<br/><span style="font-style:italic;">Today.</span>
       </h2>
       <p class="font-body text-xl mb-10" style="color:rgba(255,255,255,.75)">Free shipping above &#8377;999. COD available. FSSAI certified, ISO certified, FICCI lab-tested.</p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#products" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-brand-orange font-heading font-900 text-xl tracking-widest uppercase px-12 py-5 rounded-xl transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 cursor-pointer">
+        <a href="#products" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-brand-orange tracking-widest uppercase px-12 py-5 rounded-xl" style="font-family:'Inter',system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:.1em;" transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 cursor-pointer">
           Shop Vitalcep
         </a>
       </div>
@@ -891,8 +891,8 @@
     <div class="max-w-7xl mx-auto px-6 py-14">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
         <div class="md:col-span-1">
-          <div class="font-heading font-black text-2xl tracking-widest uppercase mb-4">
-            <span class="gradient-text">VITAL</span><span style="color:#fff">CEP</span>
+          <div class="font-heading font-bold mb-4" style="font-size:22px;letter-spacing:.04em;">
+            <span class="gradient-text">Vital</span><span style="color:#fff">cep</span>
           </div>
           <p class="font-body text-xs leading-relaxed mb-4" style="color:rgba(255,255,255,.45)">Ancient wisdom. Modern performance. Pure Cordyceps Militaris — grown, tested and shipped from India.</p>
           <div class="flex items-center gap-3">
