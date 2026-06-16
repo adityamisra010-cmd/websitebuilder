@@ -71,14 +71,17 @@
 
       <div class="vc-pcard__actions">
         <a href="{{ product_url }}" class="vc-btn vc-btn--secondary">Details</a>
-        <button
-          type="button"
-          class="vc-btn vc-btn--primary"
-          data-vc-atc="{{ first_variant.id }}"
-          {%- unless first_variant.available -%}disabled{%- endunless -%}
-        >
-          {{- first_variant.available ? 'Add' : 'Sold out' -}}
-        </button>
+        {%- form 'product', product, data-type: 'add-to-cart-form' -%}
+          <input type="hidden" name="id" value="{{ first_variant.id }}">
+          <button
+            type="submit"
+            name="add"
+            class="vc-btn vc-btn--primary"
+            {%- unless first_variant.available -%}disabled{%- endunless -%}
+          >
+            {{- first_variant.available ? 'Add' : 'Sold out' -}}
+          </button>
+        {%- endform -%}
       </div>
     </div>
   </div>
