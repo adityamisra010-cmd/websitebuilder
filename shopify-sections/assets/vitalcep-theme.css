@@ -686,14 +686,15 @@
 @media (min-width: 990px) { .vc-bens { grid-template-columns: repeat(3,1fr); gap: 24px; } }
 
 .vc-ben {
-  background-color: var(--vc-paper);
+  background-color: #fff;
   border: 1px solid var(--vc-line);
   border-radius: var(--vc-r-card);
   padding: 28px 24px;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--vc-sh-1);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.vc-ben:hover { background-color: #fff; box-shadow: var(--vc-sh-2); }
+.vc-ben:hover { box-shadow: var(--vc-sh-3); transform: translateY(-2px); }
 
 .vc-ben__icon-wrap {
   width: 48px;
@@ -707,9 +708,9 @@
   color: var(--vc-orange);
 }
 
-.vc-ben__icon    { width: 24px; height: 24px; }
-.vc-ben__title   { font-family: var(--vc-serif); font-size: 18px; font-weight: 600; color: var(--vc-ink); margin-bottom: 8px; }
-.vc-ben__desc    { font-family: var(--vc-sans); font-size: 14px; line-height: 1.65; color: var(--vc-muted-2); }
+.vc-ben__icon  { width: 24px; height: 24px; }
+.vc-ben__title { font-family: var(--vc-serif); font-size: 18px; font-weight: 600; color: var(--vc-ink); margin-bottom: 8px; }
+.vc-ben__desc  { font-family: var(--vc-sans); font-size: 14px; line-height: 1.65; color: var(--vc-muted); }
 
 /* --------------------------------------------------------------------------
    15. SOCIAL PROOF / REVIEWS
