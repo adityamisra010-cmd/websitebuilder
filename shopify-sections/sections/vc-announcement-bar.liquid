@@ -8,13 +8,14 @@
 <div class="vc-announce {{ bg_class }}" role="marquee" aria-live="off">
   <div class="vc-announce__viewport">
     <div class="vc-announce__track">
-      {%- comment -%}Duplicate for seamless loop{%- endcomment -%}
-      {%- for block in section.blocks -%}{%- for i in (1..2) -%}
-        <span class="vc-announce__item" {{ block.shopify_attributes }}>
-          {{ block.settings.text }}
-          <span class="vc-announce__dot" aria-hidden="true"></span>
-        </span>
-      {%- endfor -%}{%- endfor -%}
+      {%- for i in (1..2) -%}
+        {%- for block in section.blocks -%}
+          <span class="vc-announce__item" {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+            <span class="vc-announce__dot" aria-hidden="true"></span>
+          </span>
+        {%- endfor -%}
+      {%- endfor -%}
     </div>
   </div>
 </div>
@@ -46,7 +47,7 @@
           "type": "text",
           "id": "text",
           "label": "Message",
-          "default": "Free shipping on orders above ₹999 · Use code VITALCEP10 for 10% off"
+          "default": "Free shipping on orders above ₹999"
         }
       ]
     }
@@ -55,9 +56,12 @@
     {
       "name": "VC Announcement Bar",
       "blocks": [
-        { "type": "message", "settings": { "text": "🚀 Free shipping on orders above ₹999" } },
-        { "type": "message", "settings": { "text": "✦ Clinically-studied Cordyceps militaris" } },
-        { "type": "message", "settings": { "text": "🇮🇳 Made in India · Batch-tested quality" } }
+        { "type": "message", "settings": { "text": "Recovery" } },
+        { "type": "message", "settings": { "text": "Cordycepin" } },
+        { "type": "message", "settings": { "text": "VO2 Max" } },
+        { "type": "message", "settings": { "text": "Made in India" } },
+        { "type": "message", "settings": { "text": "Free shipping on orders above ₹999" } },
+        { "type": "message", "settings": { "text": "Clinically-studied" } }
       ]
     }
   ]
