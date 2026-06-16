@@ -686,7 +686,7 @@
 @media (min-width: 990px) { .vc-bens { grid-template-columns: repeat(3,1fr); gap: 24px; } }
 
 .vc-ben {
-  background-color: #fff;
+  background-color: var(--vc-orange-soft);
   border: 1px solid var(--vc-line);
   border-radius: var(--vc-r-card);
   padding: 28px 24px;
