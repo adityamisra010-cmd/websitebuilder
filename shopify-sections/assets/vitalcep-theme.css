@@ -673,7 +673,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   14. BENEFITS (DARK)
+   14. BENEFITS
    -------------------------------------------------------------------------- */
 .vc-bens {
   display: grid;
@@ -686,14 +686,14 @@
 @media (min-width: 990px) { .vc-bens { grid-template-columns: repeat(3,1fr); gap: 24px; } }
 
 .vc-ben {
-  background-color: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
+  background-color: var(--vc-paper);
+  border: 1px solid var(--vc-line);
   border-radius: var(--vc-r-card);
   padding: 28px 24px;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.vc-ben:hover { background-color: rgba(255,255,255,0.07); }
+.vc-ben:hover { background-color: #fff; box-shadow: var(--vc-sh-2); }
 
 .vc-ben__icon-wrap {
   width: 48px;
@@ -708,7 +708,7 @@
 }
 
 .vc-ben__icon    { width: 24px; height: 24px; }
-.vc-ben__title   { font-family: var(--vc-serif); font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+.vc-ben__title   { font-family: var(--vc-serif); font-size: 18px; font-weight: 600; color: var(--vc-ink); margin-bottom: 8px; }
 .vc-ben__desc    { font-family: var(--vc-sans); font-size: 14px; line-height: 1.65; color: var(--vc-muted-2); }
 
 /* --------------------------------------------------------------------------
