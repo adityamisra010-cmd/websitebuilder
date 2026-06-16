@@ -79,7 +79,7 @@
             class="vc-btn vc-btn--primary"
             {%- unless first_variant.available -%}disabled{%- endunless -%}
           >
-            {{- first_variant.available ? 'Add' : 'Sold out' -}}
+            {%- if first_variant.available -%}Add{%- else -%}Sold out{%- endif -%}
           </button>
         {%- endform -%}
       </div>
