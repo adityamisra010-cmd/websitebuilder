@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://inflection.partners"),
   title: "Inflection — a founder-grade growth partner for D2C & ecommerce",
   description:
-    "Five founders who've built, scaled and rebuilt brands — and backed 60+ more. Performance marketing + CRO on a flat retainer. Pay after the month, not before.",
+    "Five founders who've built, scaled, broken and rebuilt brands — and backed 60+ more. Performance marketing + CRO on a flat retainer. Pay after the month, not before.",
   keywords: [
     "performance marketing",
     "CRO",
@@ -69,6 +69,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        {/* No-JS fallback: framer-motion ships reveal elements at opacity:0 in
+            the SSR HTML. Without JS they'd stay hidden, so force them visible. */}
+        <noscript>
+          {/* eslint-disable-next-line react/no-danger */}
+          <style dangerouslySetInnerHTML={{ __html: `[style*="opacity:0"]{opacity:1!important}` }} />
+        </noscript>
       </head>
       <body>{children}</body>
     </html>

@@ -1,4 +1,4 @@
-import { Container, Eyebrow, Section } from "./ui";
+import { Container, Eyebrow, Section, Emphasize } from "./ui";
 import { Reveal, RevealGroup, itemVariants } from "./motion";
 import { MotionItem } from "./MotionItem";
 import { whyUs } from "@/lib/content";
@@ -33,11 +33,7 @@ export function WhyUs() {
 
         <Reveal className="mt-12">
           <p className="max-w-3xl text-xl leading-relaxed text-muted sm:text-2xl">
-            Not the cheap freelancer who vanishes, not the bloated agency that bills you for
-            hours.{" "}
-            <span className="text-fg">
-              A founder-grade growth partner, on a simple flat retainer.
-            </span>
+            <Emphasize text={whyUs.closing} accent={whyUs.closingEmphasis} className="text-fg" />
           </p>
         </Reveal>
       </Container>

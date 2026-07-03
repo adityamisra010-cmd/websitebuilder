@@ -22,26 +22,27 @@ export function Eyebrow({ children }: { children: ReactNode }) {
   );
 }
 
-/** Monospace data chip. */
-export function Chip({
-  children,
-  tone = "line",
+/**
+ * Renders a verbatim string with its trailing clause emphasized, so the copy
+ * stays sourced from lib/content.ts (single source of truth) while keeping the
+ * two-tone treatment.
+ */
+export function Emphasize({
+  text,
+  accent,
+  className = "text-accent text-glow",
 }: {
-  children: ReactNode;
-  tone?: "line" | "amber" | "cyan" | "emerald";
+  text: string;
+  accent: string;
+  className?: string;
 }) {
-  const tones: Record<string, string> = {
-    line: "border-line-strong text-muted",
-    amber: "border-amber/40 text-amber",
-    cyan: "border-cyan/40 text-cyan",
-    emerald: "border-accent/40 text-accent",
-  };
+  const i = text.indexOf(accent);
+  if (i < 0) return <>{text}</>;
   return (
-    <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 font-mono text-xs tracking-wide ${tones[tone]}`}
-    >
-      {children}
-    </span>
+    <>
+      {text.slice(0, i)}
+      <span className={className}>{text.slice(i)}</span>
+    </>
   );
 }
 
@@ -62,29 +63,6 @@ export function PrimaryLink({
       href={href}
       aria-label={ariaLabel}
       className={`group inline-flex items-center justify-center gap-2.5 rounded-full bg-emerald px-6 py-3.5 font-mono text-sm font-medium tracking-wide text-[#04120c] transition-transform duration-200 ease-instrument hover:-translate-y-0.5 ${className}`}
-    >
-      {children}
-    </a>
-  );
-}
-
-/** Secondary action — outlined, low-emphasis. */
-export function GhostLink({
-  href,
-  children,
-  className = "",
-  ariaLabel,
-}: {
-  href: string;
-  children: ReactNode;
-  className?: string;
-  ariaLabel?: string;
-}) {
-  return (
-    <a
-      href={href}
-      aria-label={ariaLabel}
-      className={`inline-flex items-center justify-center gap-2 rounded-full border border-line-strong px-6 py-3.5 font-mono text-sm tracking-wide text-fg transition-colors duration-200 hover:border-accent hover:text-accent ${className}`}
     >
       {children}
     </a>

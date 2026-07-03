@@ -26,12 +26,14 @@ export function Hero() {
   });
   const curveY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 70]);
 
+  // Transform-only entrance (opacity stays 1) so the LCP headline paints in the
+  // SSR HTML instead of waiting for JS — the whole pitch is Core Web Vitals.
   const rise = (delay: number) =>
     reduce
       ? {}
       : {
-          initial: { opacity: 0, y: 22 },
-          animate: { opacity: 1, y: 0 },
+          initial: { y: 22 },
+          animate: { y: 0 },
           transition: { duration: 0.7, delay, ease },
         };
 
@@ -39,19 +41,14 @@ export function Hero() {
     <section ref={sectionRef} id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-24">
       {/* graph-paper backdrop, faded at edges */}
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid grid-mask" />
-      {/* ambient aurora — two slowly drifting blobs (transform only) */}
+      {/* ambient aurora — a single emerald blob (amber/cyan stay reserved for
+          the Engine's two paths, so they debut there with meaning, not here) */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <m.div
           className="absolute -top-40 right-[-8%] h-[520px] w-[520px] rounded-full opacity-[0.16] blur-3xl"
           style={{ background: "radial-gradient(circle, var(--emerald), transparent 60%)" }}
           animate={reduce ? undefined : { x: [0, 30, 0], y: [0, 24, 0] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <m.div
-          className="absolute bottom-[-20%] left-[-10%] h-[420px] w-[420px] rounded-full opacity-[0.1] blur-3xl"
-          style={{ background: "radial-gradient(circle, var(--cyan), transparent 62%)" }}
-          animate={reduce ? undefined : { x: [0, -26, 0], y: [0, -18, 0] }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
@@ -108,18 +105,10 @@ export function Hero() {
             </m.div>
           </div>
 
-          {/* Right: the signature curve, with gentle scroll parallax */}
-          <m.div
-            style={{ y: curveY }}
-            className="panel relative overflow-hidden p-5 sm:p-7"
-            {...(reduce
-              ? {}
-              : {
-                  initial: { opacity: 0, y: 26 },
-                  animate: { opacity: 1, y: 0 },
-                  transition: { duration: 0.8, delay: 0.25, ease },
-                })}
-          >
+          {/* Right: the signature curve, with gentle scroll parallax.
+              Parallax owns the y transform, so no separate entrance animation
+              (which would fight the same MotionValue) and it stays visible in SSR. */}
+          <m.div style={{ y: curveY }} className="panel relative overflow-hidden p-5 sm:p-7">
             <div className="mb-4 flex items-center justify-between">
               <span className="font-mono text-[0.7rem] uppercase tracking-label text-faint">
                 Growth · founder P&amp;L

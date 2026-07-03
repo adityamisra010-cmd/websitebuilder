@@ -3,7 +3,6 @@
 import { m, useReducedMotion } from "framer-motion";
 import type { ReactNode, CSSProperties } from "react";
 import { Container, Eyebrow, Section } from "./ui";
-import { Counter } from "./Counter";
 import { engine } from "@/lib/content";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -63,6 +62,31 @@ function Rail({
   );
 }
 
+/** Honest compounding visual — bars rising left→right. No fabricated figure. */
+function CompoundingBars() {
+  const reduce = useReducedMotion();
+  const heights = [22, 30, 40, 52, 66, 82, 100];
+  return (
+    <div
+      className="mx-auto flex h-24 max-w-xs items-end justify-center gap-2"
+      role="img"
+      aria-label="A compounding bar chart rising month over month."
+    >
+      {heights.map((h, i) => (
+        <m.span
+          key={h}
+          className="w-5 rounded-t-sm bg-emerald"
+          style={{ height: `${h}%`, transformOrigin: "bottom", opacity: 0.35 + (i / heights.length) * 0.65 }}
+          initial={reduce ? false : { scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={vp}
+          transition={{ duration: 0.5, delay: 1.15 + i * 0.08, ease }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function NodeCard({
   kind,
   title,
@@ -75,20 +99,14 @@ function NodeCard({
   tone: "input" | "amber" | "cyan";
 }) {
   const ring =
-    tone === "amber"
-      ? "border-amber/40"
-      : tone === "cyan"
-      ? "border-cyan/40"
-      : "border-line-strong";
+    tone === "amber" ? "border-amber/40" : tone === "cyan" ? "border-cyan/40" : "border-line-strong";
   const dot = tone === "amber" ? "bg-amber" : tone === "cyan" ? "bg-cyan" : "bg-emerald";
   const kindColor =
     tone === "amber" ? "text-amber" : tone === "cyan" ? "text-cyan" : "text-accent";
   return (
-    <div className={`panel border ${ring} h-full p-6`}>
+    <div className={`panel relative z-10 border ${ring} h-full p-6`}>
       <div className="flex items-center justify-between">
-        <span className={`font-mono text-[0.7rem] uppercase tracking-label ${kindColor}`}>
-          {kind}
-        </span>
+        <span className={`font-mono text-[0.7rem] uppercase tracking-label ${kindColor}`}>{kind}</span>
         <span className={`h-2 w-2 rounded-full ${dot}`} />
       </div>
       <h3 className="font-display mt-3 text-2xl text-fg">{title}</h3>
@@ -104,8 +122,19 @@ function NodeCard({
   );
 }
 
+/** Centered vertical rail in a flex cell (used for the grid-aligned drop/collect stems). */
+function CellStem({ color, delay }: { color: string; delay: number }) {
+  return (
+    <div className="flex justify-center">
+      <Rail axis="y" color={color} delay={delay} className="h-8 w-px" />
+    </div>
+  );
+}
+
 export function Engine() {
   const [perf, cro] = engine.outputs;
+  // distance between the two card centers in a 2-col grid with gap-8 (2rem):
+  const busWidth = "calc(50% + 1rem)";
 
   return (
     <Section id="engine" className="relative overflow-hidden border-t border-line">
@@ -114,13 +143,8 @@ export function Engine() {
         <Flow>
           <Eyebrow>{engine.eyebrow}</Eyebrow>
           <h2 className="font-display mt-5 max-w-3xl text-[clamp(1.9rem,4vw,3.1rem)] text-fg">
-            Strategy in.{" "}
-            <span className="text-accent text-glow">{engine.heading}</span> out.
+            Strategy in. <span className="text-accent text-glow">{engine.heading}</span> out.
           </h2>
-          <p className="mt-4 max-w-xl text-muted">
-            One input splits into two engines — then converges into a single number that
-            compounds.
-          </p>
         </Flow>
 
         {/* ---- The flow diagram ---- */}
@@ -135,70 +159,56 @@ export function Engine() {
             />
           </Flow>
 
-          {/* down-stem into the split */}
+          {/* down-stem into the split (both breakpoints) */}
           <div className="flex justify-center">
             <Rail axis="y" color="var(--line-strong)" delay={0.3} className="h-9 w-px" />
           </div>
 
-          {/* 2 · Split → two outputs */}
-          <div className="relative">
-            {/* horizontal bus (desktop) */}
-            <div className="pointer-events-none absolute left-1/2 top-0 hidden -translate-x-1/2 sm:block">
-              <Rail
-                axis="x"
-                color="var(--line-strong)"
-                delay={0.4}
-                className="h-px"
-                style={{ width: "min(70vw, 520px)" }}
-              />
-            </div>
-            {/* two drop-stems into cards (desktop) */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 hidden justify-between sm:flex">
-              <div className="flex w-1/2 justify-center">
-                <Rail axis="y" color="var(--amber)" delay={0.5} className="h-8 w-px" />
-              </div>
-              <div className="flex w-1/2 justify-center">
-                <Rail axis="y" color="var(--cyan)" delay={0.5} className="h-8 w-px" />
-              </div>
-            </div>
-
-            <div className="grid gap-6 pt-8 sm:grid-cols-2 sm:gap-8">
-              <Flow delay={0.55}>
-                <NodeCard kind={perf.kind} title={perf.title} items={perf.items} tone="amber" />
-              </Flow>
-              <Flow delay={0.65}>
-                <NodeCard kind={cro.kind} title={cro.title} items={cro.items} tone="cyan" />
-              </Flow>
+          {/* 2 · Split connectors — desktop only, grid-aligned to card centers */}
+          <div className="relative hidden sm:block">
+            <span
+              aria-hidden
+              className="absolute left-1/2 top-0 h-px -translate-x-1/2 bg-line-strong"
+              style={{ width: busWidth }}
+            />
+            <div className="grid grid-cols-2 gap-8">
+              <CellStem color="var(--amber)" delay={0.5} />
+              <CellStem color="var(--cyan)" delay={0.5} />
             </div>
           </div>
 
-          {/* 3 · Converge */}
-          <div className="relative">
-            {/* two collect-stems from card bottoms (desktop) */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 hidden justify-between sm:flex">
-              <div className="flex w-1/2 justify-center">
-                <Rail axis="y" color="var(--amber)" delay={0.85} className="h-8 w-px" />
-              </div>
-              <div className="flex w-1/2 justify-center">
-                <Rail axis="y" color="var(--cyan)" delay={0.85} className="h-8 w-px" />
-              </div>
-            </div>
-            <div className="pointer-events-none absolute left-1/2 top-8 hidden -translate-x-1/2 sm:block">
-              <Rail
-                axis="x"
-                color="var(--emerald)"
-                delay={0.95}
-                className="h-px"
-                style={{ width: "min(70vw, 520px)" }}
-              />
-            </div>
-            {/* final down-stem to meter */}
-            <div className="flex justify-center pt-8 sm:pt-[3.3rem]">
-              <Rail axis="y" color="var(--emerald)" delay={1.05} className="h-9 w-px" />
-            </div>
+          {/* cards (with a mobile spine behind them so the flow stays connected) */}
+          <div className="relative grid gap-6 pt-6 sm:grid-cols-2 sm:gap-8 sm:pt-8">
+            <span
+              aria-hidden
+              className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-line-strong sm:hidden"
+            />
+            <Flow delay={0.55}>
+              <NodeCard kind={perf.kind} title={perf.title} items={perf.items} tone="amber" />
+            </Flow>
+            <Flow delay={0.65}>
+              <NodeCard kind={cro.kind} title={cro.title} items={cro.items} tone="cyan" />
+            </Flow>
           </div>
 
-          {/* 4 · The ticking metric */}
+          {/* 3 · Converge connectors — desktop only */}
+          <div className="relative hidden sm:block">
+            <div className="grid grid-cols-2 gap-8">
+              <CellStem color="var(--amber)" delay={0.85} />
+              <CellStem color="var(--cyan)" delay={0.85} />
+            </div>
+            <span
+              aria-hidden
+              className="absolute left-1/2 top-8 h-px -translate-x-1/2 bg-emerald"
+              style={{ width: busWidth }}
+            />
+          </div>
+          {/* final down-stem to the outcome (both breakpoints) */}
+          <div className="flex justify-center pt-6 sm:pt-8">
+            <Rail axis="y" color="var(--emerald)" delay={1.05} className="h-9 w-px" />
+          </div>
+
+          {/* 4 · The compounding outcome (no fabricated figure) */}
           <Flow delay={1.1} className="mx-auto max-w-xl">
             <div
               className="panel relative overflow-hidden border border-accent/40 p-7 text-center"
@@ -207,19 +217,10 @@ export function Engine() {
               <span className="font-mono text-[0.7rem] uppercase tracking-label text-accent">
                 {engine.heading}
               </span>
-              <div className="mt-4 flex items-end justify-center gap-2">
-                <span className="font-display text-6xl text-accent text-glow sm:text-7xl">
-                  <Counter
-                    from={engine.converge.tickFrom}
-                    to={engine.converge.tickTo}
-                    suffix={engine.converge.tickSuffix}
-                  />
-                </span>
-                <span className="mb-2 font-mono text-xs uppercase tracking-label text-faint">
-                  {engine.converge.tickLabel}
-                </span>
+              <div className="mt-6">
+                <CompoundingBars />
               </div>
-              <p className="mx-auto mt-4 max-w-md leading-relaxed text-muted">
+              <p className="mx-auto mt-6 max-w-md leading-relaxed text-muted">
                 {engine.converge.body}
               </p>
             </div>

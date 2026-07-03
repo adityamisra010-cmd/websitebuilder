@@ -6,7 +6,8 @@
    Growth Instrument — design tokens (dual theme)
    Light = cool "blueprint" white (NOT warm cream). Dark = ink.
    --emerald = bright FILL/graphic color; --accent = text/line-safe.
-   --amber + --cyan reserved for the Engine's two output paths.
+   *-rgb channel vars back the Tailwind colors so /opacity modifiers work;
+   the hex vars stay for direct use in SVG and inline styles.
    ============================================================ */
 :root {
   /* ---- Light (default): cool blueprint ---- */
@@ -27,6 +28,10 @@
   --emerald-dim: #0a8a63;
   --amber: #b45309;
   --cyan: #0369a1;
+
+  --accent-rgb: 6 114 79;
+  --amber-rgb: 180 83 9;
+  --cyan-rgb: 3 105 161;
 
   --glow-emerald: transparent; /* no muddy halo on light */
   --btn-fg: #04120c;
@@ -53,6 +58,10 @@
   --amber: #ffb020;
   --cyan: #38bdf8;
 
+  --accent-rgb: 46 230 166;
+  --amber-rgb: 255 176 32;
+  --cyan-rgb: 56 189 248;
+
   --glow-emerald: rgba(46, 230, 166, 0.35);
   --btn-fg: #04120c;
 
@@ -75,7 +84,6 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
-  /* smooth the flip between themes (color only — not animated layout) */
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -84,7 +92,6 @@ body {
   color: var(--btn-fg);
 }
 
-/* Visible keyboard focus — brand ring, never removed */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -94,53 +101,48 @@ body {
   outline: none;
 }
 
-/* ---- Graph-paper grid background ---- */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, var(--grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-.bg-grid-fine {
-  background-image:
-    linear-gradient(to right, var(--grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-.grid-mask {
-  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
-  mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
-}
-
-/* Mono eyebrow */
-.eyebrow {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.axis-rule {
-  height: 1px;
-  background: linear-gradient(to right, var(--line-strong), var(--line) 60%, transparent);
-}
-
-.text-glow {
-  text-shadow: 0 0 24px var(--glow-emerald);
-}
-
-.panel {
-  background: var(--ink-2);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-}
-
-.font-display {
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
+@layer components {
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-grid-fine {
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .grid-mask {
+    -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
+  }
+  .eyebrow {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .axis-rule {
+    height: 1px;
+    background: linear-gradient(to right, var(--line-strong), var(--line) 60%, transparent);
+  }
+  .text-glow {
+    text-shadow: 0 0 24px var(--glow-emerald);
+  }
+  .panel {
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .font-display {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
 }
 
 /* Infinite marquee track (transform only) */

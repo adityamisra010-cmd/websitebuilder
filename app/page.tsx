@@ -15,14 +15,14 @@ export default function Page() {
   return (
     <MotionProvider>
       <a
-        href="#contact"
+        href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-emerald focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:text-[#04120c]"
       >
-        Skip to contact
+        Skip to main content
       </a>
       <ScrollProgress />
       <Header />
-      <main>
+      <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <TrustMarquee />
         <Problem />

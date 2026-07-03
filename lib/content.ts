@@ -56,6 +56,7 @@ export const problem = {
   ],
   closing:
     "We've lived every one of these ourselves. So we don't guess, we've already solved them.",
+  closingEmphasis: "we've already solved them.",
 };
 
 export type Founder = {
@@ -149,12 +150,9 @@ export const engine = {
   converge: {
     // brief: "...profitable, repeatable growth, a healthy LTV:CAC and blended ROAS
     // that compounds into real profit you keep, month after month."
+    // No numeric figure is shown — the brief supplies none, so none is invented.
     body:
       "A healthy LTV:CAC and blended ROAS that compounds into real profit you keep, month after month.",
-    tickLabel: "Blended ROAS",
-    tickFrom: 1.9,
-    tickTo: 4.7,
-    tickSuffix: "x",
   },
 };
 
@@ -180,6 +178,7 @@ export const whyUs = {
   ],
   closing:
     "Not the cheap freelancer who vanishes, not the bloated agency that bills you for hours. A founder-grade growth partner, on a simple flat retainer.",
+  closingEmphasis: "A founder-grade growth partner, on a simple flat retainer.",
 };
 
 export const pricing = {
@@ -189,6 +188,7 @@ export const pricing = {
   never: ["No commission", "No percentage of revenue", "No cut of ad spend"],
   // this line is the largest text in the section, per the brief. Verbatim.
   riskReversal: "Pay after the month, not before, the risk is ours not yours.",
+  riskEmphasis: "the risk is ours not yours.",
 };
 
 export const cta = {

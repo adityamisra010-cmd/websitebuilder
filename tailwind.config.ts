@@ -13,9 +13,13 @@ const config: Config = {
         faint: "var(--faint)",
         emerald: "var(--emerald)",
         "emerald-dim": "var(--emerald-dim)",
-        accent: "var(--accent)",
-        amber: "var(--amber)",
-        cyan: "var(--cyan)",
+        // channel-backed so /opacity modifiers compile (e.g. border-accent/40)
+        accent: "rgb(var(--accent-rgb) / <alpha-value>)",
+        amber: "rgb(var(--amber-rgb) / <alpha-value>)",
+        cyan: "rgb(var(--cyan-rgb) / <alpha-value>)",
+        // used without opacity modifiers, so plain var() is fine
+        line: "var(--line)",
+        "line-strong": "var(--line-strong)",
       },
       borderColor: {
         DEFAULT: "var(--line)",
