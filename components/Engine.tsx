@@ -1,0 +1,231 @@
+"use client";
+
+import { m, useReducedMotion } from "framer-motion";
+import type { ReactNode, CSSProperties } from "react";
+import { Container, Eyebrow, Section } from "./ui";
+import { Counter } from "./Counter";
+import { engine } from "@/lib/content";
+
+const ease = [0.22, 1, 0.36, 1] as const;
+const vp = { once: true, margin: "-15% 0px -15% 0px" } as const;
+
+/** A node/element that fades + rises into place on scroll (transform + opacity). */
+function Flow({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+  return (
+    <m.div
+      className={className}
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={vp}
+      transition={{ duration: 0.55, delay, ease }}
+    >
+      {children}
+    </m.div>
+  );
+}
+
+/** A connector rail drawn by scaling (never width/height animation). */
+function Rail({
+  axis,
+  color,
+  delay,
+  className = "",
+  style,
+}: {
+  axis: "x" | "y";
+  color: string;
+  delay: number;
+  className?: string;
+  style?: CSSProperties;
+}) {
+  const reduce = useReducedMotion();
+  const origin = axis === "y" ? "top" : "center";
+  return (
+    <m.span
+      aria-hidden
+      className={className}
+      style={{ background: color, transformOrigin: origin, display: "block", ...style }}
+      initial={reduce ? false : { [axis === "y" ? "scaleY" : "scaleX"]: 0 }}
+      whileInView={{ scaleY: 1, scaleX: 1 }}
+      viewport={vp}
+      transition={{ duration: 0.45, delay, ease }}
+    />
+  );
+}
+
+function NodeCard({
+  kind,
+  title,
+  items,
+  tone,
+}: {
+  kind: string;
+  title: string;
+  items: string[];
+  tone: "input" | "amber" | "cyan";
+}) {
+  const ring =
+    tone === "amber"
+      ? "border-amber/40"
+      : tone === "cyan"
+      ? "border-cyan/40"
+      : "border-line-strong";
+  const dot = tone === "amber" ? "bg-amber" : tone === "cyan" ? "bg-cyan" : "bg-emerald";
+  const kindColor =
+    tone === "amber" ? "text-amber" : tone === "cyan" ? "text-cyan" : "text-emerald";
+  return (
+    <div className={`panel border ${ring} h-full p-6`}>
+      <div className="flex items-center justify-between">
+        <span className={`font-mono text-[0.7rem] uppercase tracking-label ${kindColor}`}>
+          {kind}
+        </span>
+        <span className={`h-2 w-2 rounded-full ${dot}`} />
+      </div>
+      <h3 className="font-display mt-3 text-2xl text-fg">{title}</h3>
+      <ul className="mt-4 space-y-2">
+        {items.map((it) => (
+          <li key={it} className="flex items-start gap-2.5 font-mono text-[0.82rem] text-muted">
+            <span className={`mt-1.5 h-1 w-1 shrink-0 rounded-full ${dot}`} />
+            {it}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export function Engine() {
+  const [perf, cro] = engine.outputs;
+
+  return (
+    <Section id="engine" className="relative overflow-hidden border-t border-line">
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid grid-mask opacity-70" />
+      <Container className="relative">
+        <Flow>
+          <Eyebrow>{engine.eyebrow}</Eyebrow>
+          <h2 className="font-display mt-5 max-w-3xl text-[clamp(1.9rem,4vw,3.1rem)] text-fg">
+            Strategy in.{" "}
+            <span className="text-emerald text-glow">{engine.heading}</span> out.
+          </h2>
+          <p className="mt-4 max-w-xl text-muted">
+            One input splits into two engines — then converges into a single number that
+            compounds.
+          </p>
+        </Flow>
+
+        {/* ---- The flow diagram ---- */}
+        <div className="relative mx-auto mt-14 max-w-4xl">
+          {/* 1 · Strategy input */}
+          <Flow className="mx-auto max-w-xl" delay={0}>
+            <NodeCard
+              kind={engine.input.kind}
+              title={engine.input.title}
+              items={engine.input.items}
+              tone="input"
+            />
+          </Flow>
+
+          {/* down-stem into the split */}
+          <div className="flex justify-center">
+            <Rail axis="y" color="var(--line-strong)" delay={0.3} className="h-9 w-px" />
+          </div>
+
+          {/* 2 · Split → two outputs */}
+          <div className="relative">
+            {/* horizontal bus (desktop) */}
+            <div className="pointer-events-none absolute left-1/2 top-0 hidden -translate-x-1/2 sm:block">
+              <Rail
+                axis="x"
+                color="var(--line-strong)"
+                delay={0.4}
+                className="h-px"
+                style={{ width: "min(70vw, 520px)" }}
+              />
+            </div>
+            {/* two drop-stems into cards (desktop) */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 hidden justify-between sm:flex">
+              <div className="flex w-1/2 justify-center">
+                <Rail axis="y" color="var(--amber)" delay={0.5} className="h-8 w-px" />
+              </div>
+              <div className="flex w-1/2 justify-center">
+                <Rail axis="y" color="var(--cyan)" delay={0.5} className="h-8 w-px" />
+              </div>
+            </div>
+
+            <div className="grid gap-6 pt-8 sm:grid-cols-2 sm:gap-8">
+              <Flow delay={0.55}>
+                <NodeCard kind={perf.kind} title={perf.title} items={perf.items} tone="amber" />
+              </Flow>
+              <Flow delay={0.65}>
+                <NodeCard kind={cro.kind} title={cro.title} items={cro.items} tone="cyan" />
+              </Flow>
+            </div>
+          </div>
+
+          {/* 3 · Converge */}
+          <div className="relative">
+            {/* two collect-stems from card bottoms (desktop) */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 hidden justify-between sm:flex">
+              <div className="flex w-1/2 justify-center">
+                <Rail axis="y" color="var(--amber)" delay={0.85} className="h-8 w-px" />
+              </div>
+              <div className="flex w-1/2 justify-center">
+                <Rail axis="y" color="var(--cyan)" delay={0.85} className="h-8 w-px" />
+              </div>
+            </div>
+            <div className="pointer-events-none absolute left-1/2 top-8 hidden -translate-x-1/2 sm:block">
+              <Rail
+                axis="x"
+                color="var(--emerald)"
+                delay={0.95}
+                className="h-px"
+                style={{ width: "min(70vw, 520px)" }}
+              />
+            </div>
+            {/* final down-stem to meter */}
+            <div className="flex justify-center pt-8 sm:pt-[3.3rem]">
+              <Rail axis="y" color="var(--emerald)" delay={1.05} className="h-9 w-px" />
+            </div>
+          </div>
+
+          {/* 4 · The ticking metric */}
+          <Flow delay={1.1} className="mx-auto max-w-xl">
+            <div
+              className="panel relative overflow-hidden border border-emerald/40 p-7 text-center"
+              style={{ boxShadow: "0 0 60px -20px var(--glow-emerald)" }}
+            >
+              <span className="font-mono text-[0.7rem] uppercase tracking-label text-emerald">
+                {engine.heading}
+              </span>
+              <div className="mt-4 flex items-end justify-center gap-2">
+                <span className="font-display text-6xl text-emerald text-glow sm:text-7xl">
+                  <Counter
+                    from={engine.converge.tickFrom}
+                    to={engine.converge.tickTo}
+                    suffix={engine.converge.tickSuffix}
+                  />
+                </span>
+                <span className="mb-2 font-mono text-xs uppercase tracking-label text-faint">
+                  {engine.converge.tickLabel}
+                </span>
+              </div>
+              <p className="mx-auto mt-4 max-w-md leading-relaxed text-muted">
+                {engine.converge.body}
+              </p>
+            </div>
+          </Flow>
+        </div>
+      </Container>
+    </Section>
+  );
+}

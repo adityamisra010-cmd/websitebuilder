@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Growth Instrument — design tokens
+   Blue-slate ink base (not black), emerald = profit/brand,
+   amber + cyan reserved for the Engine's two output paths.
+   ============================================================ */
+:root {
+  --ink: #0a0e14;
+  --ink-2: #10151d;
+  --ink-3: #161c26;
+
+  --fg: #e8eef4;
+  --muted: #a2b0be;
+  --faint: #7c8a98;
+
+  --line: rgba(232, 238, 244, 0.08);
+  --line-strong: rgba(232, 238, 244, 0.15);
+
+  --emerald: #2ee6a6;
+  --emerald-dim: #17b382;
+  --amber: #ffb020;
+  --cyan: #38bdf8;
+
+  --glow-emerald: rgba(46, 230, 166, 0.35);
+  --grid: rgba(232, 238, 244, 0.035);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--ink);
+  color: var(--fg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--emerald);
+  color: #04120c;
+}
+
+/* Visible keyboard focus — brand ring, never removed */
+:focus-visible {
+  outline: 2px solid var(--emerald);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---- Graph-paper grid background utility ---- */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+.bg-grid-fine {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Soft vignette so the grid fades at the edges */
+.grid-mask {
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
+}
+
+/* Mono eyebrow with an axis-tick */
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--emerald);
+}
+
+/* Hairline that reads as a plotted axis */
+.axis-rule {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--line-strong),
+    var(--line) 60%,
+    transparent
+  );
+}
+
+/* Emerald text glow for the signature curve label */
+.text-glow {
+  text-shadow: 0 0 24px var(--glow-emerald);
+}
+
+/* Panels */
+.panel {
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+/* Fluid display scale */
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+/* Reduced motion: neutralize everything transform/opacity-driven */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
