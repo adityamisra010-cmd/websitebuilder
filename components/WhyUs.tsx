@@ -21,7 +21,7 @@ export function WhyUs() {
               variants={itemVariants}
               className="panel flex flex-col p-7 transition-transform duration-200 ease-instrument hover:-translate-y-1"
             >
-              <span className="inline-flex w-fit items-center gap-2 font-mono text-[0.7rem] uppercase tracking-label text-emerald">
+              <span className="inline-flex w-fit items-center gap-2 font-mono text-[0.7rem] uppercase tracking-label text-accent">
                 <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald" />
                 {c.tag}
               </span>

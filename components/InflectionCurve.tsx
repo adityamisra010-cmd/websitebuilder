@@ -31,13 +31,13 @@ export function InflectionCurve({ className = "" }: { className?: string }) {
     >
       <defs>
         <linearGradient id="curveStroke" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0%" stopColor="#4b5a66" />
-          <stop offset="45%" stopColor="#17b382" />
-          <stop offset="100%" stopColor="#2ee6a6" />
+          <stop offset="0%" style={{ stopColor: "var(--faint)" }} />
+          <stop offset="45%" style={{ stopColor: "var(--emerald-dim)" }} />
+          <stop offset="100%" style={{ stopColor: "var(--accent)" }} />
         </linearGradient>
         <linearGradient id="curveFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgba(46,230,166,0.20)" />
-          <stop offset="100%" stopColor="rgba(46,230,166,0)" />
+          <stop offset="0%" style={{ stopColor: "var(--emerald)", stopOpacity: 0.18 }} />
+          <stop offset="100%" style={{ stopColor: "var(--emerald)", stopOpacity: 0 }} />
         </linearGradient>
         <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="5" result="b" />
@@ -115,19 +115,19 @@ export function InflectionCurve({ className = "" }: { className?: string }) {
           y1={inflY}
           x2={inflX}
           y2="320"
-          stroke="var(--emerald)"
+          stroke="var(--accent)"
           strokeWidth="1"
           strokeDasharray="3 4"
           opacity="0.5"
         />
-        <circle cx={inflX} cy={inflY} r="5.5" fill="var(--ink)" stroke="var(--emerald)" strokeWidth="2.5" />
+        <circle cx={inflX} cy={inflY} r="5.5" fill="var(--ink)" stroke="var(--accent)" strokeWidth="2.5" />
         {!reduce && (
           <m.circle
             cx={inflX}
             cy={inflY}
             r="5.5"
             fill="none"
-            stroke="var(--emerald)"
+            stroke="var(--accent)"
             strokeWidth="1.5"
             style={{ transformBox: "fill-box", transformOrigin: "center" }}
             initial={{ scale: 1, opacity: 0.7 }}
@@ -138,7 +138,7 @@ export function InflectionCurve({ className = "" }: { className?: string }) {
         <text
           x={inflX + 12}
           y={inflY - 8}
-          fill="var(--emerald)"
+          fill="var(--accent)"
           fontSize="12"
           letterSpacing="1.5"
           fontFamily="var(--font-mono)"
@@ -148,7 +148,7 @@ export function InflectionCurve({ className = "" }: { className?: string }) {
         </text>
 
         {/* endpoint marker */}
-        <circle cx="624" cy="78" r="4.5" fill="var(--emerald)" filter="url(#softGlow)" />
+        <circle cx="624" cy="78" r="4.5" fill="var(--accent)" filter="url(#softGlow)" />
       </g>
     </svg>
   );

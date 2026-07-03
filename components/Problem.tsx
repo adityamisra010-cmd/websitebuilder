@@ -70,7 +70,7 @@ export function Problem() {
         <Reveal className="mt-12" delay={0.05}>
           <p className="max-w-3xl text-2xl leading-snug text-fg sm:text-[1.9rem]">
             We&apos;ve lived every one of these ourselves. So we don&apos;t guess,{" "}
-            <span className="text-emerald text-glow">we&apos;ve already solved them.</span>
+            <span className="text-accent text-glow">we&apos;ve already solved them.</span>
           </p>
         </Reveal>
       </Container>

@@ -16,7 +16,7 @@ export function Container({
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
     <div className="flex items-center gap-3">
-      <span aria-hidden className="h-px w-6 bg-emerald/60" />
+      <span aria-hidden className="h-px w-6 bg-accent/60" />
       <span className="eyebrow">{children}</span>
     </div>
   );
@@ -34,7 +34,7 @@ export function Chip({
     line: "border-line-strong text-muted",
     amber: "border-amber/40 text-amber",
     cyan: "border-cyan/40 text-cyan",
-    emerald: "border-emerald/40 text-emerald",
+    emerald: "border-accent/40 text-accent",
   };
   return (
     <span
@@ -84,7 +84,7 @@ export function GhostLink({
     <a
       href={href}
       aria-label={ariaLabel}
-      className={`inline-flex items-center justify-center gap-2 rounded-full border border-line-strong px-6 py-3.5 font-mono text-sm tracking-wide text-fg transition-colors duration-200 hover:border-emerald hover:text-emerald ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-full border border-line-strong px-6 py-3.5 font-mono text-sm tracking-wide text-fg transition-colors duration-200 hover:border-accent hover:text-accent ${className}`}
     >
       {children}
     </a>

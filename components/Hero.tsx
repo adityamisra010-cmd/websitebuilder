@@ -1,14 +1,30 @@
 "use client";
 
-import { m, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { m, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Container, Eyebrow, PrimaryLink } from "./ui";
 import { InflectionCurve } from "./InflectionCurve";
+import { StatCounter } from "./StatCounter";
 import { hero, contact } from "@/lib/content";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+// Numeric parts mirror the verbatim proof line: 5 · 60+ · $1.5B+.
+const PROOF = [
+  { node: <StatCounter to={5} />, label: "founders" },
+  { node: <StatCounter to={60} suffix="+" />, label: "brands backed" },
+  { node: <StatCounter prefix="$" to={1.5} decimals={1} suffix="B+" />, label: "combined portfolio value" },
+];
+
 export function Hero() {
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const curveY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 70]);
 
   const rise = (delay: number) =>
     reduce
@@ -20,14 +36,24 @@ export function Hero() {
         };
 
   return (
-    <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-24">
+    <section ref={sectionRef} id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-24">
       {/* graph-paper backdrop, faded at edges */}
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid grid-mask" />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 right-[-10%] h-[520px] w-[520px] rounded-full opacity-[0.14] blur-3xl"
-        style={{ background: "radial-gradient(circle, var(--emerald), transparent 60%)" }}
-      />
+      {/* ambient aurora — two slowly drifting blobs (transform only) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <m.div
+          className="absolute -top-40 right-[-8%] h-[520px] w-[520px] rounded-full opacity-[0.16] blur-3xl"
+          style={{ background: "radial-gradient(circle, var(--emerald), transparent 60%)" }}
+          animate={reduce ? undefined : { x: [0, 30, 0], y: [0, 24, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <m.div
+          className="absolute bottom-[-20%] left-[-10%] h-[420px] w-[420px] rounded-full opacity-[0.1] blur-3xl"
+          style={{ background: "radial-gradient(circle, var(--cyan), transparent 62%)" }}
+          animate={reduce ? undefined : { x: [0, -26, 0], y: [0, -18, 0] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
 
       <Container className="relative">
         <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
@@ -41,28 +67,25 @@ export function Hero() {
               <m.span className="block text-fg" {...rise(0.08)}>
                 {hero.headlineLead}
               </m.span>
-              <m.span className="block text-emerald text-glow" {...rise(0.18)}>
+              <m.span className="block text-accent text-glow" {...rise(0.18)}>
                 {hero.headlineTurn}
               </m.span>
             </h1>
 
-            <m.p
-              className="mt-7 max-w-xl text-lg leading-relaxed text-muted"
-              {...rise(0.3)}
-            >
+            <m.p className="mt-7 max-w-xl text-lg leading-relaxed text-muted" {...rise(0.3)}>
               {hero.subhead}
             </m.p>
 
-            {/* proof line as three plotted readouts */}
+            {/* proof line as three counting readouts */}
             <m.dl
               className="mt-9 grid max-w-xl grid-cols-3 gap-4 border-t border-line pt-6"
               {...rise(0.4)}
             >
-              {hero.proof.map((p) => (
+              {PROOF.map((p) => (
                 <div key={p.label}>
                   <dt className="sr-only">{p.label}</dt>
                   <dd>
-                    <div className="font-display text-2xl text-fg sm:text-3xl">{p.value}</div>
+                    <div className="font-display text-2xl text-fg sm:text-3xl">{p.node}</div>
                     <div className="mt-1 font-mono text-[0.7rem] uppercase tracking-label text-faint">
                       {p.label}
                     </div>
@@ -78,15 +101,16 @@ export function Hero() {
               </PrimaryLink>
               <a
                 href={contact.emailHref}
-                className="font-mono text-sm text-muted underline decoration-line-strong underline-offset-4 transition-colors hover:text-emerald hover:decoration-emerald"
+                className="font-mono text-sm text-muted underline decoration-line-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
               >
                 {contact.email}
               </a>
             </m.div>
           </div>
 
-          {/* Right: the signature curve */}
+          {/* Right: the signature curve, with gentle scroll parallax */}
           <m.div
+            style={{ y: curveY }}
             className="panel relative overflow-hidden p-5 sm:p-7"
             {...(reduce
               ? {}
@@ -100,7 +124,7 @@ export function Hero() {
               <span className="font-mono text-[0.7rem] uppercase tracking-label text-faint">
                 Growth · founder P&amp;L
               </span>
-              <span className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-label text-emerald">
+              <span className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-label text-accent">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald" />
                 Live
               </span>

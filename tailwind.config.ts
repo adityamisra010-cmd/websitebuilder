@@ -13,6 +13,7 @@ const config: Config = {
         faint: "var(--faint)",
         emerald: "var(--emerald)",
         "emerald-dim": "var(--emerald-dim)",
+        accent: "var(--accent)",
         amber: "var(--amber)",
         cyan: "var(--cyan)",
       },

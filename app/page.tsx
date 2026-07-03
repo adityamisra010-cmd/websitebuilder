@@ -1,6 +1,8 @@
 import { MotionProvider } from "@/components/motion";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { TrustMarquee } from "@/components/TrustMarquee";
 import { Problem } from "@/components/Problem";
 import { Team } from "@/components/Team";
 import { Engine } from "@/components/Engine";
@@ -18,9 +20,11 @@ export default function Page() {
       >
         Skip to contact
       </a>
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />
+        <TrustMarquee />
         <Problem />
         <Team />
         <Engine />

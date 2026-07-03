@@ -82,7 +82,7 @@ function NodeCard({
       : "border-line-strong";
   const dot = tone === "amber" ? "bg-amber" : tone === "cyan" ? "bg-cyan" : "bg-emerald";
   const kindColor =
-    tone === "amber" ? "text-amber" : tone === "cyan" ? "text-cyan" : "text-emerald";
+    tone === "amber" ? "text-amber" : tone === "cyan" ? "text-cyan" : "text-accent";
   return (
     <div className={`panel border ${ring} h-full p-6`}>
       <div className="flex items-center justify-between">
@@ -115,7 +115,7 @@ export function Engine() {
           <Eyebrow>{engine.eyebrow}</Eyebrow>
           <h2 className="font-display mt-5 max-w-3xl text-[clamp(1.9rem,4vw,3.1rem)] text-fg">
             Strategy in.{" "}
-            <span className="text-emerald text-glow">{engine.heading}</span> out.
+            <span className="text-accent text-glow">{engine.heading}</span> out.
           </h2>
           <p className="mt-4 max-w-xl text-muted">
             One input splits into two engines — then converges into a single number that
@@ -201,14 +201,14 @@ export function Engine() {
           {/* 4 · The ticking metric */}
           <Flow delay={1.1} className="mx-auto max-w-xl">
             <div
-              className="panel relative overflow-hidden border border-emerald/40 p-7 text-center"
+              className="panel relative overflow-hidden border border-accent/40 p-7 text-center"
               style={{ boxShadow: "0 0 60px -20px var(--glow-emerald)" }}
             >
-              <span className="font-mono text-[0.7rem] uppercase tracking-label text-emerald">
+              <span className="font-mono text-[0.7rem] uppercase tracking-label text-accent">
                 {engine.heading}
               </span>
               <div className="mt-4 flex items-end justify-center gap-2">
-                <span className="font-display text-6xl text-emerald text-glow sm:text-7xl">
+                <span className="font-display text-6xl text-accent text-glow sm:text-7xl">
                   <Counter
                     from={engine.converge.tickFrom}
                     to={engine.converge.tickTo}

@@ -13,7 +13,7 @@ export function CTA() {
       />
       <Container className="relative">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <span className="font-mono text-[0.7rem] uppercase tracking-label text-emerald">
+          <span className="font-mono text-[0.7rem] uppercase tracking-label text-accent">
             {cta.eyebrow}
           </span>
           <h2 className="font-display mt-5 text-[clamp(2.1rem,5vw,3.4rem)] text-fg">
@@ -34,14 +34,14 @@ export function CTA() {
           <div className="mt-6 flex flex-col items-center justify-center gap-1.5 font-mono text-sm text-muted sm:flex-row sm:gap-6">
             <a
               href={contact.whatsappHref}
-              className="transition-colors hover:text-emerald"
+              className="transition-colors hover:text-accent"
             >
               WhatsApp {contact.whatsappDisplay}
             </a>
             <span aria-hidden className="hidden h-3 w-px bg-line-strong sm:block" />
             <a
               href={contact.emailHref}
-              className="underline decoration-line-strong underline-offset-4 transition-colors hover:text-emerald hover:decoration-emerald"
+              className="underline decoration-line-strong underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
             >
               {contact.email}
             </a>

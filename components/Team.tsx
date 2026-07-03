@@ -61,7 +61,7 @@ export function Team() {
 
               {/* key stat — the readout, aligned right on desktop */}
               <div className="col-span-2 flex items-center gap-2 border-t border-line pt-4 sm:col-span-1 sm:justify-end sm:border-0 sm:pt-0">
-                <span className="font-mono text-sm text-emerald">{f.stat}</span>
+                <span className="font-mono text-sm text-accent">{f.stat}</span>
               </div>
             </MotionItem>
           ))}

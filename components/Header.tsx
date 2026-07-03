@@ -1,4 +1,5 @@
 import { Container, PrimaryLink } from "./ui";
+import { ThemeToggle } from "./ThemeToggle";
 import { contact } from "@/lib/content";
 
 export function Header() {
@@ -36,9 +37,16 @@ export function Header() {
           ))}
         </nav>
 
-        <PrimaryLink href={contact.whatsappHref} className="px-5 py-2.5 text-xs" ariaLabel="Message Inflection on WhatsApp">
-          Talk to a founder
-        </PrimaryLink>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <PrimaryLink
+            href={contact.whatsappHref}
+            className="px-5 py-2.5 text-xs"
+            ariaLabel="Message Inflection on WhatsApp"
+          >
+            Talk to a founder
+          </PrimaryLink>
+        </div>
       </Container>
     </header>
   );

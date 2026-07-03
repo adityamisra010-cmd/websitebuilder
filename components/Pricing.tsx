@@ -40,7 +40,7 @@ export function Pricing() {
           <Reveal delay={0.08}>
             <p className="font-display text-[clamp(2.3rem,5.6vw,4rem)] leading-[1.04] tracking-tight">
               <span className="text-fg">Pay after the month, not before, </span>
-              <span className="text-emerald text-glow">the risk is ours not yours.</span>
+              <span className="text-accent text-glow">the risk is ours not yours.</span>
             </p>
           </Reveal>
         </div>

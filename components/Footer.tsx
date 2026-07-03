@@ -20,10 +20,10 @@ export function Footer() {
         </div>
 
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs text-muted">
-          <a href={contact.whatsappHref} className="transition-colors hover:text-emerald">
+          <a href={contact.whatsappHref} className="transition-colors hover:text-accent">
             WhatsApp {contact.whatsappDisplay}
           </a>
-          <a href={contact.emailHref} className="transition-colors hover:text-emerald">
+          <a href={contact.emailHref} className="transition-colors hover:text-accent">
             {contact.email}
           </a>
         </div>

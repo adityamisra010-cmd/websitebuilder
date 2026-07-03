@@ -3,11 +3,38 @@
 @tailwind utilities;
 
 /* ============================================================
-   Growth Instrument — design tokens
-   Blue-slate ink base (not black), emerald = profit/brand,
-   amber + cyan reserved for the Engine's two output paths.
+   Growth Instrument — design tokens (dual theme)
+   Light = cool "blueprint" white (NOT warm cream). Dark = ink.
+   --emerald = bright FILL/graphic color; --accent = text/line-safe.
+   --amber + --cyan reserved for the Engine's two output paths.
    ============================================================ */
 :root {
+  /* ---- Light (default): cool blueprint ---- */
+  --ink: #eef2f6;
+  --ink-2: #ffffff;
+  --ink-3: #e6ecf1;
+
+  --fg: #0c141e;
+  --muted: #47576a;
+  --faint: #5d6b7a;
+
+  --line: rgba(12, 20, 30, 0.1);
+  --line-strong: rgba(12, 20, 30, 0.18);
+  --grid: rgba(12, 20, 30, 0.05);
+
+  --emerald: #10b981; /* fills, graphics, CTA */
+  --accent: #06724f; /* text/line-safe accent */
+  --emerald-dim: #0a8a63;
+  --amber: #b45309;
+  --cyan: #0369a1;
+
+  --glow-emerald: transparent; /* no muddy halo on light */
+  --btn-fg: #04120c;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
   --ink: #0a0e14;
   --ink-2: #10151d;
   --ink-3: #161c26;
@@ -18,14 +45,18 @@
 
   --line: rgba(232, 238, 244, 0.08);
   --line-strong: rgba(232, 238, 244, 0.15);
+  --grid: rgba(232, 238, 244, 0.035);
 
   --emerald: #2ee6a6;
+  --accent: #2ee6a6;
   --emerald-dim: #17b382;
   --amber: #ffb020;
   --cyan: #38bdf8;
 
   --glow-emerald: rgba(46, 230, 166, 0.35);
-  --grid: rgba(232, 238, 244, 0.035);
+  --btn-fg: #04120c;
+
+  color-scheme: dark;
 }
 
 * {
@@ -44,16 +75,18 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  /* smooth the flip between themes (color only — not animated layout) */
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 ::selection {
   background: var(--emerald);
-  color: #04120c;
+  color: var(--btn-fg);
 }
 
 /* Visible keyboard focus — brand ring, never removed */
 :focus-visible {
-  outline: 2px solid var(--emerald);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -61,7 +94,7 @@ body {
   outline: none;
 }
 
-/* ---- Graph-paper grid background utility ---- */
+/* ---- Graph-paper grid background ---- */
 .bg-grid {
   background-image:
     linear-gradient(to right, var(--grid) 1px, transparent 1px),
@@ -74,46 +107,35 @@ body {
     linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
   background-size: 28px 28px;
 }
-
-/* Soft vignette so the grid fades at the edges */
 .grid-mask {
   -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
   mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
 }
 
-/* Mono eyebrow with an axis-tick */
+/* Mono eyebrow */
 .eyebrow {
   font-family: var(--font-mono), monospace;
   font-size: 0.75rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--emerald);
+  color: var(--accent);
 }
 
-/* Hairline that reads as a plotted axis */
 .axis-rule {
   height: 1px;
-  background: linear-gradient(
-    to right,
-    var(--line-strong),
-    var(--line) 60%,
-    transparent
-  );
+  background: linear-gradient(to right, var(--line-strong), var(--line) 60%, transparent);
 }
 
-/* Emerald text glow for the signature curve label */
 .text-glow {
   text-shadow: 0 0 24px var(--glow-emerald);
 }
 
-/* Panels */
 .panel {
   background: var(--ink-2);
   border: 1px solid var(--line);
   border-radius: 14px;
 }
 
-/* Fluid display scale */
 .font-display {
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 700;
@@ -121,7 +143,24 @@ body {
   line-height: 1.02;
 }
 
-/* Reduced motion: neutralize everything transform/opacity-driven */
+/* Infinite marquee track (transform only) */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-track {
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+.marquee-group:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Reduced motion: neutralize all motion, show final state */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
@@ -131,5 +170,8 @@ body {
   }
   html {
     scroll-behavior: auto;
+  }
+  .marquee-track {
+    animation: none !important;
   }
 }
